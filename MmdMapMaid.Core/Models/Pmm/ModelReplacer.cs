@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MikuMikuMethods.Converter;
-using MikuMikuMethods.Pmm;
-using MikuMikuMethods.Pmx;
+﻿using MikuMikuMethods.Pmm;
 
 namespace MmdMapMaid.Core.Models.Pmm;
 public class ModelReplacer
 {
     private PolygonMovieMaker Pmm
+    {
+        get;
+    }
+    private string PmmPath
     {
         get;
     }
@@ -27,8 +24,9 @@ public class ModelReplacer
         Pmm.Models[oldModelIndex].Path = newModelPath;
     }
 
-    public void Save(bool enableOverWrite)
+    public string? Save(SaveOptions? options = null)
     {
-        
+        options ??= new SaveOptions();
+        return options.SaveWithBackupAndReturnCreatedPath(PmmPath, savePath => Pmm.Write(savePath));
     }
 }

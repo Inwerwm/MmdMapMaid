@@ -30,7 +30,7 @@ public record SaveOptions(bool EnableOverwrite = true, bool EnableBackup = true,
     {
         var (savePath, backupPath) = GetPath(path);
 
-        if (EnableOverwrite && EnableBackup)
+        if (EnableOverwrite && EnableBackup && File.Exists(path))
         {
             File.Copy(path, backupPath, true);
         }
@@ -49,5 +49,19 @@ public record SaveOptions(bool EnableOverwrite = true, bool EnableBackup = true,
         return !EnableOverwrite ? savePath
             : EnableBackup ? backupPath 
             : null;
+    }
+
+    /// <summary>
+    /// 設定に応じてバックアップ付き保存を行い、新規に作られた方のファイルパスを返す
+    /// </summary>
+    /// <param name="path">保存したいパス</param>
+    /// <param name="save">保存処理</param>
+    /// <returns>新しくできたファイルの方のパス</returns>
+    public string? SaveWithBackupAndReturnCreatedPath(string path, Action<string> save)
+    {
+        var (savePath, backupPath) = CreatePathAndBackupIfEnable(path);
+        save(savePath);
+
+        return GetOtherPath(savePath, backupPath);
     }
 }

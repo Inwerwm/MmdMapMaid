@@ -15,7 +15,7 @@ public class EmmOrderMapper
 
     public EmmOrderMapper(SaveOptions? options = null)
     {
-        Options = options ?? new();
+        Options ??= options ?? new();
     }
 
     /// <summary>
@@ -28,10 +28,7 @@ public class EmmOrderMapper
     public string? Run(string sourceModelPath, string destinationModelPath, string targetEmmPath)
     {
         var mappedEmm = MapOrder(Path.GetFullPath(sourceModelPath), Path.GetFullPath(destinationModelPath), targetEmmPath);
-
-        var (savePath, backupPath) = Options.CreatePathAndBackupIfEnable(targetEmmPath);
-        mappedEmm.Write(savePath);
-        return Options.GetOtherPath(savePath, backupPath);
+        return Options.SaveWithBackupAndReturnCreatedPath(targetEmmPath, savePath => mappedEmm.Write(savePath));
     }
 
     private static EmmData MapOrder(string sourceModelPath, string destinationModelPath, string targetEmmPath)
