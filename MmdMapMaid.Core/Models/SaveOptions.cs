@@ -4,9 +4,9 @@
 /// 保存設定
 /// </summary>
 /// <param name="EnableOverwrite">生成ファイルを上書きして保存するか</param>
-/// <param name="CreateBackupIfOverwrite">上書き保存する時、古いファイルをバックアップするか</param>
+/// <param name="EnableBackup">上書き保存する時、古いファイルをバックアップするか</param>
 /// <param name="GenerationDirectory">生成/バックアップファイルの保存先ディレクトリ(nullで元ファイルと同じディレクトリ)</param>
-public record SaveOptions(bool EnableOverwrite = true, bool CreateBackupIfOverwrite = true, string? GenerationDirectory = null)
+public record SaveOptions(bool EnableOverwrite = true, bool EnableBackup = true, string? GenerationDirectory = null)
 {
     /// <summary>
     /// 設定に応じた保存/バックアップファイルパスを取得
@@ -30,7 +30,7 @@ public record SaveOptions(bool EnableOverwrite = true, bool CreateBackupIfOverwr
     {
         var (savePath, backupPath) = GetPath(path);
 
-        if (EnableOverwrite && CreateBackupIfOverwrite)
+        if (EnableOverwrite && EnableBackup)
         {
             File.Copy(path, backupPath, true);
         }
@@ -38,10 +38,16 @@ public record SaveOptions(bool EnableOverwrite = true, bool CreateBackupIfOverwr
         return (savePath, backupPath);
     }
 
+    /// <summary>
+    /// 元とは異なるパスの方を取得する
+    /// </summary>
+    /// <param name="savePath">保存パス</param>
+    /// <param name="backupPath">バックアップパス</param>
+    /// <returns>元になったパスではない方</returns>
     public string? GetOtherPath(string savePath, string backupPath)
     {
         return !EnableOverwrite ? savePath
-            : CreateBackupIfOverwrite ? backupPath 
+            : EnableBackup ? backupPath 
             : null;
     }
 }
