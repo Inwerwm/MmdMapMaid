@@ -7,13 +7,13 @@ public class EmmOrderMapper
 {
     public static IEnumerable<string> GetObjectPaths(string emmPath) => new EmmData(emmPath).Objects.Select(obj => obj.Path);
 
-    public EmmMaterialOrderOptions Options
+    public EmmSaveOptions Options
     {
         get;
         init;
     }
 
-    public EmmOrderMapper(EmmMaterialOrderOptions? options = null)
+    public EmmOrderMapper(EmmSaveOptions? options = null)
     {
         Options = options ?? new();
     }
