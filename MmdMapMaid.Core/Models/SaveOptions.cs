@@ -37,4 +37,11 @@ public record SaveOptions(bool EnableOverwrite = true, bool CreateBackupIfOverwr
 
         return (savePath, backupPath);
     }
+
+    public string? GetOtherPath(string savePath, string backupPath)
+    {
+        return !EnableOverwrite ? savePath
+            : CreateBackupIfOverwrite ? backupPath 
+            : null;
+    }
 }

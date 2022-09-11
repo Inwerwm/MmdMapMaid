@@ -29,16 +29,9 @@ public class EmmOrderMapper
     {
         var mappedEmm = MapOrder(Path.GetFullPath(sourceModelPath), Path.GetFullPath(destinationModelPath), targetEmmPath);
 
-        var otherDir = Options.GenerationDirectory ?? Path.GetDirectoryName(targetEmmPath) ?? "";
-        var otherPath = Path.Combine(otherDir, $"{Path.GetFileNameWithoutExtension(targetEmmPath)}_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.emm");
-        var (savePath, backupPath) = Options.EnableOverwrite ? (targetEmmPath, otherPath) : (otherPath, targetEmmPath);
-
-        if (Options.EnableOverwrite && Options.CreateBackupIfOverwrite)
-        {
-            File.Copy(targetEmmPath, backupPath);
-        }
+        var (savePath, backupPath) = Options.CreatePathAndBackupIfEnable(targetEmmPath);
         mappedEmm.Write(savePath);
-        return !Options.EnableOverwrite || Options.CreateBackupIfOverwrite ? otherPath : null;
+        return Options.GetOtherPath(savePath, backupPath);
     }
 
     private static EmmData MapOrder(string sourceModelPath, string destinationModelPath, string targetEmmPath)
