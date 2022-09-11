@@ -4,12 +4,42 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:conv="using:CommunityToolkit.WinUI.UI.Converters"
+    xmlns:observables="using:MmdMapMaid.Observables"
     mc:Ignorable="d">
-
+    
+    <Page.Resources>
+        <conv:BoolToVisibilityConverter x:Key="boolToVisibility" />
+    </Page.Resources>
+    
     <ScrollViewer x:Name="ContentArea">
         <StackPanel>
-            <Button x:Uid="Pmm_ReadPmmButton" />
-            
+            <Grid ColumnSpacing="15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button x:Uid="Pmm_ReadPmmButton" HorizontalAlignment="Stretch" Grid.Column="0" />
+                <Button x:Uid="Pmm_WritePmmButton" HorizontalAlignment="Stretch" Grid.Column="1" />
+            </Grid>
+            <ListView ItemsSource="{x:Bind ViewModel.ModelInfo}" SelectionMode="None" >
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="observables:PmmModelInformation">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="5*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="{x:Bind Index}" Grid.Column="0" />
+                            <TextBlock Text="{x:Bind Name}" Grid.Column="1" />
+                            <TextBox Text="{x:Bind Path, Mode=TwoWay}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackPanel>
     </ScrollViewer>
 </Page>

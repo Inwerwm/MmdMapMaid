@@ -124,10 +124,10 @@
     <value>MmdMapMaid</value>
   </data>
   <data name="Shell_Pmm.Content" xml:space="preserve">
-    <value>Pmm</value>
+    <value>Pmm Management</value>
   </data>
   <data name="Shell_Emm.Content" xml:space="preserve">
-    <value>Emm</value>
+    <value>Emm  Management</value>
   </data>
   <data name="Settings_Personalization.Text" xml:space="preserve">
     <value>Personalization</value>
@@ -158,5 +158,8 @@
   </data>
   <data name="Pmm_ReadPmmButton.Content" xml:space="preserve">
     <value>Read Pmm File</value>
+  </data>
+  <data name="Pmm_WritePmmButton.Content" xml:space="preserve">
+    <value>Write Pmm File</value>
   </data>
 </root>
