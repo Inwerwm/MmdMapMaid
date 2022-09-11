@@ -20,22 +20,23 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Button x:Uid="Pmm_ReadPmmButton" HorizontalAlignment="Stretch" Grid.Column="0" />
-                <Button x:Uid="Pmm_WritePmmButton" HorizontalAlignment="Stretch" Grid.Column="1" />
+                <Button x:Uid="Pmm_ReadPmmButton" Command="{x:Bind ViewModel.ReadPmmCommand}" HorizontalAlignment="Stretch" Grid.Column="0" />
+                <Button x:Uid="Pmm_WritePmmButton" Command="{x:Bind ViewModel.WritePmmCommand}" HorizontalAlignment="Stretch" Grid.Column="1" />
             </Grid>
-            <ListView ItemsSource="{x:Bind ViewModel.ModelInfo}" SelectionMode="None" >
+            <InfoBar x:Uid="Pmm_WriteInfoBar" Severity="{x:Bind ViewModel.WritePmmInfoSeverty, Mode=OneWay}" Message="{x:Bind ViewModel.WritingMessage, Mode=OneWay}" IsOpen="{x:Bind ViewModel.OpenCompleteMessage, Mode=TwoWay}" />
+            <ListView ItemsSource="{x:Bind ViewModel.ModelInfo}" SelectionMode="Single" >
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="observables:PmmModelInformation">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="20" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="5*" />
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Text="{x:Bind Index}" Grid.Column="0" />
-                            <TextBlock Text="{x:Bind Name}" Grid.Column="1" />
-                            <TextBox Text="{x:Bind Path, Mode=TwoWay}" />
+                            <TextBlock Text="{x:Bind Index}" VerticalAlignment="Center" Grid.Column="0" />
+                            <TextBlock Text="{x:Bind Name}" VerticalAlignment="Center" Grid.Column="1" />
+                            <TextBox Text="{x:Bind Path, Mode=TwoWay}" VerticalAlignment="Center" Grid.Column="2" />
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
