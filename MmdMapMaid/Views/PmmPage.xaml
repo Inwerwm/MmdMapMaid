@@ -6,7 +6,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid x:Name="ContentArea">
-        
-    </Grid>
+    <ScrollViewer x:Name="ContentArea">
+        <StackPanel>
+            <Button x:Uid="Pmm_ReadPmmButton" />
+            
+        </StackPanel>
+    </ScrollViewer>
 </Page>
