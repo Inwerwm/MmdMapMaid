@@ -15,6 +15,7 @@ public class ModelReplacer
     public ModelReplacer(string pmmPath)
     {
         Pmm = new(pmmPath);
+        PmmPath = pmmPath;
     }
 
     public IEnumerable<(string Name, string Path, int Index)> GetModelList() => Pmm.Models.Select((m, i) => (m.Name, m.Path, i));
