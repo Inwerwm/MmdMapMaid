@@ -15,9 +15,9 @@ public class ModelReplacer
         get;
     }
 
-    public ModelReplacer(PolygonMovieMaker pmm)
+    public ModelReplacer(string pmmPath)
     {
-        Pmm = pmm;
+        Pmm = new(pmmPath);
     }
 
     public IEnumerable<(string Name, string Path, int Index)> GetModelList() => Pmm.Models.Select((m, i) => (m.Name, m.Path, i));
