@@ -37,14 +37,14 @@ public partial class PmmViewModel : ObservableRecipient
     private void NoticeStartWrite()
     {
         WritePmmInfoSeverty = InfoBarSeverity.Informational;
-        PmmWriteInfobarMessage = "Writing...";
+        PmmWriteInfobarMessage = "PmmWriteInfobarMessage_Writing".GetLocalized();
         OpenCompleteMessage = true;
     }
 
     private void NoticeEndWrite()
     {
         WritePmmInfoSeverty = InfoBarSeverity.Success;
-        PmmWriteInfobarMessage = "Pmm file has been written.";
+        PmmWriteInfobarMessage = "PmmWriteInfobarMessage_Finished".GetLocalized();
         OpenCompleteMessage = true;
     }
 

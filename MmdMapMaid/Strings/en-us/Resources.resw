@@ -162,4 +162,10 @@
   <data name="Pmm_WritePmmButton.Content" xml:space="preserve">
     <value>Write Pmm File</value>
   </data>
+  <data name="PmmWriteInfobarMessage_Finished" xml:space="preserve">
+    <value>Pmm file has been written.</value>
+  </data>
+  <data name="PmmWriteInfobarMessage_Writing" xml:space="preserve">
+    <value>Writing...</value>
+  </data>
 </root>
