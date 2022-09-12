@@ -19,7 +19,7 @@ public partial class PmmViewModel : ObservableRecipient
     [ObservableProperty]
     private bool _openCompleteMessage;
     [ObservableProperty]
-    private string _writingMessage;
+    private string _pmmWriteInfobarMessage;
 
     private ModelReplacer? Replacer
     {
@@ -31,19 +31,20 @@ public partial class PmmViewModel : ObservableRecipient
     {
         _modelInfo = new();
         _openCompleteMessage = false;
+        _pmmWriteInfobarMessage = "";
     }
 
     private void NoticeStartWrite()
     {
         WritePmmInfoSeverty = InfoBarSeverity.Informational;
-        WritingMessage = "Writing...";
+        PmmWriteInfobarMessage = "Writing...";
         OpenCompleteMessage = true;
     }
 
     private void NoticeEndWrite()
     {
         WritePmmInfoSeverty = InfoBarSeverity.Success;
-        WritingMessage = "Pmm file has been written.";
+        PmmWriteInfobarMessage = "Pmm file has been written.";
         OpenCompleteMessage = true;
     }
 
