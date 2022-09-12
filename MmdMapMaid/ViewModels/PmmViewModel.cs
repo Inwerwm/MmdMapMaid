@@ -70,7 +70,7 @@ public partial class PmmViewModel : ObservableRecipient
 
         NoticeStartWrite();
 
-        foreach (var item in ModelInfo)
+        foreach (var item in ModelInfo.Where(info => info.IsEdited))
         {
             Replacer.Replace(item.Index, item.Path);
         }
