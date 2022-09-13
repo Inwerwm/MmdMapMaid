@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace MmdMapMaid.Observables;
@@ -40,7 +35,7 @@ public partial class PmmModelInformation : ObservableRecipient
         };
     }
 
-    [ICommand]
+    [RelayCommand]
     public void RestorePath()
     {
         Path = InitialPath;

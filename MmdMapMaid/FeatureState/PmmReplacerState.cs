@@ -6,7 +6,9 @@ using MmdMapMaid.Helpers;
 using MmdMapMaid.Observables;
 
 namespace MmdMapMaid.FeatureState;
-public partial class PmmReplacerState : ObservableRecipient
+
+[INotifyPropertyChanged]
+public partial class PmmReplacerState
 {
     [ObservableProperty]
     private ObservableCollection<PmmModelInformation> _modelInfo;
@@ -24,7 +26,7 @@ public partial class PmmReplacerState : ObservableRecipient
         _modelInfo = new();
     }
 
-    [ICommand]
+    [RelayCommand]
     private async Task ReadPmm()
     {
         var file = await StorageHelper.PickSingleFileAsync(".pmm");

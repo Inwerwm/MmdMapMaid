@@ -40,7 +40,7 @@ public partial class PmmViewModel : ObservableRecipient
         OpenCompleteMessage = true;
     }
 
-    [ICommand]
+    [RelayCommand]
     private void WritePmm()
     {
         if (!ReplacerState.IsPmmLoaded) { return; }
