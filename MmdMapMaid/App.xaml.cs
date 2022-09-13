@@ -6,6 +6,7 @@ using MmdMapMaid.Activation;
 using MmdMapMaid.Contracts.Services;
 using MmdMapMaid.Core.Contracts.Services;
 using MmdMapMaid.Core.Services;
+using MmdMapMaid.FeatureState;
 using MmdMapMaid.Helpers;
 using MmdMapMaid.Models;
 using MmdMapMaid.Services;
@@ -78,6 +79,9 @@ public partial class App : Application
 
             // Configuration
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
+
+            // Data
+            services.AddSingleton(new PmmReplacerState());
         }).
         Build();
 
