@@ -81,8 +81,8 @@ public partial class App : Application
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
 
             // States
-            services.AddSingleton(new PmmReplacerState());
-            services.AddSingleton(new EmmOrderMapperState());
+            services.AddSingleton<PmmReplacerState>();
+            services.AddSingleton<EmmOrderMapperState>();
         }).
         Build();
 
