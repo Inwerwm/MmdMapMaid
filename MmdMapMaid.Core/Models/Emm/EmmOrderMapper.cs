@@ -33,22 +33,22 @@ public class EmmOrderMapper
     /// <param name="sourceModelPath">並替前材質順のモデル</param>
     /// <param name="destinationModelPath">並替先材質順のモデル</param>
     /// <returns>新規作成ファイルのパス(上書き時はバックアップ、そうでなければ並び替え後ファイル)</returns>
-    public string? Run(string sourceModelPath, string destinationModelPath, SaveOptions? options = null)
+    public string? Run(string sourceModelPath, string destinationModelPath, IEnumerable<int> targetIndices, SaveOptions? options = null)
     {
-        MapOrder(Path.GetFullPath(sourceModelPath), Path.GetFullPath(destinationModelPath));
+        MapOrder(Path.GetFullPath(sourceModelPath), Path.GetFullPath(destinationModelPath), targetIndices);
 
         options ??= new SaveOptions();
         return options.SaveWithBackupAndReturnCreatedPath(EmmPath, savePath => Emm.Write(savePath));
     }
 
-    private void MapOrder(string sourceModelPath, string destinationModelPath, params int[] objIndices)
+    private void MapOrder(string sourceModelPath, string destinationModelPath, IEnumerable<int> targetIndices)
     {
         var sourceModel = new PmxModel(sourceModelPath);
         var destinationModel = new PmxModel(destinationModelPath);
 
         var indexMap = sourceModel.Materials.Select(srcMat => destinationModel.Materials.FindIndex(destMat => srcMat.Name == destMat.Name)).ToArray();
 
-        var targetObjects = Emm.Objects.Where((_, i) => objIndices.Contains(i));
+        var targetObjects = Emm.Objects.Where((_, i) => targetIndices.Contains(i));
 
         foreach (var objSetting in Emm.EffectSettings.SelectMany(es => es.ObjectSettings).Where(os => targetObjects.Contains(os.Object)))
         {
