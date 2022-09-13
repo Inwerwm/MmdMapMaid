@@ -129,11 +129,8 @@
   <data name="Shell_Emm.Content" xml:space="preserve">
     <value>EMM 材質並び替え</value>
   </data>
-  <data name="Settings_Personalization.Text" xml:space="preserve">
-    <value>個人設定</value>
-  </data>
   <data name="Settings_Theme.Text" xml:space="preserve">
-    <value>テーマ</value>
+    <value>色テーマ</value>
   </data>
   <data name="Settings_Theme_Light.Content" xml:space="preserve">
     <value>Light</value>
@@ -143,18 +140,6 @@
   </data>
   <data name="Settings_Theme_Default.Content" xml:space="preserve">
     <value>Default</value>
-  </data>
-  <data name="Settings_About.Text" xml:space="preserve">
-    <value>About this application</value>
-  </data>
-  <data name="Settings_AboutDescription.Text" xml:space="preserve">
-    <value>TODO: Replace with your app description.</value>
-  </data>
-  <data name="SettingsPage_PrivacyTermsLink.Content" xml:space="preserve">
-    <value>Privacy Statement</value>
-  </data>
-  <data name="SettingsPage_PrivacyTermsLink.NavigateUri" xml:space="preserve">
-    <value>https://YourPrivacyUrlGoesHere/</value>
   </data>
   <data name="Pmm_ReadPmmButton.Content" xml:space="preserve">
     <value>PMM ファイルを読み込む</value>

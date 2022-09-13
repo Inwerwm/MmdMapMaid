@@ -11,11 +11,9 @@
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     </Page.Resources>
     <Grid>
-        <StackPanel
-            x:Name="ContentArea">
-            <TextBlock x:Uid="Settings_Personalization" Style="{ThemeResource SubtitleTextBlockStyle}" />
+        <StackPanel x:Name="ContentArea">
             <StackPanel Margin="{StaticResource SmallTopBottomMargin}">
-                <TextBlock x:Uid="Settings_Theme" />
+                <TextBlock x:Uid="Settings_Theme"  Style="{ThemeResource SubtitleTextBlockStyle}" />
 
                 <StackPanel Margin="{StaticResource XSmallTopMargin}">
                     <RadioButton
@@ -49,18 +47,6 @@
                         </RadioButton.CommandParameter>
                     </RadioButton>
                 </StackPanel>
-            </StackPanel>
-
-            <TextBlock x:Uid="Settings_About" Style="{ThemeResource SubtitleTextBlockStyle}" />
-
-            <StackPanel Margin="{StaticResource XSmallTopMargin}">
-                <TextBlock Text="{x:Bind ViewModel.VersionDescription, Mode=OneWay}" Style="{ThemeResource BodyTextBlockStyle}" />
-
-                <TextBlock
-                    x:Uid="Settings_AboutDescription"
-                    Margin="{StaticResource XSmallTopMargin}"
-                    Style="{ThemeResource BodyTextBlockStyle}" />
-                <HyperlinkButton x:Uid="SettingsPage_PrivacyTermsLink" Margin="{StaticResource SettingsPageHyperlinkButtonMargin}" />
             </StackPanel>
         </StackPanel>
     </Grid>
