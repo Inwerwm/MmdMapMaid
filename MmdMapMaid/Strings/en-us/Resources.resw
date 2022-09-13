@@ -165,4 +165,7 @@
   <data name="EmmOrderMapper_MapOrderButton.Content" xml:space="preserve">
     <value>EXECUTE</value>
   </data>
+  <data name="EmmOrderMapper_CompletedMessage" xml:space="preserve">
+    <value>Emm file has been written.</value>
+  </data>
 </root>

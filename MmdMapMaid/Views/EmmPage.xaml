@@ -37,10 +37,11 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition MinHeight="40" />
-                    <RowDefinition MinHeight="40" />
-                    <RowDefinition MinHeight="40" />
-                    <RowDefinition MinHeight="40" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
                 <Button x:Uid="EmmOrderMapper_ReadEmmButton" Command="{x:Bind ViewModel.OrderMapper.ReadEmmCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="0" />
@@ -57,6 +58,8 @@
                 <TextBox IsReadOnly="True" Text="{x:Bind ViewModel.OrderMapper.DestinationPmxPath, Mode=OneWay}" TextWrapping="Wrap" Grid.Column="1" Grid.Row="2" />
 
                 <Button x:Uid="EmmOrderMapper_MapOrderButton" Command="{x:Bind ViewModel.OrderMapper.MapOrderCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" />
+
+                <InfoBar Severity="Success" VerticalAlignment="Stretch" Title="{x:Bind ViewModel.ProgressTitle, Mode=OneWay}" IsOpen="{x:Bind ViewModel.OpenProgressInfobar, Mode=TwoWay}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" />
             </Grid>
         </Grid>
     </ScrollViewer>

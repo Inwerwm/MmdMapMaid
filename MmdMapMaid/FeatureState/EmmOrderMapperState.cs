@@ -91,9 +91,9 @@ internal partial class EmmOrderMapperState
     {
         if (SelectedEmmModels is null) { return; }
 
-        OnMapStart?.Invoke(this, new());
+        OnMapStart?.Invoke(this, EventArgs.Empty);
         Mapper!.Run(SourcePmxPath!, DestinationPmxPath!, SelectedEmmModels.Cast<IndexedFiledata>().Select(m => m.Index));
-        OnMapCompleted?.Invoke(this, new());
+        OnMapCompleted?.Invoke(this, EventArgs.Empty);
     }
 
     private bool CanMapOrderExecute() => !(
