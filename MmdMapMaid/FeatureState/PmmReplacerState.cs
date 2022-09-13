@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.UI.Xaml.Controls;
 using MmdMapMaid.Core.Models.Pmm;
 using MmdMapMaid.Helpers;
 using MmdMapMaid.Observables;
@@ -12,38 +11,17 @@ public partial class PmmReplacerState : ObservableRecipient
     [ObservableProperty]
     private ObservableCollection<PmmModelInformation> _modelInfo;
 
-    [ObservableProperty]
-    private InfoBarSeverity _writePmmInfoSeverty;
-    [ObservableProperty]
-    private bool _openCompleteMessage;
-    [ObservableProperty]
-    private string _pmmWriteInfobarMessage;
-
     private ModelReplacer? Replacer
     {
         get;
         set;
     }
 
+    public bool IsPmmLoaded => Replacer != null;
+
     public PmmReplacerState()
     {
         _modelInfo = new();
-        _openCompleteMessage = false;
-        _pmmWriteInfobarMessage = "";
-    }
-
-    private void NoticeStartWrite()
-    {
-        WritePmmInfoSeverty = InfoBarSeverity.Informational;
-        PmmWriteInfobarMessage = "PmmWriteInfobarMessage_Writing".GetLocalized();
-        OpenCompleteMessage = true;
-    }
-
-    private void NoticeEndWrite()
-    {
-        WritePmmInfoSeverty = InfoBarSeverity.Success;
-        PmmWriteInfobarMessage = "PmmWriteInfobarMessage_Finished".GetLocalized();
-        OpenCompleteMessage = true;
     }
 
     [ICommand]
@@ -61,12 +39,9 @@ public partial class PmmReplacerState : ObservableRecipient
         }
     }
 
-    [ICommand]
-    private void WritePmm()
+    public void WritePmm()
     {
         if (Replacer is null) { return; }
-
-        NoticeStartWrite();
 
         foreach (var item in ModelInfo.Where(info => info.IsEdited))
         {
@@ -74,7 +49,5 @@ public partial class PmmReplacerState : ObservableRecipient
         }
 
         Replacer.Save();
-
-        NoticeEndWrite();
     }
 }

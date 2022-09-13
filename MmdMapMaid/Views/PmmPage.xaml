@@ -21,11 +21,11 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Button x:Uid="Pmm_ReadPmmButton" Command="{x:Bind ViewModel.ReplacerData.ReadPmmCommand}" HorizontalAlignment="Stretch" Grid.Column="0" />
-                <Button x:Uid="Pmm_WritePmmButton" Command="{x:Bind ViewModel.ReplacerData.WritePmmCommand}" HorizontalAlignment="Stretch" Grid.Column="1" />
+                <Button x:Uid="Pmm_ReadPmmButton" Command="{x:Bind ViewModel.ReplacerState.ReadPmmCommand}" HorizontalAlignment="Stretch" Grid.Column="0" />
+                <Button x:Uid="Pmm_WritePmmButton" Command="{x:Bind ViewModel.WritePmmCommand}" HorizontalAlignment="Stretch" Grid.Column="1" />
             </Grid>
-            <InfoBar x:Uid="Pmm_WriteInfoBar" Severity="{x:Bind ViewModel.ReplacerData.WritePmmInfoSeverty, Mode=OneWay}" Message="{x:Bind ViewModel.ReplacerData.PmmWriteInfobarMessage, Mode=OneWay}" IsOpen="{x:Bind ViewModel.ReplacerData.OpenCompleteMessage, Mode=TwoWay}" />
-            <ListView ItemsSource="{x:Bind ViewModel.ReplacerData.ModelInfo}" SelectionMode="None" >
+            <InfoBar x:Uid="Pmm_WriteInfoBar" Severity="{x:Bind ViewModel.WritePmmInfoSeverty, Mode=OneWay}" Message="{x:Bind ViewModel.PmmWriteInfobarMessage, Mode=OneWay}" IsOpen="{x:Bind ViewModel.OpenCompleteMessage, Mode=TwoWay}" />
+            <ListView ItemsSource="{x:Bind ViewModel.ReplacerState.ModelInfo}" SelectionMode="None" >
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="observables:PmmModelInformation">
                         <Grid>
