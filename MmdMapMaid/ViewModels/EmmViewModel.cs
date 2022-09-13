@@ -1,10 +1,17 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using MmdMapMaid.FeatureState;
 
 namespace MmdMapMaid.ViewModels;
 
-public class EmmViewModel : ObservableRecipient
+public partial class EmmViewModel : ObservableRecipient
 {
+    internal EmmOrderMapperState OrderMapper
+    {
+        get;
+    }
+
     public EmmViewModel()
     {
+        OrderMapper = App.GetService<EmmOrderMapperState>();
     }
 }

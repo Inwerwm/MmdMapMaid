@@ -24,6 +24,9 @@ internal partial class EmmOrderMapperState
     [ObservableProperty]
     private ObservableCollection<string> _emmModelNames;
 
+    public event EventHandler? OnMapStart;
+    public event EventHandler? OnMapCompleted;
+
     private EmmOrderMapper Mapper
     {
         get;
@@ -40,6 +43,13 @@ internal partial class EmmOrderMapperState
     private async Task ReadEmmAsync()
     {
         EmmPath = (await StorageHelper.PickSingleFileAsync(".emm"))?.Path;
+
+        if(EmmPath == null) { return; }
+
+        foreach (var path in EmmOrderMapper.GetObjectPaths(EmmPath))
+        {
+            EmmModelNames.Add(path);
+        }
     }
 
     [RelayCommand]
@@ -57,12 +67,14 @@ internal partial class EmmOrderMapperState
     [RelayCommand(CanExecute = nameof(CanMapOrderExecute))]
     private void MapOrder()
     {
+        OnMapStart?.Invoke(this, new());
         Mapper.Run(SourcePmxPath!, DestinationPmxPath!, EmmPath!);
+        OnMapCompleted?.Invoke(this, new());
     }
 
     private bool CanMapOrderExecute() => !(
         string.IsNullOrWhiteSpace(EmmPath) ||
         string.IsNullOrWhiteSpace(SourcePmxPath) ||
         string.IsNullOrWhiteSpace(DestinationPmxPath)
-    );
+    ) && EmmModelNames.Contains(SourcePmxPath);
 }

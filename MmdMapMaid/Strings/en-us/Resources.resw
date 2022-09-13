@@ -168,4 +168,13 @@
   <data name="PmmWriteInfobarMessage_Writing" xml:space="preserve">
     <value>Writing...</value>
   </data>
+  <data name="EmmOrderMapper_ReadDestinationPmxButton.Text" xml:space="preserve">
+    <value>Read model of edited material order</value>
+  </data>
+  <data name="EmmOrderMapper_ReadEmmButton.Content" xml:space="preserve">
+    <value>Read EMM file</value>
+  </data>
+  <data name="EmmOrderMapper_ReadSourcePmxButton.Text" xml:space="preserve">
+    <value>Read model of original material order</value>
+  </data>
 </root>
