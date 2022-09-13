@@ -162,4 +162,7 @@
   <data name="EmmOrderMapper_ReadSourcePmxButton.Text" xml:space="preserve">
     <value>材質順変更前の PMX モデルを読み込む</value>
   </data>
+  <data name="EmmOrderMapper_MapOrderButton.Content" xml:space="preserve">
+    <value>実行</value>
+  </data>
 </root>

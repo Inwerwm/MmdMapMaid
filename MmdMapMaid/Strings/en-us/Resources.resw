@@ -162,4 +162,7 @@
   <data name="EmmOrderMapper_ReadSourcePmxButton.Text" xml:space="preserve">
     <value>Read model of original material order</value>
   </data>
+  <data name="EmmOrderMapper_MapOrderButton.Content" xml:space="preserve">
+    <value>EXECUTE</value>
+  </data>
 </root>
