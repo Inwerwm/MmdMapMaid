@@ -15,5 +15,7 @@ public sealed partial class EmmPage : Page
     {
         ViewModel = App.GetService<EmmViewModel>();
         InitializeComponent();
+
+        ViewModel.OrderMapper.SelectedEmmModels = EmmModelsListView.SelectedItems;
     }
 }

@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:windowex="using:WinUIEx"
+    xmlns:models="using:MmdMapMaid.Models"
     mc:Ignorable="d">
 
     <ScrollViewer x:Name="ContentArea" Padding="0,0,0,20">
@@ -16,12 +16,16 @@
 
 
             <ScrollViewer Grid.Column="0" Height="{x:Bind ContentArea.ViewportHeight, Mode=OneWay}">
-                <ListView ItemsSource="{x:Bind ViewModel.OrderMapper.EmmModelNames, Mode=OneWay}" SelectionMode="None">
+                <ListView x:Name="EmmModelsListView" ItemsSource="{x:Bind ViewModel.OrderMapper.EmmModels, Mode=OneWay}"
+                          SelectionChanged="{x:Bind ViewModel.OrderMapper.UpdateSelectedModels}"
+                          SelectionMode="Multiple"
+                          VerticalContentAlignment="Center">
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="x:String">
-                            <Border BorderThickness="1" Background="#11888888" CornerRadius="6" Margin="0,5,10,0" Padding="5">
-                                <TextBlock TextWrapping="Wrap" Text="{x:Bind}" />
-                            </Border>
+                        <DataTemplate x:DataType="models:IndexedFiledata">
+                            <StackPanel Margin="0,10">
+                                <TextBlock TextWrapping="Wrap" Text="{x:Bind Name}" Margin="0,5" FontSize="{StaticResource SemiLargeFontSize}" FontWeight="SemiBold" />
+                                <TextBlock TextWrapping="Wrap" Text="{x:Bind Path}" FontSize="{StaticResource SmallFontSize}" />
+                            </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
