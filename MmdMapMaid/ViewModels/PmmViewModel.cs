@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
 using MmdMapMaid.FeatureState;
 using MmdMapMaid.Helpers;
+using Windows.Media.Core;
 
 namespace MmdMapMaid.ViewModels;
 
@@ -10,6 +11,10 @@ public partial class PmmViewModel : ObservableRecipient
 {
     [ObservableProperty]
     PmmReplacerState _replacerState;
+
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(WritePmmCommand))]
+    public bool _isPmmLoaded;
 
     [ObservableProperty]
     private InfoBarSeverity _writePmmInfoSeverty;
@@ -23,6 +28,8 @@ public partial class PmmViewModel : ObservableRecipient
         _replacerState = App.GetService<PmmReplacerState>();
         _openCompleteMessage = false;
         _pmmWriteInfobarMessage = "";
+
+        _isPmmLoaded = ReplacerState.IsPmmLoaded;
     }
 
 
@@ -41,6 +48,13 @@ public partial class PmmViewModel : ObservableRecipient
     }
 
     [RelayCommand]
+    private async Task ReadPmm()
+    {
+        await ReplacerState.ReadPmm();
+        IsPmmLoaded = true;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanWritePmmExecute))]
     private void WritePmm()
     {
         if (!ReplacerState.IsPmmLoaded) { return; }
@@ -51,4 +65,6 @@ public partial class PmmViewModel : ObservableRecipient
 
         NoticeEndWrite();
     }
+
+    private bool CanWritePmmExecute() => IsPmmLoaded;
 }

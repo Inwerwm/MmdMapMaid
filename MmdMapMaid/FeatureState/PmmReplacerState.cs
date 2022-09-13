@@ -26,8 +26,7 @@ public partial class PmmReplacerState
         _modelInfo = new();
     }
 
-    [RelayCommand]
-    private async Task ReadPmm()
+    public async Task ReadPmm()
     {
         var file = await StorageHelper.PickSingleFileAsync(".pmm");
         if (file == null) { return; }
