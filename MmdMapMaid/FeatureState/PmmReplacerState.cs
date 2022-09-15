@@ -15,7 +15,7 @@ public partial class PmmReplacerState
     [ObservableProperty]
     private ObservableCollection<PathInformation> _modelInfo;
 
-    private ModelReplacer? Replacer
+    private PmmPathReplacer? Replacer
     {
         get;
         set;
@@ -37,7 +37,7 @@ public partial class PmmReplacerState
         Replacer = new(file.Path);
 
         ModelInfo.Clear();
-        foreach (var (name, path, index) in Replacer.GetModelList())
+        foreach (var (name, path, index) in Replacer.GetModels())
         {
             ModelInfo.Add(new(index, name, path));
         }
@@ -52,7 +52,7 @@ public partial class PmmReplacerState
 
         foreach (var item in ModelInfo.Where(info => info.IsEdited))
         {
-            Replacer.Replace(item.Index, item.Path);
+            Replacer.ReplaceModelPath(item.Index, item.Path);
         }
 
         Replacer.Save();
