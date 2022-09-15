@@ -6,11 +6,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:conv="using:CommunityToolkit.WinUI.UI.Converters"
-    xmlns:observables="using:MmdMapMaid.Observables" xmlns:controls="using:MmdMapMaid.Controls"
+    xmlns:models="using:MmdMapMaid.Models"
+    xmlns:controls="using:MmdMapMaid.Controls"
     mc:Ignorable="d">
 
     <Page.Resources>
         <conv:BoolToVisibilityConverter x:Key="boolToVisibility" />
+        <CollectionViewSource x:Name="PathsViewSource" Source="{x:Bind ViewModel.ReplacerState.PathGroups}" IsSourceGrouped="True" />
     </Page.Resources>
 
     <ScrollViewer x:Name="ContentArea" Padding="0,20,30,30">
@@ -56,9 +58,25 @@
                 </Expander.Content>
             </Expander>
 
-            <ListView x:Name="PathsListView" ItemsSource="{x:Bind ViewModel.ReplacerState.ModelInfo}" SelectionMode="None" >
+            <ListView x:Name="PathsListView" ItemsSource="{x:Bind PathsViewSource.View}" SelectionMode="None" >
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsStackPanel AreStickyGroupHeadersEnabled="True"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.GroupStyle>
+                    <GroupStyle >
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate x:DataType="models:PathGroup">
+                                <Border AutomationProperties.Name="{x:Bind Key}">
+                                    <TextBlock Text="{x:Bind Key}" Style="{ThemeResource TitleTextBlockStyle}"/>
+                                </Border>
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </ListView.GroupStyle>
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="observables:PathInformation">
+                    <DataTemplate x:DataType="models:PathInformation">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="20" />

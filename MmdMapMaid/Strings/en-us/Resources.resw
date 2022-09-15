@@ -180,4 +180,10 @@
   <data name="Pmm_SearchLabel.Text" xml:space="preserve">
     <value>Replace all string in paths</value>
   </data>
+  <data name="DisplayName_Accessory" xml:space="preserve">
+    <value>Accessory</value>
+  </data>
+  <data name="DisplayName_Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
 </root>

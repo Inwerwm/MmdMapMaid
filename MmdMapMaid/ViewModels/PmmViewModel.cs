@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
 using MmdMapMaid.FeatureState;
 using MmdMapMaid.Helpers;
-using MmdMapMaid.Observables;
+using MmdMapMaid.Models;
 using Windows.Media.Core;
 
 namespace MmdMapMaid.ViewModels;

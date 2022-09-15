@@ -3,13 +3,15 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MmdMapMaid.Core.Models.Pmm;
 using MmdMapMaid.Helpers;
-using MmdMapMaid.Observables;
+using MmdMapMaid.Models;
 
 namespace MmdMapMaid.FeatureState;
 
 [INotifyPropertyChanged]
 public partial class PmmReplacerState
 {
+    [ObservableProperty]
+    private ObservableCollection<PathGroup> _pathGroups;
     [ObservableProperty]
     private ObservableCollection<PathInformation> _modelInfo;
 
@@ -23,6 +25,7 @@ public partial class PmmReplacerState
 
     public PmmReplacerState()
     {
+        _pathGroups = new();
         _modelInfo = new();
     }
 
@@ -38,6 +41,9 @@ public partial class PmmReplacerState
         {
             ModelInfo.Add(new(index, name, path));
         }
+
+        PathGroups.Clear();
+        PathGroups.Add(new("DisplayName_Model".GetLocalized(), ModelInfo));
     }
 
     public void WritePmm()

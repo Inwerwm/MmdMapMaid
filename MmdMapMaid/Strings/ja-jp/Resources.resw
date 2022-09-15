@@ -183,4 +183,10 @@
   <data name="Pmm_SearchLabel.Text" xml:space="preserve">
     <value>パス内の文字列置換</value>
   </data>
+  <data name="DisplayName_Accessory" xml:space="preserve">
+    <value>アクセサリー</value>
+  </data>
+  <data name="DisplayName_Model" xml:space="preserve">
+    <value>モデル</value>
+  </data>
 </root>

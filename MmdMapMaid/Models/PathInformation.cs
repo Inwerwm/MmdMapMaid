@@ -1,7 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MmdMapMaid.Helpers;
 
-namespace MmdMapMaid.Observables;
+namespace MmdMapMaid.Models;
 
 public partial class PathInformation : ObservableRecipient
 {
