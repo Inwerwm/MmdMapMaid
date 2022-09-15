@@ -19,7 +19,7 @@ public class PmmPathReplacer
     }
 
     public IEnumerable<(string Name, string Path, int Index)> GetModels() => Pmm.Models.Select((m, i) => (m.Name, m.Path, i));
-    public IEnumerable<(string Name, string Path, int Index)> GetAccessories() => Pmm.Accessories.Select((m, i) => (m.Name, m.Path, i));
+    public IEnumerable<(string Name, string Path, int Index)> GetAccessories() => Pmm.Accessories.Select((m, i) => (Path.GetFileNameWithoutExtension(m.Name), m.Path, i));
 
     public void ReplaceModelPath(int targetIndex, string newPath)
     {
