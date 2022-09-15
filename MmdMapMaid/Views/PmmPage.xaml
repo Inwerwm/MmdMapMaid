@@ -79,13 +79,17 @@
                     <DataTemplate x:DataType="models:PathInformation">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" x:Name="NameColumn" />
                                 <ColumnDefinition Width="50" />
                                 <ColumnDefinition Width="5*" />
                             </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
 
-                            <TextBlock Text="{x:Bind Name}" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="0" />
-                            <Button Command="{Binding RestorePathCommand}" IsEnabled="{x:Bind IsEdited, Mode=OneWay}" Grid.Column="1" >
+                            <TextBlock Text="{x:Bind Name}" TextWrapping="Wrap" FontSize="{StaticResource SemiLargeFontSize}" CharacterSpacing="50" Margin="5,0,0,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" />
+                            <Button Command="{Binding RestorePathCommand}" IsEnabled="{x:Bind IsEdited, Mode=OneWay}" Grid.Column="1" Grid.Row="0" >
                                 <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe777;"/>
                             </Button>
                             <controls:BindableRichEditBox
@@ -96,7 +100,9 @@
                                 IsSpellCheckEnabled="False"
                                 MaxLength="256"
                                 VerticalAlignment="Center"
-                                Grid.Column="2" />
+                                Grid.Column="2"
+                                Grid.Row="0" />
+                            <Border HorizontalAlignment="Stretch" BorderBrush="#4888" BorderThickness="1" Margin="0,0,5,0" Grid.Column="0" Grid.Row="1" />
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

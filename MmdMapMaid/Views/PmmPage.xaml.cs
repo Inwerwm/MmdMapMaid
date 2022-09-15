@@ -48,9 +48,9 @@ public sealed partial class PmmPage : Page
             {
                 range.CharacterFormat.BackgroundColor = theme switch
                 {
-                    ElementTheme.Light => Color.FromArgb(0xff, 0x80, 0x80, 0x80),
-                    ElementTheme.Dark => Color.FromArgb(0xff, 0x80, 0x80, 0x80),
-                    _ => Color.FromArgb(0xff, 0x80, 0x80, 0x80),
+                    ElementTheme.Light => Color.FromArgb(0x80, 0xe0, 0xe0, 0xe0),
+                    ElementTheme.Dark => Color.FromArgb(0x80, 0x50, 0x50, 0x50),
+                    _ => Color.FromArgb(0x80, 0x80, 0x80, 0x80),
                 };
             }
         }
