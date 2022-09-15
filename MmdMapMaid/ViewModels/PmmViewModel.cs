@@ -48,9 +48,9 @@ public partial class PmmViewModel : ObservableRecipient
 
     private void SubscribePathChanged()
     {
-        foreach (var model in ReplacerState.ModelInfo)
+        foreach (var pathInfo in ReplacerState.PathGroups.SelectMany(g => g))
         {
-            model.PropertyChanged += PathInfoChanged;
+            pathInfo.PropertyChanged += PathInfoChanged;
         }
     }
 
@@ -98,9 +98,9 @@ public partial class PmmViewModel : ObservableRecipient
     [RelayCommand]
     private void ReplaceAll()
     {
-        foreach (var model in ReplacerState.ModelInfo)
+        foreach (var pathInfo in ReplacerState.PathGroups.SelectMany(g => g))
         {
-            model.Path = model.Path.Replace(SearchQuery, Replacement);
+            pathInfo.Path = pathInfo.Path.Replace(SearchQuery, Replacement);
         }
     }
 
