@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml.Media;
 using MmdMapMaid.Core.Models.Pmm;
 using MmdMapMaid.Helpers;
 using MmdMapMaid.Models;
@@ -14,6 +15,8 @@ public partial class PmmReplacerState
     private ObservableCollection<PathGroup> _pathGroups;
     [ObservableProperty]
     private ObservableCollection<PathInformation> _modelInfo;
+    [ObservableProperty]
+    private ObservableCollection<PathInformation> _acsInfo;
 
     private PmmPathReplacer? Replacer
     {
@@ -27,6 +30,7 @@ public partial class PmmReplacerState
     {
         _pathGroups = new();
         _modelInfo = new();
+        _acsInfo = new();
     }
 
     public async Task ReadPmm()
@@ -42,8 +46,15 @@ public partial class PmmReplacerState
             ModelInfo.Add(new(index, name, path));
         }
 
+        AcsInfo.Clear();
+        foreach (var (name, path, index) in Replacer.GetAccessories())
+        {
+            AcsInfo.Add(new(index, name, path));
+        }
+
         PathGroups.Clear();
         PathGroups.Add(new("DisplayName_Model".GetLocalized(), ModelInfo));
+        PathGroups.Add(new("DisplayName_Accessory".GetLocalized(), AcsInfo));
     }
 
     public void WritePmm()
@@ -53,6 +64,10 @@ public partial class PmmReplacerState
         foreach (var item in ModelInfo.Where(info => info.IsEdited))
         {
             Replacer.ReplaceModelPath(item.Index, item.Path);
+        }
+        foreach (var item in AcsInfo.Where(info => info.IsEdited))
+        {
+            Replacer.ReplaceAccessoryPath(item.Index, item.Path);
         }
 
         Replacer.Save();
