@@ -79,15 +79,13 @@
                     <DataTemplate x:DataType="models:PathInformation">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="20" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="50" />
                                 <ColumnDefinition Width="5*" />
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock x:Name="PmmModelInfoIndex" Text="{x:Bind Index}" VerticalAlignment="Center" Grid.Column="0" />
-                            <TextBlock Text="{x:Bind Name}" VerticalAlignment="Center" Grid.Column="1" />
-                            <Button Command="{Binding RestorePathCommand}" IsEnabled="{x:Bind IsEdited, Mode=OneWay}" Grid.Column="2" >
+                            <TextBlock Text="{x:Bind Name}" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="0" />
+                            <Button Command="{Binding RestorePathCommand}" IsEnabled="{x:Bind IsEdited, Mode=OneWay}" Grid.Column="1" >
                                 <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe777;"/>
                             </Button>
                             <controls:BindableRichEditBox
@@ -98,7 +96,7 @@
                                 IsSpellCheckEnabled="False"
                                 MaxLength="256"
                                 VerticalAlignment="Center"
-                                Grid.Column="3" />
+                                Grid.Column="2" />
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
