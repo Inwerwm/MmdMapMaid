@@ -6,15 +6,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:conv="using:CommunityToolkit.WinUI.UI.Converters"
-    xmlns:observables="using:MmdMapMaid.Observables"
+    xmlns:observables="using:MmdMapMaid.Observables" xmlns:controls="using:MmdMapMaid.Controls"
     mc:Ignorable="d">
 
     <Page.Resources>
         <conv:BoolToVisibilityConverter x:Key="boolToVisibility" />
     </Page.Resources>
 
-    <ScrollViewer x:Name="ContentArea">
-        <StackPanel>
+    <ScrollViewer x:Name="ContentArea" Padding="0,20,30,30">
+        <StackPanel Spacing="20">
             <Grid ColumnSpacing="15">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -25,9 +25,40 @@
                 <Button x:Uid="Pmm_WritePmmButton" Command="{x:Bind ViewModel.WritePmmCommand}" HorizontalAlignment="Stretch" Grid.Column="1" />
             </Grid>
             <InfoBar x:Uid="Pmm_WriteInfoBar" Severity="{x:Bind ViewModel.WritePmmInfoSeverty, Mode=OneWay}" Message="{x:Bind ViewModel.PmmWriteInfobarMessage, Mode=OneWay}" IsOpen="{x:Bind ViewModel.OpenCompleteMessage, Mode=TwoWay}" />
-            <ListView ItemsSource="{x:Bind ViewModel.ReplacerState.ModelInfo}" SelectionMode="None" >
+
+            <Expander IsExpanded="True" Visibility="{x:Bind ViewModel.IsPmmLoaded, Converter={StaticResource boolToVisibility}, Mode=OneWay}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="10">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" Spacing="15">
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe721;" VerticalAlignment="Center" />
+                        <TextBlock x:Uid="Pmm_SearchLabel" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Expander.Header>
+                <Expander.Content>
+                    <StackPanel Spacing="15">
+                        <Grid RowSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock x:Uid="Pmm_SearchQueryText" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" />
+                            <TextBox Text="{x:Bind ViewModel.SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="SearchQueryChanged" Grid.Column="1" Grid.Row="0" />
+                            <TextBlock x:Uid="Pmm_ReplacementText" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" />
+                            <TextBox Text="{x:Bind ViewModel.Replacement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" />
+                        </Grid>
+
+                        <Button x:Uid="Pmm_ReplaceAllButton" Command="{x:Bind ViewModel.ReplaceAllCommand}" HorizontalAlignment="Stretch" Grid.Column="1" />
+                    </StackPanel>
+                </Expander.Content>
+            </Expander>
+
+            <ListView x:Name="PathsListView" ItemsSource="{x:Bind ViewModel.ReplacerState.ModelInfo}" SelectionMode="None" >
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="observables:PmmModelInformation">
+                    <DataTemplate x:DataType="observables:PathInformation">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="20" />
@@ -41,7 +72,15 @@
                             <Button Command="{Binding RestorePathCommand}" IsEnabled="{x:Bind IsEdited, Mode=OneWay}" Grid.Column="2" >
                                 <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe777;"/>
                             </Button>
-                            <TextBox Text="{x:Bind Path, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Center" Grid.Column="3" />
+                            <controls:BindableRichEditBox
+                                Text="{x:Bind Path, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                TextWrapping="Wrap"
+                                AcceptsReturn="False"
+                                ClipboardCopyFormat="PlainText"
+                                IsSpellCheckEnabled="False"
+                                MaxLength="256"
+                                VerticalAlignment="Center"
+                                Grid.Column="3" />
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

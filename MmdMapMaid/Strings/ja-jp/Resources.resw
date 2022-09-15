@@ -168,4 +168,19 @@
   <data name="EmmOrderMapper_CompletedMessage" xml:space="preserve">
     <value>Emm ファイルの書き込みが完了しました</value>
   </data>
+  <data name="Pmm_ReplaceAllButton.Content" xml:space="preserve">
+    <value>すべて置換</value>
+  </data>
+  <data name="Pmm_ReplacementText.Text" xml:space="preserve">
+    <value>置換文字列</value>
+  </data>
+  <data name="Pmm_ReplaceOneButton.Content" xml:space="preserve">
+    <value>置換</value>
+  </data>
+  <data name="Pmm_SearchQueryText.Text" xml:space="preserve">
+    <value>検索文字列</value>
+  </data>
+  <data name="Pmm_SearchLabel.Text" xml:space="preserve">
+    <value>パス内の文字列置換</value>
+  </data>
 </root>

@@ -11,7 +11,7 @@ namespace MmdMapMaid.FeatureState;
 public partial class PmmReplacerState
 {
     [ObservableProperty]
-    private ObservableCollection<PmmModelInformation> _modelInfo;
+    private ObservableCollection<PathInformation> _modelInfo;
 
     private ModelReplacer? Replacer
     {

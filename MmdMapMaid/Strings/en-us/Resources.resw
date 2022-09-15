@@ -168,4 +168,16 @@
   <data name="EmmOrderMapper_CompletedMessage" xml:space="preserve">
     <value>Emm file has been written.</value>
   </data>
+  <data name="Pmm_ReplaceAllButton.Content" xml:space="preserve">
+    <value>Replace all</value>
+  </data>
+  <data name="Pmm_ReplacementText.Text" xml:space="preserve">
+    <value>Replacement</value>
+  </data>
+  <data name="Pmm_SearchQueryText.Text" xml:space="preserve">
+    <value>Search query</value>
+  </data>
+  <data name="Pmm_SearchLabel.Text" xml:space="preserve">
+    <value>Replace all string in paths</value>
+  </data>
 </root>

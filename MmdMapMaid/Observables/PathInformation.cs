@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace MmdMapMaid.Observables;
 
-public partial class PmmModelInformation : ObservableRecipient
+public partial class PathInformation : ObservableRecipient
 {
     [ObservableProperty]
     private int _index;
@@ -19,7 +19,7 @@ public partial class PmmModelInformation : ObservableRecipient
         get;
     }
 
-    public PmmModelInformation(int index, string name, string path)
+    public PathInformation(int index, string name, string path)
     {
         _index = index;
         _name = name;
