@@ -22,7 +22,7 @@ public class DefaultActivationHandler : ActivationHandler<LaunchActivatedEventAr
 
     protected async override Task HandleInternalAsync(LaunchActivatedEventArgs args)
     {
-        _navigationService.NavigateTo(typeof(PmmViewModel).FullName!, args.Arguments);
+        _navigationService.NavigateTo(typeof(EmmViewModel).FullName!, args.Arguments);
 
         await Task.CompletedTask;
     }
