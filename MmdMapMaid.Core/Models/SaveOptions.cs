@@ -18,7 +18,7 @@ public record SaveOptions(bool EnableOverwrite = true, bool EnableBackup = true,
         var otherDir = GenerationDirectory ?? Path.GetDirectoryName(path) ?? "";
         var otherPath = Path.Combine(otherDir, $"{Path.GetFileNameWithoutExtension(path)}_{DateTime.Now:yyyy-MM-dd_HH-mm-ss-ff}{Path.GetExtension(path)}");
 
-        return EnableOverwrite ? (path, otherPath) : (otherDir, path);
+        return EnableOverwrite ? (path, otherPath) : (otherPath, path);
     }
 
     /// <summary>
