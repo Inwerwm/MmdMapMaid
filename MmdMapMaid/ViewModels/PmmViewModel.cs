@@ -79,7 +79,7 @@ public partial class PmmViewModel : ObservableRecipient
     public void ReadPmm(StorageFile pmmFile)
     {
         ReplacerState.ReadPmm(pmmFile);
-        IsPmmLoaded = true;
+        IsPmmLoaded = ReplacerState.IsPmmLoaded;
         SubscribePathChanged();
     }
 
@@ -87,7 +87,7 @@ public partial class PmmViewModel : ObservableRecipient
     private async Task ReadPmm()
     {
         await ReplacerState.ReadPmm();
-        IsPmmLoaded = true;
+        IsPmmLoaded = ReplacerState.IsPmmLoaded;
         SubscribePathChanged();
     }
 
