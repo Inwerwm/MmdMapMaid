@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using MmdMapMaid.Controls;
 using MmdMapMaid.ViewModels;
+using Windows.Storage;
 using Windows.UI;
 
 namespace MmdMapMaid.Views;
@@ -54,5 +55,19 @@ public sealed partial class PmmPage : Page
                 };
             }
         }
+    }
+
+    private void ContentArea_DragOver(object _, DragEventArgs e)
+    {
+        e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Copy;
+    }
+
+    private async void ContentArea_Drop(object sender, DragEventArgs e)
+    {
+        var droped = await e.DataView.GetStorageItemsAsync();
+        var item = droped.FirstOrDefault(file => Path.GetExtension(file.Name) == ".pmm");
+        if (item is not StorageFile pmm) { return; }
+
+        ViewModel.ReadPmm(pmm);
     }
 }

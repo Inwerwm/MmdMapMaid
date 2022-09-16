@@ -6,6 +6,7 @@ using MmdMapMaid.FeatureState;
 using MmdMapMaid.Helpers;
 using MmdMapMaid.Models;
 using Windows.Media.Core;
+using Windows.Storage;
 
 namespace MmdMapMaid.ViewModels;
 
@@ -73,6 +74,13 @@ public partial class PmmViewModel : ObservableRecipient
         WritePmmInfoSeverty = InfoBarSeverity.Success;
         PmmWriteInfobarMessage = "PmmWriteInfobarMessage_Finished".GetLocalized();
         OpenCompleteMessage = true;
+    }
+
+    public void ReadPmm(StorageFile pmmFile)
+    {
+        ReplacerState.ReadPmm(pmmFile);
+        IsPmmLoaded = true;
+        SubscribePathChanged();
     }
 
     [RelayCommand]

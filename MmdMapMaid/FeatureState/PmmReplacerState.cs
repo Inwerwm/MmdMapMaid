@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Media;
 using MmdMapMaid.Core.Models.Pmm;
 using MmdMapMaid.Helpers;
 using MmdMapMaid.Models;
+using Windows.Storage;
 
 namespace MmdMapMaid.FeatureState;
 
@@ -38,6 +39,11 @@ public partial class PmmReplacerState
         var file = await StorageHelper.PickSingleFileAsync(".pmm");
         if (file == null) { return; }
 
+        ReadPmm(file);
+    }
+
+    public void ReadPmm(StorageFile file)
+    {
         Replacer = new(file.Path);
 
         ModelInfo.Clear();

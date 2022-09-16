@@ -186,4 +186,13 @@
   <data name="DisplayName_Model" xml:space="preserve">
     <value>Model</value>
   </data>
+  <data name="EmmOrderMapper_DestinationPmxPath.PlaceholderText" xml:space="preserve">
+    <value>Drag &amp; Drop here</value>
+  </data>
+  <data name="EmmOrderMapper_EmmPath.PlaceholderText" xml:space="preserve">
+    <value>Drag &amp; Drop here</value>
+  </data>
+  <data name="EmmOrderMapper_SourcePmxPath.PlaceholderText" xml:space="preserve">
+    <value>Drag &amp; Drop here</value>
+  </data>
 </root>

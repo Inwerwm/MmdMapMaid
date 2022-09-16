@@ -189,4 +189,13 @@
   <data name="DisplayName_Model" xml:space="preserve">
     <value>モデル</value>
   </data>
+  <data name="EmmOrderMapper_DestinationPmxPath.PlaceholderText" xml:space="preserve">
+    <value>ここにドラッグ＆ドロップ</value>
+  </data>
+  <data name="EmmOrderMapper_EmmPath.PlaceholderText" xml:space="preserve">
+    <value>ここにドラッグ＆ドロップ</value>
+  </data>
+  <data name="EmmOrderMapper_SourcePmxPath.PlaceholderText" xml:space="preserve">
+    <value>ここにドラッグ＆ドロップ</value>
+  </data>
 </root>

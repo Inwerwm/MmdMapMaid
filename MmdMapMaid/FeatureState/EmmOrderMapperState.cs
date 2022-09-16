@@ -56,15 +56,40 @@ internal partial class EmmOrderMapperState
     [RelayCommand]
     private async Task ReadEmmAsync()
     {
-        EmmPath = (await StorageHelper.PickSingleFileAsync(".emm"))?.Path;
+        var emmPath = (await StorageHelper.PickSingleFileAsync(".emm"))?.Path;
 
-        if (EmmPath == null) { return; }
+        if (emmPath is null) { return; }
 
+        ReadEmm(emmPath);
+    }
+
+    public void ReadEmm(string emmPath)
+    {
+        EmmPath = emmPath;
         Mapper = new EmmOrderMapper(EmmPath);
 
         foreach (var (path, i) in Mapper.ObjectPaths.Select((path, i) => (path, i)).Where(item => Path.GetExtension(item.path).ToLowerInvariant() == ".pmx"))
         {
             EmmModels.Add(new(i, path));
+        }
+
+        SelectDestinationPmx();
+    }
+
+    public void ReadDestinationPmx(string pmxPath)
+    {
+        DestinationPmxPath = pmxPath;
+        SelectDestinationPmx();
+    }
+
+    private void SelectDestinationPmx()
+    {
+        if (SelectedEmmModels is null) { return; }
+        if (string.IsNullOrEmpty(DestinationPmxPath)) { return; }
+
+        foreach (var model in EmmModels.Where(m => m.Path == DestinationPmxPath))
+        {
+            SelectedEmmModels.Add(model);
         }
     }
 
@@ -77,13 +102,10 @@ internal partial class EmmOrderMapperState
     [RelayCommand]
     private async Task ReadDestinationPmx()
     {
-        DestinationPmxPath = (await StorageHelper.PickSingleFileAsync(".pmx"))?.Path;
+        var pmxPath = (await StorageHelper.PickSingleFileAsync(".pmx"))?.Path;
+        if (pmxPath is null) { return; }
 
-        if(SelectedEmmModels is null) { return; }
-        foreach (var model in EmmModels.Where(m => m.Path == DestinationPmxPath))
-        {
-            SelectedEmmModels.Add(model);
-        }
+        ReadDestinationPmx(pmxPath);
     }
 
     [RelayCommand(CanExecute = nameof(CanMapOrderExecute))]

@@ -15,7 +15,7 @@
         <CollectionViewSource x:Name="PathsViewSource" Source="{x:Bind ViewModel.ReplacerState.PathGroups}" IsSourceGrouped="True" />
     </Page.Resources>
 
-    <ScrollViewer x:Name="ContentArea" Padding="0,20,30,30">
+    <ScrollViewer x:Name="ContentArea" AllowDrop="True" DragOver="ContentArea_DragOver" Drop="ContentArea_Drop" Padding="0,20,30,30">
         <StackPanel Spacing="20">
             <Grid ColumnSpacing="15">
                 <Grid.ColumnDefinitions>
