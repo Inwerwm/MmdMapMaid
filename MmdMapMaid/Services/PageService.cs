@@ -17,6 +17,7 @@ public class PageService : IPageService
         Configure<PmmViewModel, PmmPage>();
         Configure<EmmViewModel, EmmPage>();
         Configure<SettingsViewModel, SettingsPage>();
+        Configure<ExtractEmdViewModel, ExtractEmdPage>();
     }
 
     public Type GetPageType(string key)

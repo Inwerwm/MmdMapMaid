@@ -198,4 +198,7 @@
   <data name="EmmOrderMapper_SourcePmxPath.PlaceholderText" xml:space="preserve">
     <value>ここにドラッグ＆ドロップ</value>
   </data>
+  <data name="Shell_ExtractEmd.Content" xml:space="preserve">
+    <value>EMD 抽出</value>
+  </data>
 </root>
