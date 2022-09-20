@@ -15,5 +15,8 @@ public sealed partial class ExtractEmdPage : Page
     {
         ViewModel = App.GetService<ExtractEmdViewModel>();
         InitializeComponent();
+
+        ViewModel.Extractor.SelectedEmmObjects = EmmObjectsListView.SelectedItems;
+        ViewModel.Extractor.SelectedEmmEffects = EmmEffectsListView.SelectedItems;
     }
 }

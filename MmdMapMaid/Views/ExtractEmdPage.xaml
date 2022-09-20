@@ -11,12 +11,13 @@
         <Grid ColumnSpacing="40">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*" />
-                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
 
             <ScrollViewer Height="{x:Bind ContentArea.ViewportHeight, Mode=OneWay}" Grid.Column="0">
-                <ListView x:Name="EmmModelsListView"
+                <ListView x:Name="EmmObjectsListView" ItemsSource="{x:Bind ViewModel.Extractor.EmmObjects, Mode=OneWay}"
+                          SelectionChanged="{x:Bind ViewModel.Extractor.UpdateSelectedObjects}"
                           SelectionMode="Multiple"
                           VerticalContentAlignment="Center">
                     <ListView.ItemTemplate>
@@ -31,12 +32,13 @@
             </ScrollViewer>
 
             <ScrollViewer Height="{x:Bind ContentArea.ViewportHeight, Mode=OneWay}" Grid.Column="1">
-                <ListView x:Name="EmmEffectsListView"
+                <ListView x:Name="EmmEffectsListView" ItemsSource="{x:Bind ViewModel.Extractor.EmmEffects, Mode=OneWay}"
+                          SelectionChanged="{x:Bind ViewModel.Extractor.UpdateSelectedEffects}"
                           SelectionMode="Multiple"
                           VerticalContentAlignment="Center">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="models:IndexedFiledata">
-                            <TextBlock Text="{x:Bind Name}" TextWrapping="Wrap" />
+                            <TextBlock Text="{x:Bind Path}" FontSize="{StaticResource SemiLargeFontSize}" CharacterSpacing="50" TextWrapping="Wrap" Margin="0, 10" />
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
@@ -49,14 +51,15 @@
                     <RowDefinition Height="80" />
                 </Grid.RowDefinitions>
 
-                <Button x:Uid="EmmOrderMapper_ReadEmmButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" />
+                <Button x:Uid="EmmOrderMapper_ReadEmmButton" Command="{x:Bind ViewModel.Extractor.ReadEmmCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" />
                 <TextBox 
                     x:Uid="EmmOrderMapper_EmmPath"
+                    Text="{x:Bind ViewModel.Extractor.EmmPath, Mode=OneWay}"
                     IsReadOnly="True" 
                     TextWrapping="Wrap" 
                     AllowDrop="True"
                     Grid.Row="1" />
-                <Button x:Uid="EmmOrderMapper_MapOrderButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" />
+                <Button x:Uid="EmmOrderMapper_MapOrderButton" Command="{x:Bind ViewModel.Extractor.ExtractCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" />
             </Grid>
         </Grid>
     </ScrollViewer>
