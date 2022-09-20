@@ -18,7 +18,16 @@ class StorageHelper
         {
             openPicker.FileTypeFilter.Add(type);
         }
-        WinRT.Interop.InitializeWithWindow.Initialize(openPicker, WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow));
+        RegisterPicker(openPicker);
         return openPicker;
     }
+
+    public static async Task<StorageFolder> PickFolderAsync()
+    {
+        var folderPicker = new FolderPicker();
+        RegisterPicker(folderPicker);
+        return await folderPicker.PickSingleFolderAsync();
+    }
+
+    private static void RegisterPicker(object picker) => WinRT.Interop.InitializeWithWindow.Initialize(picker, WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow));
 }
