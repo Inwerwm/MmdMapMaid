@@ -85,6 +85,7 @@ public partial class App : Application
             // States
             services.AddSingleton<PmmReplacerState>();
             services.AddSingleton<EmmOrderMapperState>();
+            services.AddSingleton<EmdExtractorState>();
         }).
         Build();
 
