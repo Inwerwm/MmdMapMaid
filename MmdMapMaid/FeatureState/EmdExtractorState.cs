@@ -42,6 +42,8 @@ internal partial class EmdExtractorState
     private string _saveDirectory;
     private bool _isSaveDirectoryExplicitlySelected;
 
+    public event EventHandler? OnCompleted;
+
     private EmdExtractor? Extractor
     {
         get;
@@ -120,6 +122,8 @@ internal partial class EmdExtractorState
                 Extractor.Run(obj, effect, SaveDirectory);
             }
         }
+
+        OnCompleted?.Invoke(this, EventArgs.Empty);
     }
 
     private bool CanExtractExecute() => !(

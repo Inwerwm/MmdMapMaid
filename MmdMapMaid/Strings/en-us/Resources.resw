@@ -201,4 +201,7 @@
   <data name="EmdExtractor_SaveDirectory.Content" xml:space="preserve">
     <value>Select folder to save EMD</value>
   </data>
+  <data name="EmdExtractor_CompletedMessage" xml:space="preserve">
+    <value>Emd file has been written.</value>
+  </data>
 </root>

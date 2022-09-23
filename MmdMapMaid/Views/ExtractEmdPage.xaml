@@ -72,6 +72,7 @@
                     AllowDrop="True"
                     Grid.Row="3" />
                 <Button x:Uid="EmmOrderMapper_MapOrderButton" Command="{x:Bind ViewModel.Extractor.ExtractCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="4" />
+                <InfoBar Severity="Success" Title="{x:Bind ViewModel.ProgressTitle, Mode=OneWay}" IsOpen="{x:Bind ViewModel.OpenProgressInfobar, Mode=TwoWay}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="5" />
             </Grid>
         </Grid>
     </ScrollViewer>

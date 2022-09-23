@@ -204,4 +204,7 @@
   <data name="EmdExtractor_SaveDirectory.Content" xml:space="preserve">
     <value>EMD 保存フォルダを選択</value>
   </data>
+  <data name="EmdExtractor_CompletedMessage" xml:space="preserve">
+    <value>EMD ファイルの書き込みが完了しました</value>
+  </data>
 </root>
