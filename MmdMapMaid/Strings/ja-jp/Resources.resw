@@ -201,4 +201,7 @@
   <data name="Shell_ExtractEmd.Content" xml:space="preserve">
     <value>EMD 抽出</value>
   </data>
+  <data name="EmdExtractor_SaveDirectory.Content" xml:space="preserve">
+    <value>EMD 保存フォルダを選択</value>
+  </data>
 </root>

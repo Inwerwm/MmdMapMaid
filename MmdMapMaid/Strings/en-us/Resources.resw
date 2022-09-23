@@ -198,4 +198,7 @@
   <data name="Shell_ExtractEmd.Content" xml:space="preserve">
     <value>Emd Extraction</value>
   </data>
+  <data name="EmdExtractor_SaveDirectory.Content" xml:space="preserve">
+    <value>Select folder to save EMD</value>
+  </data>
 </root>

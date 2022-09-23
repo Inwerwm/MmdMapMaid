@@ -39,7 +39,8 @@ internal partial class EmdExtractorState
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(ExtractCommand))]
-    private string _saveDir;
+    private string _saveDirectory;
+    private bool _isSaveDirectoryExplicitlySelected;
 
     private EmdExtractor? Extractor
     {
@@ -51,7 +52,8 @@ internal partial class EmdExtractorState
     {
         _emmObjects = new();
         _emmEffects = new();
-        _saveDir = "";
+        _saveDirectory = "";
+        _isSaveDirectoryExplicitlySelected = false;
     }
 
     public void UpdateSelectedObjects(object _, Microsoft.UI.Xaml.Controls.SelectionChangedEventArgs e)
@@ -77,7 +79,10 @@ internal partial class EmdExtractorState
             EmmEffects.Add(new(i, name));
         }
 
-        SaveDir = Path.GetDirectoryName(EmmPath) ?? "";
+        if (!_isSaveDirectoryExplicitlySelected)
+        {
+            SaveDirectory = Path.GetDirectoryName(EmmPath) ?? "";
+        }
     }
 
     [RelayCommand]
@@ -97,28 +102,29 @@ internal partial class EmdExtractorState
 
         if (folder is null) { return; }
 
-        SaveDir = folder;
+        SaveDirectory = folder;
+        _isSaveDirectoryExplicitlySelected = true;
     }
 
     [RelayCommand(CanExecute = nameof(CanExtractExecute))]
     public void Extract()
     {
-        if(Extractor is null) { return; }
-        if(SelectedEmmObjects is null) { return; }
-        if(SelectedEmmEffects is null) { return; }
+        if (Extractor is null) { return; }
+        if (SelectedEmmObjects is null) { return; }
+        if (SelectedEmmEffects is null) { return; }
 
         foreach (var obj in SelectedEmmObjects.Cast<IndexedFiledata>().Select(obj => obj.Index))
         {
             foreach (var effect in SelectedEmmEffects.Cast<IndexedFiledata>().Select(effect => effect.Index))
             {
-                Extractor.Run(obj, effect, SaveDir);
+                Extractor.Run(obj, effect, SaveDirectory);
             }
         }
     }
 
     private bool CanExtractExecute() => !(
             string.IsNullOrWhiteSpace(EmmPath) ||
-            string.IsNullOrWhiteSpace(SaveDir) ||
+            string.IsNullOrWhiteSpace(SaveDirectory) ||
             Extractor is null
         ) && IsObjectSelected && IsEffectSelected;
 }
