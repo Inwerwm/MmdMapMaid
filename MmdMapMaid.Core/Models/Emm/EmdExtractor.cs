@@ -31,6 +31,6 @@ public class EmdExtractor
         var emd = targetEffect.ObjectSettings.FirstOrDefault(s => s.Object == targetObject)?.ToEmd();
         if(emd is null) { return; }
 
-        emd.Write(Path.Combine(saveDirectory, $"{Path.GetFileNameWithoutExtension(targetObject.Name)}_{targetEffect.Name}.emd"));
+        emd.Write(Path.Combine(saveDirectory, $"{targetEffect.Name}_{Path.GetFileNameWithoutExtension(targetObject.Path)}.emd"));
     }
 }
