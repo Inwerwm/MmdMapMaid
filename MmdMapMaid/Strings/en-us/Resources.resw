@@ -204,4 +204,7 @@
   <data name="EmdExtractor_CompletedMessage" xml:space="preserve">
     <value>Emd file has been written.</value>
   </data>
+  <data name="DragAndDropPlaceHolder.Text" xml:space="preserve">
+    <value>Drag &amp; Drop here</value>
+  </data>
 </root>

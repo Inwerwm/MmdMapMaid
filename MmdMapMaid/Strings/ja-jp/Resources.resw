@@ -207,4 +207,7 @@
   <data name="EmdExtractor_CompletedMessage" xml:space="preserve">
     <value>EMD ファイルの書き込みが完了しました</value>
   </data>
+  <data name="DragAndDropPlaceHolder.Text" xml:space="preserve">
+    <value>ここにドラッグ＆ドロップ</value>
+  </data>
 </root>

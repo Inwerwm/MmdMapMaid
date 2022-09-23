@@ -7,16 +7,18 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:conv="using:CommunityToolkit.WinUI.UI.Converters"
     xmlns:models="using:MmdMapMaid.Models"
+    xmlns:helpers="using:MmdMapMaid.Helpers"
     xmlns:controls="using:MmdMapMaid.Controls"
     mc:Ignorable="d">
 
     <Page.Resources>
         <conv:BoolToVisibilityConverter x:Key="boolToVisibility" />
+        <helpers:NegatedBoolToVisibility x:Key="negaBoolToVisibility" />
         <CollectionViewSource x:Name="PathsViewSource" Source="{x:Bind ViewModel.ReplacerState.PathGroups}" IsSourceGrouped="True" />
     </Page.Resources>
 
     <ScrollViewer x:Name="ContentArea" AllowDrop="True" DragOver="ContentArea_DragOver" Drop="ContentArea_Drop" Padding="0,20,30,30">
-        <StackPanel Spacing="20">
+        <StackPanel Spacing="5">
             <Grid ColumnSpacing="15">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -27,6 +29,13 @@
                 <Button x:Uid="Pmm_WritePmmButton" Command="{x:Bind ViewModel.WritePmmCommand}" HorizontalAlignment="Stretch" Grid.Column="1" />
             </Grid>
             <InfoBar x:Uid="Pmm_WriteInfoBar" Severity="{x:Bind ViewModel.WritePmmInfoSeverty, Mode=OneWay}" Message="{x:Bind ViewModel.PmmWriteInfobarMessage, Mode=OneWay}" IsOpen="{x:Bind ViewModel.OpenCompleteMessage, Mode=TwoWay}" />
+
+            <TextBlock
+                x:Uid="DragAndDropPlaceHolder"
+                Visibility="{x:Bind ViewModel.IsPmmLoaded, Mode=OneWay, Converter={StaticResource negaBoolToVisibility}}"
+                Opacity="0.6"
+                HorizontalTextAlignment="Center"
+                Margin="50" />
 
             <Expander IsExpanded="True" Visibility="{x:Bind ViewModel.IsPmmLoaded, Converter={StaticResource boolToVisibility}, Mode=OneWay}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="10">
                 <Expander.Header>
