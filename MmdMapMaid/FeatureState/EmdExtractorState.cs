@@ -72,6 +72,9 @@ internal partial class EmdExtractorState
         EmmPath = emmPath;
         Extractor = new(EmmPath);
 
+        EmmObjects.Clear();
+        EmmEffects.Clear();
+
         foreach (var (path, i) in Extractor.ObjectPaths.Select((path, i) => (path, i)))
         {
             EmmObjects.Add(new(i, path));

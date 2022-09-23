@@ -68,6 +68,8 @@ internal partial class EmmOrderMapperState
         EmmPath = emmPath;
         Mapper = new EmmOrderMapper(EmmPath);
 
+        EmmModels.Clear();
+
         foreach (var (path, i) in Mapper.ObjectPaths.Select((path, i) => (path, i)).Where(item => Path.GetExtension(item.path).ToLowerInvariant() == ".pmx"))
         {
             EmmModels.Add(new(i, path));
