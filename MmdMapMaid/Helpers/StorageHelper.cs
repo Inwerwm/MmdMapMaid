@@ -1,5 +1,7 @@
 ﻿using Windows.Storage.Pickers;
 using Windows.Storage;
+using Microsoft.UI.Xaml;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace MmdMapMaid.Helpers;
 
@@ -30,4 +32,13 @@ class StorageHelper
     }
 
     private static void RegisterPicker(object picker) => WinRT.Interop.InitializeWithWindow.Initialize(picker, WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow));
+
+    public static void SetAcceptedOperation(DragEventArgs e, DataPackageOperation operation = DataPackageOperation.Copy) =>
+        e.AcceptedOperation = operation;
+
+    public static async Task<StorageFile?> ReadDropedFile(DragEventArgs e, string? extension = null)
+    {
+        var droped = await e.DataView.GetStorageItemsAsync();
+        return (extension is null ? droped.FirstOrDefault() : droped.FirstOrDefault(file => (Path.GetExtension(file.Path) ?? "") == extension)) as StorageFile;
+    }
 }

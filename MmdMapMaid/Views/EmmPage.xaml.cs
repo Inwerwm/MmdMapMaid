@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-
+using MmdMapMaid.Helpers;
 using MmdMapMaid.ViewModels;
 using Windows.Storage;
 
@@ -21,21 +21,14 @@ public sealed partial class EmmPage : Page
         ViewModel.OrderMapper.SelectedEmmModels = EmmModelsListView.SelectedItems;
     }
 
-    private static async Task<StorageFile?> ReadDropedFile(DragEventArgs e, string ext)
-    {
-        var droped = await e.DataView.GetStorageItemsAsync();
-        var storageItem = droped.FirstOrDefault(file => Path.GetExtension(file.Path) == ext);
-        return storageItem as StorageFile;
-    }
-
     private void EmmDragOver(object sender, DragEventArgs e)
     {
-        e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Copy;
+        StorageHelper.SetAcceptedOperation(e);
     }
 
     private async void TargetEmmDrop(object sender, DragEventArgs e)
     {
-        var file = await ReadDropedFile(e, ".emm");
+        var file = await StorageHelper.ReadDropedFile(e, ".emm");
         if (file is null) { return; }
 
         ViewModel.OrderMapper.ReadEmm(file.Path);
@@ -43,14 +36,14 @@ public sealed partial class EmmPage : Page
 
     private async void SourceModelDrop(object sender, DragEventArgs e)
     {
-        var file = await ReadDropedFile(e, ".pmx");
+        var file = await StorageHelper.ReadDropedFile(e, ".pmx");
         if (file is null) { return; }
 
         ViewModel.OrderMapper.SourcePmxPath = file.Path;
     }
     private async void DestinationModelDrop(object sender, DragEventArgs e)
     {
-        var file = await ReadDropedFile(e, ".pmx");
+        var file = await StorageHelper.ReadDropedFile(e, ".pmx");
         if (file is null) { return; }
 
         ViewModel.OrderMapper.ReadDestinationPmx(file.Path);

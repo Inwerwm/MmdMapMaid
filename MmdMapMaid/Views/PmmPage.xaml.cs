@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using MmdMapMaid.Controls;
+using MmdMapMaid.Helpers;
 using MmdMapMaid.ViewModels;
 using Windows.Storage;
 using Windows.UI;
@@ -59,15 +60,14 @@ public sealed partial class PmmPage : Page
 
     private void ContentArea_DragOver(object _, DragEventArgs e)
     {
-        e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Copy;
+        StorageHelper.SetAcceptedOperation(e);
     }
 
     private async void ContentArea_Drop(object sender, DragEventArgs e)
     {
-        var droped = await e.DataView.GetStorageItemsAsync();
-        var item = droped.FirstOrDefault(file => Path.GetExtension(file.Name) == ".pmm");
-        if (item is not StorageFile pmm) { return; }
+        var file = await StorageHelper.ReadDropedFile(e, ".pmm");
+        if (file is null) { return; }
 
-        ViewModel.ReadPmm(pmm);
+        ViewModel.ReadPmm(file);
     }
 }
