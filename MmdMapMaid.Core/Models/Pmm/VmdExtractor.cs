@@ -14,7 +14,7 @@ public class VmdExtractor
         get;
     }
 
-    public string[] ModelNames => Pmm.Models.Select(m => m.Name).ToArray();
+    public IEnumerable<(string Name, string Path, int Index)> GetModels() => Pmm.Models.Select((m, i) => (m.Name, m.Path, i));
 
     public VmdExtractor(string pmmPath)
     {
