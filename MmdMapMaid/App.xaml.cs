@@ -68,6 +68,8 @@ public partial class App : Application
             services.AddSingleton<IFileService, FileService>();
 
             // Views and ViewModels
+            services.AddTransient<ExtractVmdViewModel>();
+            services.AddTransient<ExtractVmdPage>();
             services.AddTransient<ExtractEmdViewModel>();
             services.AddTransient<ExtractEmdPage>();
             services.AddTransient<SettingsViewModel>();
@@ -84,6 +86,7 @@ public partial class App : Application
 
             // States
             services.AddSingleton<PmmReplacerState>();
+            services.AddSingleton<VmdExtractorState>();
             services.AddSingleton<EmmOrderMapperState>();
             services.AddSingleton<EmdExtractorState>();
         }).

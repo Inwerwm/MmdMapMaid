@@ -1,0 +1,85 @@
+﻿<Page
+    x:Class="MmdMapMaid.Views.ExtractVmdPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:MmdMapMaid.Models"
+    mc:Ignorable="d">
+
+    <Grid x:Name="ContentArea" ColumnSpacing="40">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+
+        <ScrollViewer VerticalAlignment="Stretch" Grid.Column="0">
+            <ListView x:Name="PmmModelsListView" ItemsSource="{x:Bind ViewModel.Extractor.PmmModels, Mode=OneWay}"
+                          SelectionChanged="{x:Bind ViewModel.Extractor.UpdateSelectedModels}"
+                          SelectionMode="Multiple"
+                          VerticalContentAlignment="Center">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:PathInformation">
+                        <StackPanel Margin="0,10">
+                            <TextBlock TextWrapping="Wrap" Text="{x:Bind Name}" Margin="0,5" FontSize="{StaticResource SemiLargeFontSize}" FontWeight="SemiBold" />
+                            <TextBlock TextWrapping="Wrap" Text="{x:Bind Path}" FontSize="{StaticResource SmallFontSize}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
+
+        <ScrollViewer VerticalAlignment="Stretch" Padding="0,0,20,0" Grid.Column="1">
+            <StackPanel>
+                <TextBlock x:Uid="VmdExtractor_Settings_Title" FontSize="{StaticResource TitleTextBlockFontSize}" />
+                <TextBlock x:Uid="VmdExtractor_Settings_Cameras" FontSize="{StaticResource SemiLargeFontSize}" Margin="0,20,0,5" />
+                <CheckBox x:Uid="VmdExtractor_ExtractCamera" x:Name="ExtractCamera" IsChecked="{x:Bind ViewModel.Extractor.DoesExtractCamera, Mode=TwoWay}" />
+                <CheckBox x:Uid="VmdExtractor_ExtractLight" x:Name="ExtractLight" IsChecked="{x:Bind ViewModel.Extractor.DoesExtractLight, Mode=TwoWay}" IsEnabled="{x:Bind ExtractCamera.IsChecked.Value, Mode=OneWay}" />
+                <TextBlock x:Uid="VmdExtractor_Settings_Models" FontSize="{StaticResource SemiLargeFontSize}" Margin="0,20,0,5" />
+                <CheckBox x:Uid="VmdExtractor_ExtractMorph" x:Name="ExtractMorph" IsChecked="{x:Bind ViewModel.Extractor.DoesExtractMorph, Mode=TwoWay}" IsEnabled="{x:Bind ViewModel.Extractor.IsModelSelected, Mode=OneWay}" />
+                <CheckBox x:Uid="VmdExtractor_ExtractMotion" x:Name="ExtractMotion" IsChecked="{x:Bind ViewModel.Extractor.DoesExtractMotion, Mode=TwoWay}" IsEnabled="{x:Bind ViewModel.Extractor.IsModelSelected, Mode=OneWay}" />
+                <TextBlock x:Uid="VmdExtractor_Settings_Frames" FontSize="{StaticResource SemiLargeFontSize}" Margin="0,20,0,5" />
+                <TextBlock x:Uid="VmdExtractor_Settings_StartFrame" Margin="0,5" />
+                <NumberBox Value="{x:Bind ViewModel.Extractor.StartFrame, Mode=TwoWay}" Minimum="0" Maximum="{x:Bind ViewModel.Extractor.LastFrame, Mode=OneWay}" SpinButtonPlacementMode="Inline" LargeChange="100" />
+                <TextBlock x:Uid="VmdExtractor_Settings_EndFrame" Margin="0,5" />
+                <NumberBox Value="{x:Bind ViewModel.Extractor.EndFrame, Mode=TwoWay}" Minimum="-1" Maximum="{x:Bind ViewModel.Extractor.LastFrame, Mode=OneWay}" SpinButtonPlacementMode="Inline" LargeChange="100" />
+                <TextBlock x:Uid="VmdExtractor_Settings_EndFrameDescription" FontSize="{StaticResource SmallFontSize}" Margin="0,5" />
+            </StackPanel>
+        </ScrollViewer>
+
+        <ScrollViewer VerticalAlignment="Stretch" Padding="0,0,20,0" Grid.Column="2">
+            <Grid RowSpacing="10" VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="*" MinHeight="200" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="80" />
+                    <RowDefinition Height="75" />
+                </Grid.RowDefinitions>
+
+                <Button x:Uid="Pmm_ReadPmmButton" Command="{x:Bind ViewModel.Extractor.ReadPmmCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" />
+                <TextBox 
+                    x:Uid="DragAndDropTextBox"
+                    Text="{x:Bind ViewModel.Extractor.PmmPath, Mode=OneWay}"
+                    IsReadOnly="True" 
+                    TextWrapping="Wrap" 
+                    AllowDrop="True"
+                    DragOver="FileDragOver"
+                    Drop="PmmDrop"
+                    Grid.Row="1" />
+                <Button x:Uid="VmdExtractor_SaveDirectory" Command="{x:Bind ViewModel.Extractor.ReadSaveFolderCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" />
+                <TextBox
+                    Text="{x:Bind ViewModel.Extractor.SaveDirectory, Mode=OneWay}"
+                    IsReadOnly="True" 
+                    TextWrapping="Wrap" 
+                    AllowDrop="True"
+                    Grid.Row="3" />
+                <Button x:Uid="EmmOrderMapper_MapOrderButton" Command="{x:Bind ViewModel.Extractor.ExtractCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="4" />
+                <InfoBar Severity="Success" Title="{x:Bind ViewModel.ProgressTitle, Mode=OneWay}" IsOpen="{x:Bind ViewModel.OpenProgressInfobar, Mode=TwoWay}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="5" />
+
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Page>

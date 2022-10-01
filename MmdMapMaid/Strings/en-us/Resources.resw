@@ -207,4 +207,55 @@
   <data name="DragAndDropPlaceHolder.Text" xml:space="preserve">
     <value>Drag &amp; Drop here</value>
   </data>
+  <data name="Shell_ExtractVmd.Content" xml:space="preserve">
+    <value>Vmd Extraction</value>
+  </data>
+  <data name="Vmd_WriteCompleteMessage" xml:space="preserve">
+    <value>Vmd file has been written.</value>
+  </data>
+  <data name="DragAndDropTextBox.PlaceholderText" xml:space="preserve">
+    <value>Drag &amp; Drop here</value>
+  </data>
+  <data name="VmdExtractor_ExecuteButton.Content" xml:space="preserve">
+    <value>EXECUTE</value>
+  </data>
+  <data name="Pmm_ReplaceOneButton.Content" xml:space="preserve">
+    <value>Replace one</value>
+  </data>
+  <data name="VmdExtractor_SaveDirectory.Content" xml:space="preserve">
+    <value>Select folder to save VMD</value>
+  </data>
+  <data name="VmdExtractor_ExtractCamera.Content" xml:space="preserve">
+    <value>Extract camera</value>
+  </data>
+  <data name="VmdExtractor_ExtractLight.Content" xml:space="preserve">
+    <value>With light</value>
+  </data>
+  <data name="VmdExtractor_ExtractMorph.Content" xml:space="preserve">
+    <value>Extract Morph</value>
+  </data>
+  <data name="VmdExtractor_ExtractMotion.Content" xml:space="preserve">
+    <value>Extract Motion</value>
+  </data>
+  <data name="VmdExtractor_Settings_Cameras.Text" xml:space="preserve">
+    <value>Camera Motion</value>
+  </data>
+  <data name="VmdExtractor_Settings_EndFrame.Text" xml:space="preserve">
+    <value>End frame</value>
+  </data>
+  <data name="VmdExtractor_Settings_EndFrameDescription.Text" xml:space="preserve">
+    <value>If EndFrame &lt; StartFrame then extract to file end.</value>
+  </data>
+  <data name="VmdExtractor_Settings_Frames.Text" xml:space="preserve">
+    <value>Extraction Range</value>
+  </data>
+  <data name="VmdExtractor_Settings_Models.Text" xml:space="preserve">
+    <value>Model Motion</value>
+  </data>
+  <data name="VmdExtractor_Settings_StartFrame.Text" xml:space="preserve">
+    <value>Start frame</value>
+  </data>
+  <data name="VmdExtractor_Settings_Title.Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
 </root>
