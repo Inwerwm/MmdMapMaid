@@ -32,4 +32,8 @@ public class VmdExtractor
     {
         Pmm.ExtractCameraMotion(options).Write(Path.Combine(saveDirectory, $"{Path.GetFileNameWithoutExtension(PmmPath)}_Camera.vmd"));
     }
+
+    public async Task<int> CalcLastFrame(CancellationToken? token = null) => token is null ?
+        await Task.Run(Pmm.CalculateLastFrame) :
+        await Task.Run(Pmm.CalculateLastFrame, token.Value);
 }
