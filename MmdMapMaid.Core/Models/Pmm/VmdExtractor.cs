@@ -25,7 +25,7 @@ public class VmdExtractor
     public void ExtractModelMotion(int modelIndex, string saveDirectory, ModelMotionExtractionOptions? options = null)
     {
         var targetModel = Pmm.Models[modelIndex];
-        targetModel.ExtractModelMotion(options).Write(Path.Combine(saveDirectory, $"{Path.GetFileNameWithoutExtension(PmmPath)}_{targetModel.Name}.vmd"));
+        targetModel.ExtractModelMotion(options).Write(Path.Combine(saveDirectory, $"{Path.GetFileNameWithoutExtension(PmmPath)}_{modelIndex}_{targetModel.Name}.vmd"));
     }
 
     public void ExtractCameraMotion(string saveDirectory, CameraMotionExtractionOptions? options = null)
