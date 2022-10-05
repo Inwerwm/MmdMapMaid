@@ -106,6 +106,7 @@ public partial class PmmViewModel : ObservableRecipient
     [RelayCommand]
     private void ReplaceAll()
     {
+        if (string.IsNullOrWhiteSpace(SearchQuery)) { return; }
         foreach (var pathInfo in ReplacerState.PathGroups.SelectMany(g => g))
         {
             pathInfo.Path = pathInfo.Path.Replace(SearchQuery, Replacement);
