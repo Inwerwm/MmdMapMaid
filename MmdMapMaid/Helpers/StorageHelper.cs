@@ -24,6 +24,18 @@ class StorageHelper
         return openPicker;
     }
 
+    public static async Task<StorageFile> PickSaveFileAsync(params KeyValuePair<string, IList<string>>[] fileTypes)
+    {
+        var savePicker = new FileSavePicker();
+
+        foreach (var type in fileTypes)
+        {
+            savePicker.FileTypeChoices.Add(type);
+        }
+        RegisterPicker(savePicker);
+        return await savePicker.PickSaveFileAsync();
+    }
+
     public static async Task<StorageFolder> PickFolderAsync()
     {
         var folderPicker = new FolderPicker();

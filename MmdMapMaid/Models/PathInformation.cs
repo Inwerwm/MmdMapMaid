@@ -14,8 +14,10 @@ public partial class PathInformation : ObservableRecipient
     private string _path;
     [ObservableProperty]
     private bool _isEdited;
+    [ObservableProperty]
+    private bool _isRemoved;
 
-    private string InitialPath
+    public string InitialPath
     {
         get;
     }
@@ -30,15 +32,21 @@ public partial class PathInformation : ObservableRecipient
 
         PropertyChanged += (sender, e) =>
         {
-            if (e.PropertyName != nameof(Path)) { return; }
-
-            IsEdited = Path != InitialPath;
+            IsEdited = e.PropertyName switch
+            {
+                nameof(Path) => CompareToInit(),
+                nameof(IsRemoved) => CompareToInit(),
+                _ => IsEdited
+            };
         };
     }
+
+    private bool CompareToInit() => (Path != InitialPath) || IsRemoved;
 
     [RelayCommand]
     public void RestorePath()
     {
         Path = InitialPath;
+        IsRemoved = false;
     }
 }

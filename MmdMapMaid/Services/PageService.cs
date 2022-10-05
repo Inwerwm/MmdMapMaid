@@ -19,6 +19,7 @@ public class PageService : IPageService
         Configure<SettingsViewModel, SettingsPage>();
         Configure<ExtractEmdViewModel, ExtractEmdPage>();
         Configure<ExtractVmdViewModel, ExtractVmdPage>();
+        Configure<ReplaceVmdViewModel, ReplaceVmdPage>();
     }
 
     public Type GetPageType(string key)

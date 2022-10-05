@@ -3,21 +3,21 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
 using MmdMapMaid.FeatureState;
-using MmdMapMaid.Helpers;
 using MmdMapMaid.Models;
-using Windows.Media.Core;
+using static ABI.System.Windows.Input.ICommand_Delegates;
 using Windows.Storage;
+using MmdMapMaid.Helpers;
 
 namespace MmdMapMaid.ViewModels;
 
-public partial class PmmViewModel : ObservableRecipient
+public partial class ReplaceVmdViewModel : ObservableRecipient
 {
     [ObservableProperty]
-    PmmReplacerState _replacerState;
+    VmdReplacerState _replacerState;
 
     [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(WritePmmCommand))]
-    public bool _isPmmLoaded;
+    [NotifyCanExecuteChangedFor(nameof(WriteVmdCommand))]
+    public bool _isVmdLoaded;
 
     [ObservableProperty]
     private string _searchQuery;
@@ -25,24 +25,24 @@ public partial class PmmViewModel : ObservableRecipient
     private string _replacement;
 
     [ObservableProperty]
-    private InfoBarSeverity _writePmmInfoSeverty;
+    private InfoBarSeverity _writeVmdInfoSeverty;
     [ObservableProperty]
     private bool _openCompleteMessage;
     [ObservableProperty]
-    private string _pmmWriteInfobarMessage;
+    private string _vmdWriteInfobarMessage;
 
     public event EventHandler<PropertyChangedEventArgs>? OnPathChanged;
 
-    public PmmViewModel()
+    public ReplaceVmdViewModel()
     {
-        _replacerState = App.GetService<PmmReplacerState>();
+        _replacerState = App.GetService<VmdReplacerState>();
         _openCompleteMessage = false;
-        _pmmWriteInfobarMessage = "";
+        _vmdWriteInfobarMessage = "";
 
         _searchQuery = "";
         _replacement = "";
 
-        _isPmmLoaded = ReplacerState.IsPmmLoaded;
+        _isVmdLoaded = ReplacerState.IsVmdLoaded;
 
         SubscribePathChanged();
     }
@@ -57,50 +57,45 @@ public partial class PmmViewModel : ObservableRecipient
 
     private void PathInfoChanged(object? sender, PropertyChangedEventArgs e)
     {
-       if(e.PropertyName == nameof(PathInformation.Path)) {
+        if (e.PropertyName == nameof(PathInformation.Path))
+        {
             OnPathChanged?.Invoke(sender, e);
         }
     }
 
-    private void NoticeStartWrite()
-    {
-        WritePmmInfoSeverty = InfoBarSeverity.Informational;
-        PmmWriteInfobarMessage = "PmmWriteInfobarMessage_Writing".GetLocalized();
-        OpenCompleteMessage = true;
-    }
-
     private void NoticeEndWrite()
     {
-        WritePmmInfoSeverty = InfoBarSeverity.Success;
-        PmmWriteInfobarMessage = "PmmWriteInfobarMessage_Finished".GetLocalized();
+        WriteVmdInfoSeverty = InfoBarSeverity.Success;
+        VmdWriteInfobarMessage = "Vmd_WriteCompleteMessage".GetLocalized();
         OpenCompleteMessage = true;
     }
 
-    public void ReadPmm(StorageFile pmmFile)
+    public void ReadVmd(StorageFile vmdFile)
     {
-        ReplacerState.ReadPmm(pmmFile);
-        IsPmmLoaded = ReplacerState.IsPmmLoaded;
+        ReplacerState.ReadVmd(vmdFile);
+        IsVmdLoaded = ReplacerState.IsVmdLoaded;
         SubscribePathChanged();
     }
 
     [RelayCommand]
-    private async Task ReadPmm()
+    private async Task ReadVmd()
     {
-        await ReplacerState.ReadPmm();
-        IsPmmLoaded = ReplacerState.IsPmmLoaded;
+        await ReplacerState.ReadVmd();
+        IsVmdLoaded = ReplacerState.IsVmdLoaded;
         SubscribePathChanged();
     }
 
-    [RelayCommand(CanExecute = nameof(CanWritePmmExecute))]
-    private void WritePmm()
+    [RelayCommand(CanExecute = nameof(CanWriteVmdExecute))]
+    private async Task WriteVmdAsync()
     {
-        if (!ReplacerState.IsPmmLoaded) { return; }
+        if (!ReplacerState.IsVmdLoaded) { return; }
 
-        NoticeStartWrite();
-
-        ReplacerState.WritePmm();
-
-        NoticeEndWrite();
+        try
+        {
+            await ReplacerState.WriteVmd();
+            NoticeEndWrite();
+        }
+        catch (OperationCanceledException) { }
     }
 
     [RelayCommand]
@@ -113,5 +108,5 @@ public partial class PmmViewModel : ObservableRecipient
         }
     }
 
-    private bool CanWritePmmExecute() => IsPmmLoaded;
+    private bool CanWriteVmdExecute() => IsVmdLoaded;
 }

@@ -168,20 +168,17 @@
   <data name="EmmOrderMapper_CompletedMessage" xml:space="preserve">
     <value>Emm ファイルの書き込みが完了しました</value>
   </data>
-  <data name="Pmm_ReplaceAllButton.Content" xml:space="preserve">
+  <data name="ReplaceAllButton.Content" xml:space="preserve">
     <value>すべて置換</value>
   </data>
-  <data name="Pmm_ReplacementText.Text" xml:space="preserve">
+  <data name="ReplacementText.Text" xml:space="preserve">
     <value>置換文字列</value>
   </data>
-  <data name="Pmm_ReplaceOneButton.Content" xml:space="preserve">
-    <value>置換</value>
-  </data>
-  <data name="Pmm_SearchQueryText.Text" xml:space="preserve">
+  <data name="SearchQueryText.Text" xml:space="preserve">
     <value>検索文字列</value>
   </data>
-  <data name="Pmm_SearchLabel.Text" xml:space="preserve">
-    <value>パス内の文字列置換</value>
+  <data name="SearchLabel.Text" xml:space="preserve">
+    <value>文字列置換</value>
   </data>
   <data name="DisplayName_Accessory" xml:space="preserve">
     <value>アクセサリー</value>
@@ -257,5 +254,20 @@
   </data>
   <data name="VmdExtractor_Settings_Title.Text" xml:space="preserve">
     <value>設定</value>
+  </data>
+  <data name="DisplayName_Morph" xml:space="preserve">
+    <value>モーフ</value>
+  </data>
+  <data name="DisplayName_Motion" xml:space="preserve">
+    <value>モーション</value>
+  </data>
+  <data name="Vmd_ReadVmdButton.Content" xml:space="preserve">
+    <value>VMD ファイルを読み込む</value>
+  </data>
+  <data name="Vmd_WriteVmdButton.Content" xml:space="preserve">
+    <value>VMD ファイルを書き込む</value>
+  </data>
+  <data name="Shell_ReplaceVmd.Content" xml:space="preserve">
+    <value>VMD 名前置き換え</value>
   </data>
 </root>
