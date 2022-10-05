@@ -267,4 +267,7 @@
   <data name="Vmd_WriteVmdButton.Content" xml:space="preserve">
     <value>VMD ファイルを書き込む</value>
   </data>
+  <data name="Shell_ReplaceVmd.Content" xml:space="preserve">
+    <value>VMD 名前置き換え</value>
+  </data>
 </root>

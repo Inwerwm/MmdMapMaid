@@ -127,7 +127,7 @@
     <value>Pmm Management</value>
   </data>
   <data name="Shell_Emm.Content" xml:space="preserve">
-    <value>Emm  Management</value>
+    <value>Emm Management</value>
   </data>
   <data name="Settings_Theme.Text" xml:space="preserve">
     <value>Theme</value>
@@ -256,7 +256,7 @@
     <value>Settings</value>
   </data>
   <data name="Shell_ReplaceVmd.Content" xml:space="preserve">
-    <value>ReplaceVmd</value>
+    <value>Vmd Management</value>
   </data>
   <data name="DisplayName_Morph" xml:space="preserve">
     <value>Morph</value>
