@@ -68,6 +68,8 @@ public partial class App : Application
             services.AddSingleton<IFileService, FileService>();
 
             // Views and ViewModels
+            services.AddTransient<ReplaceVmdViewModel>();
+            services.AddTransient<ReplaceVmdPage>();
             services.AddTransient<ExtractVmdViewModel>();
             services.AddTransient<ExtractVmdPage>();
             services.AddTransient<ExtractEmdViewModel>();

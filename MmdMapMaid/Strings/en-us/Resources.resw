@@ -258,4 +258,7 @@
   <data name="VmdExtractor_Settings_Title.Text" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="Shell_ReplaceVmd.Content" xml:space="preserve">
+    <value>ReplaceVmd</value>
+  </data>
 </root>
