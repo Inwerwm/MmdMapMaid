@@ -168,17 +168,17 @@
   <data name="EmmOrderMapper_CompletedMessage" xml:space="preserve">
     <value>Emm file has been written.</value>
   </data>
-  <data name="Pmm_ReplaceAllButton.Content" xml:space="preserve">
+  <data name="ReplaceAllButton.Content" xml:space="preserve">
     <value>Replace all</value>
   </data>
-  <data name="Pmm_ReplacementText.Text" xml:space="preserve">
+  <data name="ReplacementText.Text" xml:space="preserve">
     <value>Replacement</value>
   </data>
   <data name="Pmm_SearchQueryText.Text" xml:space="preserve">
     <value>Search query</value>
   </data>
-  <data name="Pmm_SearchLabel.Text" xml:space="preserve">
-    <value>Replace all string in paths</value>
+  <data name="SearchLabel.Text" xml:space="preserve">
+    <value>Replace all string</value>
   </data>
   <data name="DisplayName_Accessory" xml:space="preserve">
     <value>Accessory</value>
@@ -219,9 +219,6 @@
   <data name="VmdExtractor_ExecuteButton.Content" xml:space="preserve">
     <value>EXECUTE</value>
   </data>
-  <data name="Pmm_ReplaceOneButton.Content" xml:space="preserve">
-    <value>Replace one</value>
-  </data>
   <data name="VmdExtractor_SaveDirectory.Content" xml:space="preserve">
     <value>Select folder to save VMD</value>
   </data>
@@ -260,5 +257,17 @@
   </data>
   <data name="Shell_ReplaceVmd.Content" xml:space="preserve">
     <value>ReplaceVmd</value>
+  </data>
+  <data name="DisplayName_Morph" xml:space="preserve">
+    <value>Morph</value>
+  </data>
+  <data name="DisplayName_Motion" xml:space="preserve">
+    <value>Motion</value>
+  </data>
+  <data name="Vmd_ReadVmdButton.Content" xml:space="preserve">
+    <value>Read Vmd File</value>
+  </data>
+  <data name="Vmd_WriteVmdButton.Content" xml:space="preserve">
+    <value>Write Vmd File</value>
   </data>
 </root>
