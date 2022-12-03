@@ -270,4 +270,10 @@
   <data name="Shell_ReplaceVmd.Content" xml:space="preserve">
     <value>VMD 名前置き換え</value>
   </data>
+  <data name="Pmm_WithEditEmmSwitch.OffContent" xml:space="preserve">
+    <value>同名EMMファイルのオブジェクトは編集しない</value>
+  </data>
+  <data name="Pmm_WithEditEmmSwitch.OnContent" xml:space="preserve">
+    <value>同名EMMファイルのオブジェクトも編集する</value>
+  </data>
 </root>

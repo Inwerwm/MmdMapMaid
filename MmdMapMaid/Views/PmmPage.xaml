@@ -20,13 +20,19 @@
     <ScrollViewer x:Name="ContentArea" AllowDrop="True" DragOver="ContentArea_DragOver" Drop="ContentArea_Drop" Padding="0,20,30,30">
         <StackPanel Spacing="5">
             <Grid ColumnSpacing="15">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Button x:Uid="Pmm_ReadPmmButton" Command="{x:Bind ViewModel.ReadPmmCommand}" HorizontalAlignment="Stretch" Grid.Column="0" />
-                <Button x:Uid="Pmm_WritePmmButton" Command="{x:Bind ViewModel.WritePmmCommand}" HorizontalAlignment="Stretch" Grid.Column="1" />
+                <Button x:Uid="Pmm_ReadPmmButton" Command="{x:Bind ViewModel.ReadPmmCommand}" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0" />
+                <Button x:Uid="Pmm_WritePmmButton" Command="{x:Bind ViewModel.WritePmmCommand}" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="1" />
+
+                <ToggleSwitch x:Uid="Pmm_WithEditEmmSwitch" IsOn="{x:Bind ViewModel.ReplacerState.EnableEditEmm, Mode=TwoWay}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
             </Grid>
             <InfoBar x:Uid="Pmm_WriteInfoBar" Severity="{x:Bind ViewModel.WritePmmInfoSeverty, Mode=OneWay}" Message="{x:Bind ViewModel.PmmWriteInfobarMessage, Mode=OneWay}" IsOpen="{x:Bind ViewModel.OpenCompleteMessage, Mode=TwoWay}" />
 

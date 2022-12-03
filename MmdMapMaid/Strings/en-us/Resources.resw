@@ -270,4 +270,10 @@
   <data name="Vmd_WriteVmdButton.Content" xml:space="preserve">
     <value>Write Vmd File</value>
   </data>
+  <data name="Pmm_WithEditEmmSwitch.OffContent" xml:space="preserve">
+    <value>Editing of the EMM file with the same name is disabled.</value>
+  </data>
+  <data name="Pmm_WithEditEmmSwitch.OnContent" xml:space="preserve">
+    <value>Editing of the EMM file with the same name is enabled.</value>
+  </data>
 </root>

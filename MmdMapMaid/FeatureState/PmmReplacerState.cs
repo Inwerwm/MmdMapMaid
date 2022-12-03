@@ -18,6 +18,8 @@ public partial class PmmReplacerState
     private ObservableCollection<PathInformation> _modelInfo;
     [ObservableProperty]
     private ObservableCollection<PathInformation> _acsInfo;
+    [ObservableProperty]
+    private bool _enableEditEmm;
 
     private PmmPathReplacer? Replacer
     {
@@ -32,6 +34,7 @@ public partial class PmmReplacerState
         _pathGroups = new();
         _modelInfo = new();
         _acsInfo = new();
+        _enableEditEmm = true;
     }
 
     public async Task ReadPmm()
@@ -69,11 +72,11 @@ public partial class PmmReplacerState
 
         foreach (var item in ModelInfo.Where(info => info.IsEdited))
         {
-            Replacer.ReplaceModelPath(item.Index, item.Path);
+            Replacer.ReplaceModelPath(item.Index, item.Path, EnableEditEmm);
         }
         foreach (var item in AcsInfo.Where(info => info.IsEdited))
         {
-            Replacer.ReplaceAccessoryPath(item.Index, item.Path);
+            Replacer.ReplaceAccessoryPath(item.Index, item.Path, EnableEditEmm);
         }
 
         Replacer.Save();
