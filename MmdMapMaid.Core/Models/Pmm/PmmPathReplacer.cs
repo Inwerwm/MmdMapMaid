@@ -39,7 +39,10 @@ public class PmmPathReplacer
     public IEnumerable<(string Name, string Path, int Index)> GetModels() => Pmm.Models.Select((m, i) => (m.Name, m.Path, i));
     public IEnumerable<(string Name, string Path, int Index)> GetAccessories() => Pmm.Accessories.Select((m, i) => (Path.GetFileNameWithoutExtension(m.Name), m.Path, i));
 
-    private EmmObject? FindTargetObject(string path) => Emm?.Objects.Find(obj => Regex.IsMatch(path, Regex.Escape(obj.Path) + "$"));
+    private EmmObject? FindTargetObject(string path) => Emm?.Objects.Find(obj =>
+        Regex.IsMatch(obj.Path, @"^[A-Z]:\\")
+            ? (obj.Path == path)
+            : Regex.IsMatch(path, Regex.Escape(obj.Path) + "$"));
 
     private void Replace(Func<string> getPath, Action<string> setPath, string newPath, bool editingEmmTogether)
     {
