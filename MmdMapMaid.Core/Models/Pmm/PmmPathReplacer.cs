@@ -1,4 +1,6 @@
-﻿using MikuMikuMethods.Mme;
+﻿using System.Text.RegularExpressions;
+using MikuMikuMethods.Mme;
+using MikuMikuMethods.Mme.Element;
 using MikuMikuMethods.Pmm;
 
 namespace MmdMapMaid.Core.Models.Pmm;
@@ -37,28 +39,36 @@ public class PmmPathReplacer
     public IEnumerable<(string Name, string Path, int Index)> GetModels() => Pmm.Models.Select((m, i) => (m.Name, m.Path, i));
     public IEnumerable<(string Name, string Path, int Index)> GetAccessories() => Pmm.Accessories.Select((m, i) => (Path.GetFileNameWithoutExtension(m.Name), m.Path, i));
 
-    public void ReplaceModelPath(int targetIndex, string newPath, bool editingEmmTogether)
+    private EmmObject? FindTargetObject(string path) => Emm?.Objects.Find(obj => Regex.IsMatch(path, Regex.Escape(obj.Path) + "$"));
+
+    private void Replace(Func<string> getPath, Action<string> setPath, string newPath, bool editingEmmTogether)
     {
-        var targetPath = Pmm.Models[targetIndex].Path;
-        Pmm.Models[targetIndex].Path = newPath;
+        var targetPath = getPath();
+        setPath(newPath);
 
         if (Emm is not null && editingEmmTogether &&
-            Emm.Objects.Find(obj => obj.Path == targetPath) is not null and var targetObject)
+            FindTargetObject(targetPath) is not null and var targetObject)
         {
             targetObject.Path = newPath;
         }
     }
 
+    public void ReplaceModelPath(int targetIndex, string newPath, bool editingEmmTogether)
+    {
+        Replace(
+            () => Pmm.Models[targetIndex].Path,
+            path => Pmm.Models[targetIndex].Path = path,
+            newPath,
+            editingEmmTogether);
+    }
+
     public void ReplaceAccessoryPath(int targetIndex, string newPath, bool editingEmmTogether)
     {
-        var targetPath = Pmm.Accessories[targetIndex].Path;
-        Pmm.Accessories[targetIndex].Path = newPath;
-
-        if (Emm is not null && editingEmmTogether &&
-            Emm.Objects.Find(obj => obj.Path == targetPath) is not null and var targetObject)
-        {
-            targetObject.Path = newPath;
-        }
+        Replace(
+            () => Pmm.Accessories[targetIndex].Path,
+            path => Pmm.Accessories[targetIndex].Path = path,
+            newPath,
+            editingEmmTogether);
     }
 
     public string? Save(SaveOptions? options = null)
