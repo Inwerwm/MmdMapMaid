@@ -6,7 +6,7 @@
 /// <param name="EnableOverwrite">生成ファイルを上書きして保存するか</param>
 /// <param name="EnableBackup">上書き保存する時、古いファイルをバックアップするか</param>
 /// <param name="GenerationDirectory">生成/バックアップファイルの保存先ディレクトリ(nullで元ファイルと同じディレクトリ)</param>
-public record SaveOptions(bool EnableOverwrite = true, bool EnableBackup = true, string? GenerationDirectory = null)
+public record SaveOptions(bool EnableOverwrite = true, bool EnableBackup = true, string? GenerationDirectory = null, DateTime? Timestamp = null)
 {
     /// <summary>
     /// 設定に応じた保存/バックアップファイルパスを取得
@@ -16,7 +16,7 @@ public record SaveOptions(bool EnableOverwrite = true, bool EnableBackup = true,
     public (string SavePath, string BackupPath) GetPath(string path)
     {
         var otherDir = GenerationDirectory ?? Path.GetDirectoryName(path) ?? "";
-        var otherPath = Path.Combine(otherDir, $"{Path.GetFileNameWithoutExtension(path)}_{DateTime.Now:yyyy-MM-dd_HH-mm-ss-ff}{Path.GetExtension(path)}");
+        var otherPath = Path.Combine(otherDir, $"{Path.GetFileNameWithoutExtension(path)}_{(Timestamp ?? DateTime.Now):yyyy-MM-dd_HH-mm-ss-ff}{Path.GetExtension(path)}");
 
         return EnableOverwrite ? (path, otherPath) : (otherPath, path);
     }
