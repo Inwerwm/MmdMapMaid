@@ -6,7 +6,63 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid x:Name="ContentArea">
+    <Grid x:Name="ContentArea" Margin="0,0,0,30" RowSpacing="10" ColumnSpacing="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="64"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- VMDファイルパス -->
+        <TextBox IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" />
+        <Button x:Uid="Vmd_ReadVmdButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="4"/>
+        
+        <!-- BPM -->
+        <TextBlock x:Uid="Vmd_BPM" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
+        <NumberBox Minimum="1" Maximum="1800" SpinButtonPlacementMode="Inline" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />
+        
+        <!-- 配置間隔 -->
+        <TextBlock x:Uid="Vmd_PlotInterval" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" />
+        <NumberBox Minimum="1" Maximum="1800" SpinButtonPlacementMode="Inline" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" />
+
+        <!-- 周期 -->
+        <TextBlock x:Uid="Vmd_Frequency" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="3" Grid.Column="0" />
+        <NumberBox Minimum="1" Maximum="1800" SpinButtonPlacementMode="Inline" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="4" Grid.Column="0" />
+        <TextBlock x:Uid="Vmd_Frequency_Description" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="5" Grid.Column="0" />
+
+        <!-- 拍子 -->
+        <TextBlock x:Uid="Vmd_Beat" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Grid.Column="1" />
+        <NumberBox Minimum="1" Maximum="8" SpinButtonPlacementMode="Inline" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="4" Grid.Column="1" />
+        <TextBlock x:Uid="Vmd_Beat_Description" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="5" Grid.Column="1" />
+
+        <!-- ループ数 -->
+        <TextBlock x:Uid="Vmd_LoopCount" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="3" Grid.Column="2" />
+        <NumberBox Minimum="1" SpinButtonPlacementMode="Inline" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="4" Grid.Column="2" />
+        <TextBlock x:Uid="Vmd_LoopCount_Description" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="5" Grid.Column="2" />
+        
+        <!-- 設置オフセット -->
+        <TextBlock x:Uid="Vmd_PlotCountOffset" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="3" Grid.Column="3" />
+        <NumberBox SpinButtonPlacementMode="Inline" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="4" Grid.Column="3" />
+        <TextBlock x:Uid="Vmd_PlotCountOffset_Description" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="5" Grid.Column="3" />
+        
+        <!-- 設置数 -->
+        <TextBlock x:Uid="Vmd_PlotCount" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="4" />
+        <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Grid.RowSpan="2" Grid.Column="4"/>
+        <Button x:Uid="EmmOrderMapper_MapOrderButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="4" Grid.RowSpan="2" Grid.Column="4"/>
+        
+        <!-- ログ -->
+        <TextBox IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="5" />
         
     </Grid>
 </Page>
