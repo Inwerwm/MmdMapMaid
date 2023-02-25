@@ -276,4 +276,7 @@
   <data name="Pmm_WithEditEmmSwitch.OnContent" xml:space="preserve">
     <value>同名EMMファイルのオブジェクトも編集する</value>
   </data>
+  <data name="Shell_MotionLoop.Content" xml:space="preserve">
+    <value>VMD モーションループ</value>
+  </data>
 </root>

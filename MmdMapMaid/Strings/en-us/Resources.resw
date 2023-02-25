@@ -276,4 +276,7 @@
   <data name="Pmm_WithEditEmmSwitch.OnContent" xml:space="preserve">
     <value>Editing of the EMM file with the same name is enabled.</value>
   </data>
+  <data name="Shell_MotionLoop.Content" xml:space="preserve">
+    <value>Vmd Motion Loop</value>
+  </data>
 </root>

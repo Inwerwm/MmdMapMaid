@@ -20,6 +20,7 @@ public class PageService : IPageService
         Configure<ExtractEmdViewModel, ExtractEmdPage>();
         Configure<ExtractVmdViewModel, ExtractVmdPage>();
         Configure<ReplaceVmdViewModel, ReplaceVmdPage>();
+        Configure<MotionLoopViewModel, MotionLoopPage>();
     }
 
     public Type GetPageType(string key)
