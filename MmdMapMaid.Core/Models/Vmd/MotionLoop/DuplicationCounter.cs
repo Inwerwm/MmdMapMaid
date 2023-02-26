@@ -26,7 +26,7 @@ public class DuplicationCounter
         get; set;
     }
 
-    public bool Decrement
+    public int CountOffset
     {
         get; set;
     }
@@ -34,5 +34,5 @@ public class DuplicationCounter
     /// <summary>
     /// 複製回数
     /// </summary>
-    public int ElementCount => (int)Math.Ceiling(Beat * LoopCount / (decimal)Frequency) - (Decrement ? 1 : 0);
+    public int ElementCount => Math.Max(0, (int)Math.Ceiling(Beat * LoopCount / (decimal)Frequency) + CountOffset);
 }
