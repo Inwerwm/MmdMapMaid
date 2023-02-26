@@ -9,8 +9,7 @@ using Windows.Storage;
 
 namespace MmdMapMaid.FeatureState;
 
-[INotifyPropertyChanged]
-public partial class PmmReplacerState
+public partial class PmmReplacerState : ObservableObject
 {
     [ObservableProperty]
     private ObservableCollection<PathGroup> _pathGroups;

@@ -8,8 +8,7 @@ using MmdMapMaid.Models;
 
 namespace MmdMapMaid.FeatureState;
 
-[INotifyPropertyChanged]
-internal partial class EmmOrderMapperState
+internal partial class EmmOrderMapperState : ObservableObject
 {
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(MapOrderCommand))]

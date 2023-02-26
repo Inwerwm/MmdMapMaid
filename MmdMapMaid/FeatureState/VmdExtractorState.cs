@@ -9,8 +9,7 @@ using MmdMapMaid.Models;
 
 namespace MmdMapMaid.FeatureState;
 
-[INotifyPropertyChanged]
-internal partial class VmdExtractorState
+internal partial class VmdExtractorState : ObservableObject
 {
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(ExtractCommand))]
