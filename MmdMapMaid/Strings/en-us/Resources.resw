@@ -141,43 +141,40 @@
   <data name="Settings_Theme_Default.Content" xml:space="preserve">
     <value>Default</value>
   </data>
-  <data name="Pmm_ReadPmmButton.Content" xml:space="preserve">
+  <data name="Button_ReadPmm.Content" xml:space="preserve">
     <value>Read Pmm File</value>
   </data>
-  <data name="Pmm_WritePmmButton.Content" xml:space="preserve">
+  <data name="Button_WritePmm.Content" xml:space="preserve">
     <value>Write Pmm File</value>
   </data>
-  <data name="PmmWriteInfobarMessage_Finished" xml:space="preserve">
+  <data name="Message_PmmWriteComplete" xml:space="preserve">
     <value>Pmm file has been written.</value>
   </data>
-  <data name="PmmWriteInfobarMessage_Writing" xml:space="preserve">
+  <data name="Message_Writing" xml:space="preserve">
     <value>Writing...</value>
   </data>
-  <data name="EmmOrderMapper_ReadDestinationPmxButton.Text" xml:space="preserve">
+  <data name="Button_ReadDestinationPmx.Text" xml:space="preserve">
     <value>Read model of edited material order</value>
   </data>
-  <data name="EmmOrderMapper_ReadEmmButton.Content" xml:space="preserve">
+  <data name="Button_ReadEmm.Content" xml:space="preserve">
     <value>Read EMM file</value>
   </data>
-  <data name="EmmOrderMapper_ReadSourcePmxButton.Text" xml:space="preserve">
+  <data name="Button_ReadSourcePmx.Text" xml:space="preserve">
     <value>Read model of original material order</value>
   </data>
-  <data name="EmmOrderMapper_MapOrderButton.Content" xml:space="preserve">
-    <value>EXECUTE</value>
-  </data>
-  <data name="EmmOrderMapper_CompletedMessage" xml:space="preserve">
+  <data name="Message_EmmWriteComplete" xml:space="preserve">
     <value>Emm file has been written.</value>
   </data>
-  <data name="ReplaceAllButton.Content" xml:space="preserve">
+  <data name="Button_ReplaceAll.Content" xml:space="preserve">
     <value>Replace all</value>
   </data>
-  <data name="ReplacementText.Text" xml:space="preserve">
+  <data name="Label_ReplacementText.Text" xml:space="preserve">
     <value>Replacement</value>
   </data>
-  <data name="Pmm_SearchQueryText.Text" xml:space="preserve">
+  <data name="Pmm_Label_SearchQueryText.Text" xml:space="preserve">
     <value>Search query</value>
   </data>
-  <data name="SearchLabel.Text" xml:space="preserve">
+  <data name="Label_Search.Text" xml:space="preserve">
     <value>Replace all string</value>
   </data>
   <data name="DisplayName_Accessory" xml:space="preserve">
@@ -198,10 +195,10 @@
   <data name="Shell_ExtractEmd.Content" xml:space="preserve">
     <value>Emd Extraction</value>
   </data>
-  <data name="EmdExtractor_SaveDirectory.Content" xml:space="preserve">
+  <data name="Button_SelectEmdSaveDirectory.Content" xml:space="preserve">
     <value>Select folder to save EMD</value>
   </data>
-  <data name="EmdExtractor_CompletedMessage" xml:space="preserve">
+  <data name="Message_EmdWriteComplete" xml:space="preserve">
     <value>Emd file has been written.</value>
   </data>
   <data name="DragAndDropPlaceHolder.Text" xml:space="preserve">
@@ -210,37 +207,34 @@
   <data name="Shell_ExtractVmd.Content" xml:space="preserve">
     <value>Vmd Extraction</value>
   </data>
-  <data name="Vmd_WriteCompleteMessage" xml:space="preserve">
+  <data name="Message_VmdWriteComplete" xml:space="preserve">
     <value>Vmd file has been written.</value>
   </data>
   <data name="DragAndDropTextBox.PlaceholderText" xml:space="preserve">
     <value>Drag &amp; Drop here</value>
   </data>
-  <data name="VmdExtractor_ExecuteButton.Content" xml:space="preserve">
-    <value>EXECUTE</value>
-  </data>
-  <data name="VmdExtractor_SaveDirectory.Content" xml:space="preserve">
+  <data name="Button_SelectVmdSaveDirectory.Content" xml:space="preserve">
     <value>Select folder to save VMD</value>
   </data>
-  <data name="VmdExtractor_ExtractCamera.Content" xml:space="preserve">
+  <data name="Button_ExtractCamera.Content" xml:space="preserve">
     <value>Extract camera</value>
   </data>
-  <data name="VmdExtractor_ExtractLight.Content" xml:space="preserve">
+  <data name="Button_ExtractLight.Content" xml:space="preserve">
     <value>With light</value>
   </data>
-  <data name="VmdExtractor_ExtractMorph.Content" xml:space="preserve">
+  <data name="Button_ExtractMorph.Content" xml:space="preserve">
     <value>Extract Morph</value>
   </data>
-  <data name="VmdExtractor_ExtractMotion.Content" xml:space="preserve">
+  <data name="Button_ExtractMotion.Content" xml:space="preserve">
     <value>Extract Motion</value>
   </data>
-  <data name="VmdExtractor_Settings_Cameras.Text" xml:space="preserve">
+  <data name="Label_CameraMotion.Text" xml:space="preserve">
     <value>Camera Motion</value>
   </data>
-  <data name="VmdExtractor_Settings_EndFrame.Text" xml:space="preserve">
+  <data name="Label_EndFrame.Text" xml:space="preserve">
     <value>End frame</value>
   </data>
-  <data name="VmdExtractor_Settings_EndFrameDescription.Text" xml:space="preserve">
+  <data name="Label_EndFrameDescription_VmdExtractor.Text" xml:space="preserve">
     <value>If EndFrame &lt; StartFrame then extract to file end.</value>
   </data>
   <data name="VmdExtractor_Settings_Frames.Text" xml:space="preserve">
@@ -249,10 +243,10 @@
   <data name="VmdExtractor_Settings_Models.Text" xml:space="preserve">
     <value>Model Motion</value>
   </data>
-  <data name="VmdExtractor_Settings_StartFrame.Text" xml:space="preserve">
+  <data name="Label_StartFrame.Text" xml:space="preserve">
     <value>Start frame</value>
   </data>
-  <data name="VmdExtractor_Settings_Title.Text" xml:space="preserve">
+  <data name="Label_Settings.Text" xml:space="preserve">
     <value>Settings</value>
   </data>
   <data name="Shell_ReplaceVmd.Content" xml:space="preserve">
@@ -264,19 +258,22 @@
   <data name="DisplayName_Motion" xml:space="preserve">
     <value>Motion</value>
   </data>
-  <data name="Vmd_ReadVmdButton.Content" xml:space="preserve">
+  <data name="Button_ReadVmd.Content" xml:space="preserve">
     <value>Read Vmd File</value>
   </data>
-  <data name="Vmd_WriteVmdButton.Content" xml:space="preserve">
+  <data name="Button_WriteVmd.Content" xml:space="preserve">
     <value>Write Vmd File</value>
   </data>
-  <data name="Pmm_WithEditEmmSwitch.OffContent" xml:space="preserve">
+  <data name="Switch_WithEditEmm.OffContent" xml:space="preserve">
     <value>Editing of the EMM file with the same name is disabled.</value>
   </data>
-  <data name="Pmm_WithEditEmmSwitch.OnContent" xml:space="preserve">
+  <data name="Switch_WithEditEmm.OnContent" xml:space="preserve">
     <value>Editing of the EMM file with the same name is enabled.</value>
   </data>
   <data name="Shell_MotionLoop.Content" xml:space="preserve">
     <value>Vmd Motion Loop</value>
+  </data>
+  <data name="Button_Execute.Content" xml:space="preserve">
+    <value>Execute</value>
   </data>
 </root>

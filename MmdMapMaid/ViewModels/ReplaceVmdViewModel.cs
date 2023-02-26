@@ -66,7 +66,7 @@ public partial class ReplaceVmdViewModel : ObservableRecipient
     private void NoticeEndWrite()
     {
         WriteVmdInfoSeverty = InfoBarSeverity.Success;
-        VmdWriteInfobarMessage = "Vmd_WriteCompleteMessage".GetLocalized();
+        VmdWriteInfobarMessage = "Message_VmdWriteComplete".GetLocalized();
         OpenCompleteMessage = true;
     }
 

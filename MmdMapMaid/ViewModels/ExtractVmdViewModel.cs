@@ -25,7 +25,7 @@ public partial class ExtractVmdViewModel : ObservableRecipient
         _openProgressInfobar = false;
         Extractor.OnCompleted += (_, e) =>
         {
-            ProgressTitle = "Vmd_WriteCompleteMessage".GetLocalized();
+            ProgressTitle = "Message_VmdWriteComplete".GetLocalized();
             OpenProgressInfobar = true;
         };
     }

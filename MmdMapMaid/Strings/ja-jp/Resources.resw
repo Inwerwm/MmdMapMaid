@@ -141,43 +141,40 @@
   <data name="Settings_Theme_Default.Content" xml:space="preserve">
     <value>Default</value>
   </data>
-  <data name="Pmm_ReadPmmButton.Content" xml:space="preserve">
+  <data name="Button_ReadPmm.Content" xml:space="preserve">
     <value>PMM ファイルを読み込む</value>
   </data>
-  <data name="Pmm_WritePmmButton.Content" xml:space="preserve">
+  <data name="Button_WritePmm.Content" xml:space="preserve">
     <value>PMM ファイルを書き込む</value>
   </data>
-  <data name="PmmWriteInfobarMessage_Finished" xml:space="preserve">
+  <data name="Message_PmmWriteComplete" xml:space="preserve">
     <value>PMM ファイルの書き込みが完了しました</value>
   </data>
-  <data name="PmmWriteInfobarMessage_Writing" xml:space="preserve">
+  <data name="Message_Writing" xml:space="preserve">
     <value>書き込み中です…</value>
   </data>
-  <data name="EmmOrderMapper_ReadDestinationPmxButton.Text" xml:space="preserve">
+  <data name="Button_ReadDestinationPmx.Text" xml:space="preserve">
     <value>材質順変更後の PMX モデルを読み込む</value>
   </data>
-  <data name="EmmOrderMapper_ReadEmmButton.Content" xml:space="preserve">
+  <data name="Button_ReadEmm.Content" xml:space="preserve">
     <value>EMM ファイルを読み込む</value>
   </data>
-  <data name="EmmOrderMapper_ReadSourcePmxButton.Text" xml:space="preserve">
+  <data name="Button_ReadSourcePmx.Text" xml:space="preserve">
     <value>材質順変更前の PMX モデルを読み込む</value>
   </data>
-  <data name="EmmOrderMapper_MapOrderButton.Content" xml:space="preserve">
-    <value>実行</value>
-  </data>
-  <data name="EmmOrderMapper_CompletedMessage" xml:space="preserve">
+  <data name="Message_EmmWriteComplete" xml:space="preserve">
     <value>Emm ファイルの書き込みが完了しました</value>
   </data>
-  <data name="ReplaceAllButton.Content" xml:space="preserve">
+  <data name="Button_ReplaceAll.Content" xml:space="preserve">
     <value>すべて置換</value>
   </data>
-  <data name="ReplacementText.Text" xml:space="preserve">
+  <data name="Label_ReplacementText.Text" xml:space="preserve">
     <value>置換文字列</value>
   </data>
-  <data name="SearchQueryText.Text" xml:space="preserve">
+  <data name="Label_SearchQueryText.Text" xml:space="preserve">
     <value>検索文字列</value>
   </data>
-  <data name="SearchLabel.Text" xml:space="preserve">
+  <data name="Label_Search.Text" xml:space="preserve">
     <value>文字列置換</value>
   </data>
   <data name="DisplayName_Accessory" xml:space="preserve">
@@ -198,10 +195,10 @@
   <data name="Shell_ExtractEmd.Content" xml:space="preserve">
     <value>EMD 抽出</value>
   </data>
-  <data name="EmdExtractor_SaveDirectory.Content" xml:space="preserve">
+  <data name="Button_SelectEmdSaveDirectory.Content" xml:space="preserve">
     <value>EMD 保存フォルダを選択</value>
   </data>
-  <data name="EmdExtractor_CompletedMessage" xml:space="preserve">
+  <data name="Message_EmdWriteComplete" xml:space="preserve">
     <value>EMD ファイルの書き込みが完了しました</value>
   </data>
   <data name="DragAndDropPlaceHolder.Text" xml:space="preserve">
@@ -210,37 +207,34 @@
   <data name="Shell_ExtractVmd.Content" xml:space="preserve">
     <value>VMD 抽出</value>
   </data>
-  <data name="Vmd_WriteCompleteMessage" xml:space="preserve">
+  <data name="Message_VmdWriteComplete" xml:space="preserve">
     <value>Vmd ファイルの書き込みが完了しました</value>
   </data>
   <data name="DragAndDropTextBox.PlaceholderText" xml:space="preserve">
     <value>ここにドラッグ&amp;ドロップ</value>
   </data>
-  <data name="VmdExtractor_ExecuteButton.Content" xml:space="preserve">
-    <value>実行</value>
-  </data>
-  <data name="VmdExtractor_SaveDirectory.Content" xml:space="preserve">
+  <data name="Button_SelectVmdSaveDirectory.Content" xml:space="preserve">
     <value>VMD 保存フォルダを選択</value>
   </data>
-  <data name="VmdExtractor_ExtractCamera.Content" xml:space="preserve">
+  <data name="Button_ExtractCamera.Content" xml:space="preserve">
     <value>カメラを抽出する</value>
   </data>
-  <data name="VmdExtractor_ExtractLight.Content" xml:space="preserve">
+  <data name="Button_ExtractLight.Content" xml:space="preserve">
     <value>照明も一緒に抽出する</value>
   </data>
-  <data name="VmdExtractor_ExtractMorph.Content" xml:space="preserve">
+  <data name="Button_ExtractMorph.Content" xml:space="preserve">
     <value>モーフを抽出する</value>
   </data>
-  <data name="VmdExtractor_ExtractMotion.Content" xml:space="preserve">
+  <data name="Button_ExtractMotion.Content" xml:space="preserve">
     <value>モーションを抽出する</value>
   </data>
-  <data name="VmdExtractor_Settings_Cameras.Text" xml:space="preserve">
+  <data name="Label_CameraMotion.Text" xml:space="preserve">
     <value>カメラモーション</value>
   </data>
-  <data name="VmdExtractor_Settings_EndFrame.Text" xml:space="preserve">
+  <data name="Label_EndFrame.Text" xml:space="preserve">
     <value>終了フレーム</value>
   </data>
-  <data name="VmdExtractor_Settings_EndFrameDescription.Text" xml:space="preserve">
+  <data name="Label_EndFrameDescription_VmdExtractor.Text" xml:space="preserve">
     <value>終了フレーム &lt; 開始フレーム のときは最後まで抽出する</value>
   </data>
   <data name="VmdExtractor_Settings_Frames.Text" xml:space="preserve">
@@ -249,11 +243,14 @@
   <data name="VmdExtractor_Settings_Models.Text" xml:space="preserve">
     <value>モデルモーション</value>
   </data>
-  <data name="VmdExtractor_Settings_StartFrame.Text" xml:space="preserve">
+  <data name="Label_StartFrame.Text" xml:space="preserve">
     <value>開始フレーム</value>
   </data>
-  <data name="VmdExtractor_Settings_Title.Text" xml:space="preserve">
+  <data name="Label_Settings.Text" xml:space="preserve">
     <value>設定</value>
+  </data>
+  <data name="Shell_ReplaceVmd.Content" xml:space="preserve">
+    <value>VMD 名前置き換え</value>
   </data>
   <data name="DisplayName_Morph" xml:space="preserve">
     <value>モーフ</value>
@@ -261,22 +258,22 @@
   <data name="DisplayName_Motion" xml:space="preserve">
     <value>モーション</value>
   </data>
-  <data name="Vmd_ReadVmdButton.Content" xml:space="preserve">
+  <data name="Button_ReadVmd.Content" xml:space="preserve">
     <value>VMD ファイルを読み込む</value>
   </data>
-  <data name="Vmd_WriteVmdButton.Content" xml:space="preserve">
+  <data name="Button_WriteVmd.Content" xml:space="preserve">
     <value>VMD ファイルを書き込む</value>
   </data>
-  <data name="Shell_ReplaceVmd.Content" xml:space="preserve">
-    <value>VMD 名前置き換え</value>
-  </data>
-  <data name="Pmm_WithEditEmmSwitch.OffContent" xml:space="preserve">
+  <data name="Switch_WithEditEmm.OffContent" xml:space="preserve">
     <value>同名EMMファイルのオブジェクトは編集しない</value>
   </data>
-  <data name="Pmm_WithEditEmmSwitch.OnContent" xml:space="preserve">
+  <data name="Switch_WithEditEmm.OnContent" xml:space="preserve">
     <value>同名EMMファイルのオブジェクトも編集する</value>
   </data>
   <data name="Shell_MotionLoop.Content" xml:space="preserve">
     <value>VMD モーションループ</value>
+  </data>
+  <data name="Button_Execute.Content" xml:space="preserve">
+    <value>実行</value>
   </data>
 </root>

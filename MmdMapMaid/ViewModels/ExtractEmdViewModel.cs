@@ -24,7 +24,7 @@ public partial class ExtractEmdViewModel : ObservableRecipient
         _openProgressInfobar = false;
         Extractor.OnCompleted += (_, e) =>
         {
-            ProgressTitle = "EmdExtractor_CompletedMessage".GetLocalized();
+            ProgressTitle = "Message_EmdWriteComplete".GetLocalized();
             OpenProgressInfobar = true;
         };
     }

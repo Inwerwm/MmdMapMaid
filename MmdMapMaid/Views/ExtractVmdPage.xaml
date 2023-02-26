@@ -32,19 +32,19 @@
 
         <ScrollViewer VerticalAlignment="Stretch" Padding="0,0,20,0" Grid.Column="1">
             <StackPanel>
-                <TextBlock x:Uid="VmdExtractor_Settings_Title" FontSize="{StaticResource TitleTextBlockFontSize}" />
-                <TextBlock x:Uid="VmdExtractor_Settings_Cameras" FontSize="{StaticResource SemiLargeFontSize}" Margin="0,20,0,5" />
-                <CheckBox x:Uid="VmdExtractor_ExtractCamera" x:Name="ExtractCamera" IsChecked="{x:Bind ViewModel.Extractor.DoesExtractCamera, Mode=TwoWay}" />
-                <CheckBox x:Uid="VmdExtractor_ExtractLight" x:Name="ExtractLight" IsChecked="{x:Bind ViewModel.Extractor.DoesExtractLight, Mode=TwoWay}" IsEnabled="{x:Bind ExtractCamera.IsChecked.Value, Mode=OneWay}" />
+                <TextBlock x:Uid="Label_Settings" FontSize="{StaticResource TitleTextBlockFontSize}" />
+                <TextBlock x:Uid="Label_CameraMotion" FontSize="{StaticResource SemiLargeFontSize}" Margin="0,20,0,5" />
+                <CheckBox x:Uid="Button_ExtractCamera" x:Name="ExtractCamera" IsChecked="{x:Bind ViewModel.Extractor.DoesExtractCamera, Mode=TwoWay}" />
+                <CheckBox x:Uid="Button_ExtractLight" x:Name="ExtractLight" IsChecked="{x:Bind ViewModel.Extractor.DoesExtractLight, Mode=TwoWay}" IsEnabled="{x:Bind ExtractCamera.IsChecked.Value, Mode=OneWay}" />
                 <TextBlock x:Uid="VmdExtractor_Settings_Models" FontSize="{StaticResource SemiLargeFontSize}" Margin="0,20,0,5" />
-                <CheckBox x:Uid="VmdExtractor_ExtractMorph" x:Name="ExtractMorph" IsChecked="{x:Bind ViewModel.Extractor.DoesExtractMorph, Mode=TwoWay}" IsEnabled="{x:Bind ViewModel.Extractor.IsModelSelected, Mode=OneWay}" />
-                <CheckBox x:Uid="VmdExtractor_ExtractMotion" x:Name="ExtractMotion" IsChecked="{x:Bind ViewModel.Extractor.DoesExtractMotion, Mode=TwoWay}" IsEnabled="{x:Bind ViewModel.Extractor.IsModelSelected, Mode=OneWay}" />
+                <CheckBox x:Uid="Button_ExtractMorph" x:Name="ExtractMorph" IsChecked="{x:Bind ViewModel.Extractor.DoesExtractMorph, Mode=TwoWay}" IsEnabled="{x:Bind ViewModel.Extractor.IsModelSelected, Mode=OneWay}" />
+                <CheckBox x:Uid="Button_ExtractMotion" x:Name="ExtractMotion" IsChecked="{x:Bind ViewModel.Extractor.DoesExtractMotion, Mode=TwoWay}" IsEnabled="{x:Bind ViewModel.Extractor.IsModelSelected, Mode=OneWay}" />
                 <TextBlock x:Uid="VmdExtractor_Settings_Frames" FontSize="{StaticResource SemiLargeFontSize}" Margin="0,20,0,5" />
-                <TextBlock x:Uid="VmdExtractor_Settings_StartFrame" Margin="0,5" />
+                <TextBlock x:Uid="Label_StartFrame" Margin="0,5" />
                 <NumberBox Value="{x:Bind ViewModel.Extractor.StartFrame, Mode=TwoWay}" Minimum="0" Maximum="{x:Bind ViewModel.Extractor.LastFrame, Mode=OneWay}" SpinButtonPlacementMode="Inline" LargeChange="100" />
-                <TextBlock x:Uid="VmdExtractor_Settings_EndFrame" Margin="0,5" />
+                <TextBlock x:Uid="Label_EndFrame" Margin="0,5" />
                 <NumberBox Value="{x:Bind ViewModel.Extractor.EndFrame, Mode=TwoWay}" Minimum="-1" Maximum="{x:Bind ViewModel.Extractor.LastFrame, Mode=OneWay}" SpinButtonPlacementMode="Inline" LargeChange="100" />
-                <TextBlock x:Uid="VmdExtractor_Settings_EndFrameDescription" FontSize="{StaticResource SmallFontSize}" Margin="0,5" />
+                <TextBlock x:Uid="Label_EndFrameDescription_VmdExtractor" FontSize="{StaticResource SmallFontSize}" Margin="0,5" />
             </StackPanel>
         </ScrollViewer>
 
@@ -59,7 +59,7 @@
                     <RowDefinition Height="75" />
                 </Grid.RowDefinitions>
 
-                <Button x:Uid="Pmm_ReadPmmButton" Command="{x:Bind ViewModel.Extractor.ReadPmmCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" />
+                <Button x:Uid="Button_ReadPmm" Command="{x:Bind ViewModel.Extractor.ReadPmmCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" />
                 <TextBox 
                     x:Uid="DragAndDropTextBox"
                     Text="{x:Bind ViewModel.Extractor.PmmPath, Mode=OneWay}"
@@ -69,14 +69,14 @@
                     DragOver="FileDragOver"
                     Drop="PmmDrop"
                     Grid.Row="1" />
-                <Button x:Uid="VmdExtractor_SaveDirectory" Command="{x:Bind ViewModel.Extractor.ReadSaveFolderCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" />
+                <Button x:Uid="Button_SelectVmdSaveDirectory" Command="{x:Bind ViewModel.Extractor.ReadSaveFolderCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" />
                 <TextBox
                     Text="{x:Bind ViewModel.Extractor.SaveDirectory, Mode=OneWay}"
                     IsReadOnly="True" 
                     TextWrapping="Wrap" 
                     AllowDrop="True"
                     Grid.Row="3" />
-                <Button x:Uid="EmmOrderMapper_MapOrderButton" Command="{x:Bind ViewModel.Extractor.ExtractCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="4" />
+                <Button x:Uid="Button_Execute" Command="{x:Bind ViewModel.Extractor.ExtractCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="4" />
                 <InfoBar Severity="Success" Title="{x:Bind ViewModel.ProgressTitle, Mode=OneWay}" IsOpen="{x:Bind ViewModel.OpenProgressInfobar, Mode=TwoWay}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="5" />
 
             </Grid>

@@ -24,7 +24,7 @@ public partial class EmmViewModel : ObservableRecipient
 
         OrderMapper.OnMapCompleted += (_, e) =>
         {
-            ProgressTitle = "EmmOrderMapper_CompletedMessage".GetLocalized();
+            ProgressTitle = "Message_EmmWriteComplete".GetLocalized();
             OpenProgressInfobar = true;
         };
     }
