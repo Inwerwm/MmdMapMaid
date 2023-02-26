@@ -276,4 +276,37 @@
   <data name="Button_Execute.Content" xml:space="preserve">
     <value>Execute</value>
   </data>
+  <data name="Label_Beat.Text" xml:space="preserve">
+    <value>Beat</value>
+  </data>
+  <data name="Label_BeatDescription_MotionLoop.Text" xml:space="preserve">
+    <value>Set the number of beats per quarter.</value>
+  </data>
+  <data name="Label_BPM.Text" xml:space="preserve">
+    <value>BPM</value>
+  </data>
+  <data name="Label_Frequency.Text" xml:space="preserve">
+    <value>Frequency</value>
+  </data>
+  <data name="Label_FrequencyDescription_MotionLoop.Text" xml:space="preserve">
+    <value>Set how many beats to plot once per.</value>
+  </data>
+  <data name="Label_LoopCount.Text" xml:space="preserve">
+    <value>Loop Count</value>
+  </data>
+  <data name="Label_LoopCountDescription_MotionLoop.Text" xml:space="preserve">
+    <value>Set the count of loop times for the plot.</value>
+  </data>
+  <data name="Label_PlotCount.Text" xml:space="preserve">
+    <value>Plot Count</value>
+  </data>
+  <data name="Label_PlotCountOffset.Text" xml:space="preserve">
+    <value>Plot Count Offset</value>
+  </data>
+  <data name="Label_PlotCountOffsetDescription_MotionLoop.Text" xml:space="preserve">
+    <value>Directly increase or decrease the plot count.</value>
+  </data>
+  <data name="Label_PlotInterval.Text" xml:space="preserve">
+    <value>Plot Interval</value>
+  </data>
 </root>

@@ -276,4 +276,37 @@
   <data name="Button_Execute.Content" xml:space="preserve">
     <value>実行</value>
   </data>
+  <data name="Label_Beat.Text" xml:space="preserve">
+    <value>拍子</value>
+  </data>
+  <data name="Label_BeatDescription_MotionLoop.Text" xml:space="preserve">
+    <value>4分の何拍子か</value>
+  </data>
+  <data name="Label_BPM.Text" xml:space="preserve">
+    <value>BPM</value>
+  </data>
+  <data name="Label_Frequency.Text" xml:space="preserve">
+    <value>周期</value>
+  </data>
+  <data name="Label_FrequencyDescription_MotionLoop.Text" xml:space="preserve">
+    <value>何拍に一回設置するか</value>
+  </data>
+  <data name="Label_LoopCount.Text" xml:space="preserve">
+    <value>ループ数</value>
+  </data>
+  <data name="Label_LoopCountDescription_MotionLoop.Text" xml:space="preserve">
+    <value>設置ループの回数</value>
+  </data>
+  <data name="Label_PlotCount.Text" xml:space="preserve">
+    <value>設置数</value>
+  </data>
+  <data name="Label_PlotCountOffset.Text" xml:space="preserve">
+    <value>設置数増減</value>
+  </data>
+  <data name="Label_PlotCountOffsetDescription_MotionLoop.Text" xml:space="preserve">
+    <value>設置数を直接増減させる</value>
+  </data>
+  <data name="Label_PlotInterval.Text" xml:space="preserve">
+    <value>設置間隔</value>
+  </data>
 </root>
