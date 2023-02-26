@@ -4,8 +4,7 @@ using Windows.Storage;
 
 namespace MmdMapMaid.FeatureState;
 
-[INotifyPropertyChanged]
-internal partial class VmdMotionLoopState
+internal partial class VmdMotionLoopState : ObservableObject
 {
     private IntervalCalculator IntervalCalculator
     {
@@ -122,11 +121,5 @@ internal partial class VmdMotionLoopState
         }
 
         Properties.Settings.Default.Save();
-    }
-
-
-    public void ReadVmd(StorageFile file)
-    {
-        ElementVmdPath = file.Path;
     }
 }

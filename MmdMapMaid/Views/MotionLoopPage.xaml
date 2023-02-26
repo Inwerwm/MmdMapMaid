@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid x:Name="ContentArea" Margin="0,0,0,30" RowSpacing="5" ColumnSpacing="5">
+    <Grid x:Name="ContentArea" AllowDrop="True" DragOver="ContentArea_DragOver" Drop="ContentArea_Drop" Margin="0,0,0,30" RowSpacing="5" ColumnSpacing="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="32"/>
             <RowDefinition Height="32"/>
@@ -26,7 +26,7 @@
 
         <!-- VMDファイルパス -->
         <TextBox Text="{x:Bind ViewModel.MotionLoop.ElementVmdPath, Mode=OneWay}" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" />
-        <Button x:Uid="Button_ReadVmd" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="4"/>
+        <Button x:Uid="Button_ReadVmd" Command="{x:Bind ViewModel.ReadVmdCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="4"/>
 
         <!-- BPM -->
         <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
