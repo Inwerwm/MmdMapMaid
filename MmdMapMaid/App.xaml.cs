@@ -94,6 +94,7 @@ public partial class App : Application
             services.AddSingleton<VmdExtractorState>();
             services.AddSingleton<EmmOrderMapperState>();
             services.AddSingleton<EmdExtractorState>();
+            services.AddSingleton<VmdMotionLoopState>();
         }).
         Build();
 

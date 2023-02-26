@@ -15,7 +15,7 @@ internal static class FrameDuplicator
             return cloneFrame;
         }).Where(frame => frame != null).Cast<IVmdFrame>();
 
-    public static IEnumerable<IVmdFrame> Duplicate(IEnumerable<IVmdFrame> frames, decimal interval, int count) =>
+    public static IEnumerable<IVmdFrame> Duplicate(IEnumerable<IVmdFrame> frames, double interval, int count) =>
         Enumerable.Range(0, count).SelectMany(i => Duplicate(frames, (uint)Math.Round(interval * i)));
 
     public static VocaloidMotionData CreateLoopMotion(VocaloidMotionData vmd, IntervalCalculator loop, DuplicationCounter counter)

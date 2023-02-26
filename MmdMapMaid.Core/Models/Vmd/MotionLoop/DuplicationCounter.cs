@@ -34,5 +34,5 @@ public class DuplicationCounter
     /// <summary>
     /// 複製回数
     /// </summary>
-    public int ElementCount => Math.Max(0, (int)Math.Ceiling(Beat * LoopCount / (decimal)Frequency) + CountOffset);
+    public int ElementCount => Math.Max(0, (int)Math.Ceiling(Beat * LoopCount / (double)Frequency) + CountOffset);
 }

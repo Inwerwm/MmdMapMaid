@@ -1,19 +1,19 @@
 ﻿namespace MmdMapMaid.Core.Models.Vmd.MotionLoop;
-internal class IntervalCalculator
+public class IntervalCalculator
 {
-    private decimal? bpm;
-    private decimal? interval;
+    private double? bpm;
+    private double? interval;
 
     /// <summary>
     /// BPMと設置間隔の相互計算に必要なキーフレームの設置フレームレート
     /// MMDでは30
     /// </summary>
-    public decimal BaseFrameRate
+    public double BaseFrameRate
     {
         get; init;
     }
 
-    public decimal? BPM
+    public double? BPM
     {
         get => bpm;
         set
@@ -26,7 +26,7 @@ internal class IntervalCalculator
         }
     }
 
-    public decimal? Interval
+    public double? Interval
     {
         get => interval;
         set
@@ -39,11 +39,11 @@ internal class IntervalCalculator
         }
     }
 
-    public IntervalCalculator(decimal baseFrameRate)
+    public IntervalCalculator(double baseFrameRate)
     {
         BaseFrameRate = baseFrameRate;
     }
 
-    private static decimal? FilterPositiveOnly(decimal? value) =>
-        value.HasValue && value > 0m ? value : null;
+    private static double? FilterPositiveOnly(double? value) =>
+        value.HasValue && value > 0 ? value : null;
 }
