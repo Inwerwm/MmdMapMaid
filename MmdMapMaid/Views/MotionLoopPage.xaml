@@ -13,8 +13,9 @@
             <RowDefinition Height="32"/>
             <RowDefinition Height="32"/>
             <RowDefinition Height="32"/>
-            <RowDefinition Height="64"/>
+            <RowDefinition Height="32"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -81,6 +82,9 @@
 
         <!-- ログ -->
         <TextBox x:Name="TextBoxLog" AcceptsReturn="True" TextWrapping="Wrap" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="5" />
+
+        <!-- フォルダを開く -->
+        <Button x:Uid="Button_OpenDestinationFolder" Command="{x:Bind ViewModel.OpenDestinationFolderCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="5" />
 
     </Grid>
 </Page>

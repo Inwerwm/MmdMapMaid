@@ -309,4 +309,7 @@
   <data name="Label_PlotInterval.Text" xml:space="preserve">
     <value>設置間隔</value>
   </data>
+  <data name="Button_OpenDestinationFolder.Content" xml:space="preserve">
+    <value>保存先フォルダを開く</value>
+  </data>
 </root>

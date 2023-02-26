@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Diagnostics;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MmdMapMaid.FeatureState;
 using MmdMapMaid.Helpers;
@@ -50,5 +51,17 @@ public partial class MotionLoopViewModel : ObservableRecipient
     {
         var log = MotionLoop.Execute();
         AppendLog?.Invoke(log);
+    }
+
+    [RelayCommand]
+    private void OpenDestinationFolder()
+    {
+        var destinationFolder = Path.GetDirectoryName(MotionLoop.ElementVmdPath);
+        if (string.IsNullOrWhiteSpace(destinationFolder))
+        {
+            return;
+        }
+
+        Process.Start("explorer.exe", destinationFolder);
     }
 }
