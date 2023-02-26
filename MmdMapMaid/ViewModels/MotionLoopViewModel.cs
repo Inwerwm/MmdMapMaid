@@ -49,6 +49,11 @@ public partial class MotionLoopViewModel : ObservableRecipient
     [RelayCommand]
     private void ExecuteMotionLoop()
     {
+        if (string.IsNullOrEmpty(MotionLoop.ElementVmdPath))
+        {
+            return;
+        }
+
         var log = MotionLoop.Execute();
         AppendLog?.Invoke(log);
     }
