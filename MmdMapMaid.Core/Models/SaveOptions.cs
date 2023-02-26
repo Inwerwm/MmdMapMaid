@@ -13,7 +13,7 @@ public record SaveOptions(bool EnableOverwrite = true, bool EnableBackup = true,
     /// </summary>
     /// <param name="path">元になるパス</param>
     /// <returns>保存用パスとバックアップ用パス</returns>
-    public (string SavePath, string BackupPath) GetPath(string path)
+    private (string SavePath, string BackupPath) GetPath(string path)
     {
         var otherDir = GenerationDirectory ?? Path.GetDirectoryName(path) ?? "";
         var otherPath = Path.Combine(otherDir, $"{Path.GetFileNameWithoutExtension(path)}_{(Timestamp ?? DateTime.Now):yyyy-MM-dd_HH-mm-ss-ff}{Path.GetExtension(path)}");
@@ -26,7 +26,7 @@ public record SaveOptions(bool EnableOverwrite = true, bool EnableBackup = true,
     /// </summary>
     /// <param name="path">元になるパス</param>
     /// <returns>保存用パスとバックアップ用パス</returns>
-    public (string SavePath, string BackupPath) CreatePathAndBackupIfEnable(string path)
+    private (string SavePath, string BackupPath) CreatePathAndBackupIfEnable(string path)
     {
         var (savePath, backupPath) = GetPath(path);
 
@@ -44,7 +44,7 @@ public record SaveOptions(bool EnableOverwrite = true, bool EnableBackup = true,
     /// <param name="savePath">保存パス</param>
     /// <param name="backupPath">バックアップパス</param>
     /// <returns>元になったパスではない方</returns>
-    public string? GetOtherPath(string savePath, string backupPath)
+    private string? GetOtherPath(string savePath, string backupPath)
     {
         return !EnableOverwrite ? savePath
             : EnableBackup ? backupPath 
@@ -64,4 +64,7 @@ public record SaveOptions(bool EnableOverwrite = true, bool EnableBackup = true,
 
         return GetOtherPath(savePath, backupPath);
     }
+
+    public static string AddSuffixTo(string fullPath, string suffix) =>
+        Path.Combine(Path.GetDirectoryName(fullPath) ?? ".",  Path.GetFileNameWithoutExtension(fullPath) + suffix + Path.GetExtension(fullPath));
 }

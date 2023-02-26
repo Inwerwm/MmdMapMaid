@@ -76,11 +76,11 @@
             <TextBlock x:Uid="Label_PlotCount" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="{StaticResource SemiLargeFontSize}"/>
         </Grid>
         <TextBlock Text="{x:Bind ViewModel.MotionLoop.PlotCount, Mode=OneWay}" FontSize="64" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="2" Grid.RowSpan="2" Grid.Column="4"/>
-        <Button x:Uid="Button_Execute" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="4" Grid.RowSpan="2" Grid.Column="4"/>
+        <Button x:Uid="Button_Execute" Command="{x:Bind ViewModel.ExecuteMotionLoopCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="4" Grid.RowSpan="2" Grid.Column="4"/>
         <Border BorderBrush="{ThemeResource TextFillColorPrimaryBrush}" BorderThickness="2,0,0,0" Margin="-4,0,0,0" Opacity="0.1" Grid.Row="1" Grid.RowSpan="5" Grid.Column="4"/>
 
         <!-- ログ -->
-        <TextBox IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="5" />
+        <TextBox x:Name="TextBoxLog" AcceptsReturn="True" TextWrapping="Wrap" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="5" />
 
     </Grid>
 </Page>

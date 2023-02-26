@@ -1,17 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using MmdMapMaid.Core.Models.Vmd.MotionLoop;
-using Windows.Storage;
+using CommunityToolkit.Mvvm.Input;
+using MmdMapMaid.Core.Models;
+using MmdMapMaid.Core.Models.Vmd;
 
 namespace MmdMapMaid.FeatureState;
 
 internal partial class VmdMotionLoopState : ObservableObject
 {
-    private IntervalCalculator IntervalCalculator
-    {
-        get;
-    } = new(30);
-
-    private DuplicationCounter DuplicationCounter
+    private MotionLooper MotionLooper
     {
         get;
     } = new();
@@ -46,26 +42,25 @@ internal partial class VmdMotionLoopState : ObservableObject
     [ObservableProperty]
     private int _plotCount;
 
-    [ObservableProperty]
-    private string _log;
-
     public VmdMotionLoopState()
     {
         _elementVmdPath = Properties.Settings.Default.ElementVmdPath;
+
         Bpm = Properties.Settings.Default.Bpm;
-        Interval = Properties.Settings.Default.Interval;
+        MotionLooper.IntervalCalculator.BPM = Bpm;
+
+        Interval = MotionLooper.IntervalCalculator.Interval ?? 1;
+
         Frequency = Properties.Settings.Default.Frequency;
         Beat = Properties.Settings.Default.Beat;
         LoopCount = Properties.Settings.Default.LoopCount;
         PlotCountOffset = Properties.Settings.Default.PlotCountOffset;
-        
-        DuplicationCounter.Frequency = Frequency;
-        DuplicationCounter.Beat = Beat;
-        DuplicationCounter.LoopCount = LoopCount;
-        DuplicationCounter.CountOffset = PlotCountOffset;
-        PlotCount = DuplicationCounter.ElementCount;
 
-        _log = string.Empty;
+        MotionLooper.DuplicationCounter.Frequency = Frequency;
+        MotionLooper.DuplicationCounter.Beat = Beat;
+        MotionLooper.DuplicationCounter.LoopCount = LoopCount;
+        MotionLooper.DuplicationCounter.CountOffset = PlotCountOffset;
+        PlotCount = MotionLooper.DuplicationCounter.ElementCount;
 
         PropertyChanged += VmdMotionLoopState_PropertyChanged;
     }
@@ -74,14 +69,16 @@ internal partial class VmdMotionLoopState : ObservableObject
     {
         switch (e.PropertyName)
         {
+            case nameof(ElementVmdPath):
+                Properties.Settings.Default.ElementVmdPath = ElementVmdPath;
+                break;
             case nameof(Bpm):
                 if (IsIntervalUpdating) { break; }
                 IsIntervalUpdating = true;
 
-                IntervalCalculator.BPM = Bpm;
-                Interval = IntervalCalculator.Interval ?? 1;
+                MotionLooper.IntervalCalculator.BPM = Bpm;
+                Interval = MotionLooper.IntervalCalculator.Interval ?? 1;
 
-                Properties.Settings.Default.Interval = Interval;
                 Properties.Settings.Default.Bpm = Bpm;
 
                 IsIntervalUpdating = false;
@@ -90,36 +87,50 @@ internal partial class VmdMotionLoopState : ObservableObject
                 if (IsIntervalUpdating) { break; }
                 IsIntervalUpdating = true;
 
-                IntervalCalculator.Interval = Interval;
-                Bpm = IntervalCalculator.BPM ?? 1;
+                MotionLooper.IntervalCalculator.Interval = Interval;
+                Bpm = MotionLooper.IntervalCalculator.BPM ?? 1;
 
-                Properties.Settings.Default.Interval = Interval;
                 Properties.Settings.Default.Bpm = Bpm;
 
                 IsIntervalUpdating = false;
                 break;
             case nameof(Frequency):
-                DuplicationCounter.Frequency = Frequency;
-                PlotCount = DuplicationCounter.ElementCount;
+                MotionLooper.DuplicationCounter.Frequency = Frequency;
+                PlotCount = MotionLooper.DuplicationCounter.ElementCount;
                 Properties.Settings.Default.Frequency = Frequency;
                 break;
             case nameof(Beat):
-                DuplicationCounter.Beat = Beat;
-                PlotCount = DuplicationCounter.ElementCount;
+                MotionLooper.DuplicationCounter.Beat = Beat;
+                PlotCount = MotionLooper.DuplicationCounter.ElementCount;
                 Properties.Settings.Default.Beat = Beat;
                 break;
             case nameof(LoopCount):
-                DuplicationCounter.LoopCount = LoopCount;
-                PlotCount = DuplicationCounter.ElementCount;
+                MotionLooper.DuplicationCounter.LoopCount = LoopCount;
+                PlotCount = MotionLooper.DuplicationCounter.ElementCount;
                 Properties.Settings.Default.LoopCount = LoopCount;
                 break;
             case nameof(PlotCountOffset):
-                DuplicationCounter.CountOffset = PlotCountOffset;
-                PlotCount = DuplicationCounter.ElementCount;
+                MotionLooper.DuplicationCounter.CountOffset = PlotCountOffset;
+                PlotCount = MotionLooper.DuplicationCounter.ElementCount;
                 Properties.Settings.Default.PlotCountOffset = PlotCountOffset;
                 break;
         }
 
         Properties.Settings.Default.Save();
+    }
+
+    public string Execute()
+    {
+        var elementVmd = MotionLooper.ReadFile(ElementVmdPath);
+        var loopMotion = MotionLooper.CreateLoopMotion(elementVmd);
+
+        var save = new SaveOptions(EnableBackup: false);
+        var savePath = SaveOptions.AddSuffixTo(ElementVmdPath, "_loop");
+        save.SaveWithBackupAndReturnCreatedPath(savePath, loopMotion.Write);
+
+        return $$"""
+        総数: {{elementVmd.GetAllFrames().Count()}} → {{loopMotion.GetAllFrames().Count()}}
+        出力: {{savePath}}{{Environment.NewLine}}
+        """;
     }
 }

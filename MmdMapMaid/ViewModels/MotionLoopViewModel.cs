@@ -13,6 +13,12 @@ public partial class MotionLoopViewModel : ObservableRecipient
         get;
     }
 
+    public Action<string>? AppendLog
+    {
+        get;
+        set;
+    }
+
     public MotionLoopViewModel()
     {
         MotionLoop = App.GetService<VmdMotionLoopState>();
@@ -20,7 +26,7 @@ public partial class MotionLoopViewModel : ObservableRecipient
 
     public void ReadVmd(StorageFile file)
     {
-        if(Path.GetExtension(file.Path).ToLower() != ".vmd")
+        if (Path.GetExtension(file.Path).ToLower() != ".vmd")
         {
             return;
         }
@@ -32,6 +38,17 @@ public partial class MotionLoopViewModel : ObservableRecipient
     private async void ReadVmd()
     {
         var file = await StorageHelper.PickSingleFileAsync(".vmd");
+        if (file is null)
+        {
+            return;
+        }
         ReadVmd(file);
+    }
+
+    [RelayCommand]
+    private void ExecuteMotionLoop()
+    {
+        var log = MotionLoop.Execute();
+        AppendLog?.Invoke(log);
     }
 }

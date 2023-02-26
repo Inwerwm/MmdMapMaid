@@ -3,7 +3,7 @@ using MikuMikuMethods.Vmd;
 using MmdMapMaid.Core.Models.Vmd.MotionLoop;
 
 namespace MmdMapMaid.Core.Models.Vmd;
-internal class MotionLooper
+public class MotionLooper
 {
     public DuplicationCounter DuplicationCounter
     {

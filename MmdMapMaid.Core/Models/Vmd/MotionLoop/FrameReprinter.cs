@@ -3,7 +3,7 @@ using MikuMikuMethods;
 using MikuMikuMethods.Vmd;
 
 namespace MmdMapMaid.Core.Models.Vmd.MotionLoop;
-internal class FrameReprinter
+public class FrameReprinter
 {
     /// <summary>
     /// ターゲットフレームの補間曲線をソースの最近傍フレームから転写する
