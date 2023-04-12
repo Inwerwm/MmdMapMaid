@@ -16,7 +16,7 @@ internal static class SearchHelpers
     {
         var theme = (control.Content as FrameworkElement)!.ActualTheme;
 
-        foreach (var pathBox in containerListView.FindDescendants().Where(element => element is BindableRichEditBox).Cast<BindableRichEditBox>())
+        foreach (var pathBox in containerListView.FindDescendants().OfType<BindableRichEditBox>())
         {
             var range = pathBox.Document.GetRange(0, TextConstants.MaxUnitCount);
 
@@ -25,66 +25,42 @@ internal static class SearchHelpers
 
             if (string.IsNullOrEmpty(query)) { continue; }
 
-            if (useRegex)
+            range.GetText(TextGetOptions.None, out var text);
+            var matches = useRegex ? RegexSearch(text, query) : TextSearch(text, query);
+
+            foreach (var matchRange in matches.Select(match => pathBox.Document.GetRange(match.Start, match.End)))
             {
-                RegexSearch(query, theme, range, pathBox);
+                matchRange.CharacterFormat.BackgroundColor = theme switch
+                {
+                    ElementTheme.Light => Color.FromArgb(0x80, 0xe0, 0xe0, 0xe0),
+                    ElementTheme.Dark => Color.FromArgb(0x80, 0x50, 0x50, 0x50),
+                    _ => Color.FromArgb(0x80, 0x80, 0x80, 0x80),
+                };
             }
-            else
-            {
-                TextSearch(query, theme, range);
-            }
         }
     }
 
-    private static void TextSearch(string query, ElementTheme theme, ITextRange range)
+    private static IEnumerable<(int Start, int End)> TextSearch(string input, string pattern)
     {
-        while (range.FindText(query, TextConstants.MaxUnitCount, FindOptions.None) > 0)
+        var index = input.IndexOf(pattern);
+        
+        if(index == -1)
         {
-            range.CharacterFormat.BackgroundColor = theme switch
-            {
-                ElementTheme.Light => Color.FromArgb(0x80, 0xe0, 0xe0, 0xe0),
-                ElementTheme.Dark => Color.FromArgb(0x80, 0x50, 0x50, 0x50),
-                _ => Color.FromArgb(0x80, 0x80, 0x80, 0x80),
-            };
+            yield break;
         }
+        yield return (index, index + pattern.Length);
     }
 
-    private static void RegexSearch(string query, ElementTheme theme, ITextRange range, RichEditBox pathBox)
-    {
-        var regex = CreateRegex(query);
-
-        if (regex is null) { return; }
-
-        // テキストボックスのテキストを取得
-        range.GetText(TextGetOptions.None, out var text);
-
-        // 正規表現で一致するテキストを探す
-        foreach (var matchRange in regex.Matches(text).Select(match => pathBox.Document.GetRange(match.Index, match.Index + match.Length)))
-        {
-            // 背景色を変更
-            matchRange.CharacterFormat.BackgroundColor = theme switch
-            {
-                ElementTheme.Light => Color.FromArgb(0x80, 0xe0, 0xe0, 0xe0),
-                ElementTheme.Dark => Color.FromArgb(0x80, 0x50, 0x50, 0x50),
-                _ => Color.FromArgb(0x80, 0x80, 0x80, 0x80),
-            };
-        }
-    }
-
-    /// <summary>
-    /// 正規表現オブジェクトを作成する。パターンが不正だった場合はnullを返す。
-    /// </summary>
-    /// <param name="pattern">The regular expression pattern to match.</param>
-    /// <returns>A new instance of the System.Text.RegularExpressions.Regex class for the specified regular expression.</returns>
-    private static Regex? CreateRegex(string pattern)
+    private static IEnumerable<(int Start, int End)> RegexSearch(string input, string pattern)
     {
         try
         {
-            return new Regex(pattern);
+            var regex = new Regex(pattern);
+            return regex.Matches(input).Select(match => (match.Index, match.Index + match.Length));
         }
         catch (RegexParseException)
         {
-            return null;
+            return Enumerable.Empty<(int Start, int End)>();
         }
     }
 }
