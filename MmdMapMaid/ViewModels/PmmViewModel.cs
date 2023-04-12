@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Text.RegularExpressions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
@@ -7,6 +8,7 @@ using MmdMapMaid.Helpers;
 using MmdMapMaid.Models;
 using Windows.Media.Core;
 using Windows.Storage;
+using Windows.UI.Popups;
 
 namespace MmdMapMaid.ViewModels;
 
@@ -23,6 +25,8 @@ public partial class PmmViewModel : ObservableRecipient
     private string _searchQuery;
     [ObservableProperty]
     private string _replacement;
+    [ObservableProperty]
+    private bool _useRegex;
 
     [ObservableProperty]
     private InfoBarSeverity _writePmmInfoSeverty;
@@ -41,6 +45,7 @@ public partial class PmmViewModel : ObservableRecipient
 
         _searchQuery = "";
         _replacement = "";
+        _useRegex = true;
 
         _isPmmLoaded = ReplacerState.IsPmmLoaded;
 
@@ -109,7 +114,7 @@ public partial class PmmViewModel : ObservableRecipient
         if (string.IsNullOrWhiteSpace(SearchQuery)) { return; }
         foreach (var pathInfo in ReplacerState.PathGroups.SelectMany(g => g))
         {
-            pathInfo.Path = pathInfo.Path.Replace(SearchQuery, Replacement);
+            pathInfo.Path = UseRegex ? Regex.Replace(pathInfo.Path, SearchQuery, Replacement) : pathInfo.Path.Replace(SearchQuery, Replacement);
         }
     }
 

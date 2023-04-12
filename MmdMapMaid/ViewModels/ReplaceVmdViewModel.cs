@@ -7,6 +7,7 @@ using MmdMapMaid.Models;
 using static ABI.System.Windows.Input.ICommand_Delegates;
 using Windows.Storage;
 using MmdMapMaid.Helpers;
+using System.Text.RegularExpressions;
 
 namespace MmdMapMaid.ViewModels;
 
@@ -23,6 +24,8 @@ public partial class ReplaceVmdViewModel : ObservableRecipient
     private string _searchQuery;
     [ObservableProperty]
     private string _replacement;
+    [ObservableProperty]
+    private bool _useRegex;
 
     [ObservableProperty]
     private InfoBarSeverity _writeVmdInfoSeverty;
@@ -41,6 +44,7 @@ public partial class ReplaceVmdViewModel : ObservableRecipient
 
         _searchQuery = "";
         _replacement = "";
+        _useRegex = true;
 
         _isVmdLoaded = ReplacerState.IsVmdLoaded;
 
@@ -104,7 +108,7 @@ public partial class ReplaceVmdViewModel : ObservableRecipient
         if (string.IsNullOrWhiteSpace(SearchQuery)) { return; }
         foreach (var pathInfo in ReplacerState.PathGroups.SelectMany(g => g))
         {
-            pathInfo.Path = pathInfo.Path.Replace(SearchQuery, Replacement);
+            pathInfo.Path = UseRegex ? Regex.Replace(pathInfo.Path, SearchQuery, Replacement) : pathInfo.Path.Replace(SearchQuery, Replacement);
         }
     }
 
