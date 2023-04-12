@@ -1,5 +1,4 @@
 ﻿using System.Text.RegularExpressions;
-using CommunityToolkit.WinUI.UI;
 using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -12,11 +11,13 @@ namespace MmdMapMaid.Helpers;
 internal static class SearchHelpers
 {
 
-    public static void HighlightSearch(UserControl control, ListView containerListView, string query, bool useRegex)
+    public static void HighlightSearch(UserControl control, BindableRichEditBox[]? editBoxes, string query, bool useRegex)
     {
-        var theme = (control.Content as FrameworkElement)!.ActualTheme;
+        if (editBoxes is null) { return; }
+        if (useRegex && !IsValidRegexPattern(query)) { return; }
 
-        foreach (var pathBox in containerListView.FindDescendants().OfType<BindableRichEditBox>())
+        var theme = (control.Content as FrameworkElement)!.ActualTheme;
+        foreach (var pathBox in editBoxes)
         {
             var range = pathBox.Document.GetRange(0, TextConstants.MaxUnitCount);
 
@@ -43,8 +44,8 @@ internal static class SearchHelpers
     private static IEnumerable<(int Start, int End)> TextSearch(string input, string pattern)
     {
         var index = input.IndexOf(pattern);
-        
-        if(index == -1)
+
+        if (index == -1)
         {
             yield break;
         }
@@ -61,6 +62,19 @@ internal static class SearchHelpers
         catch (RegexParseException)
         {
             return Enumerable.Empty<(int Start, int End)>();
+        }
+    }
+
+    private static bool IsValidRegexPattern(string pattern)
+    {
+        try
+        {
+            _ = new Regex(pattern);
+            return true;
+        }
+        catch (RegexParseException)
+        {
+            return false;
         }
     }
 }

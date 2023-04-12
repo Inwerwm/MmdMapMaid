@@ -1,5 +1,7 @@
-﻿using Microsoft.UI.Xaml;
+﻿using CommunityToolkit.WinUI.UI;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using MmdMapMaid.Controls;
 using MmdMapMaid.Helpers;
 using MmdMapMaid.ViewModels;
 
@@ -12,6 +14,12 @@ public sealed partial class PmmPage : Page
         get;
     }
 
+    private BindableRichEditBox[] PathBoxes
+    {
+        get;
+        set;
+    }
+
     public PmmPage()
     {
         ViewModel = App.GetService<PmmViewModel>();
@@ -21,6 +29,7 @@ public sealed partial class PmmPage : Page
         {
             Search();
         };
+        PathsListView.LayoutUpdated += (_, _) => PathBoxes = PathsListView.FindDescendants().OfType<BindableRichEditBox>().ToArray();
     }
 
     private void SearchQueryChanged(object sender, TextChangedEventArgs e)
@@ -30,7 +39,7 @@ public sealed partial class PmmPage : Page
 
     private void Search()
     {
-        SearchHelpers.HighlightSearch(this, PathsListView, ViewModel.SearchQuery, UseRegex.IsOn);
+        SearchHelpers.HighlightSearch(this, PathBoxes, ViewModel.SearchQuery, UseRegex.IsOn);
     }
 
     private void ContentArea_DragOver(object _, DragEventArgs e)
