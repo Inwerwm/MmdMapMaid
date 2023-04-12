@@ -51,8 +51,9 @@ internal static class SearchHelpers
 
     private static void RegexSearch(string query, ElementTheme theme, ITextRange range, RichEditBox pathBox)
     {
-        // 正規表現オブジェクトを作成
-        var regex = new Regex(query);
+        var regex = CreateRegex(query);
+
+        if (regex is null) { return; }
 
         // テキストボックスのテキストを取得
         range.GetText(TextGetOptions.None, out var text);
@@ -67,6 +68,23 @@ internal static class SearchHelpers
                 ElementTheme.Dark => Color.FromArgb(0x80, 0x50, 0x50, 0x50),
                 _ => Color.FromArgb(0x80, 0x80, 0x80, 0x80),
             };
+        }
+    }
+
+    /// <summary>
+    /// 正規表現オブジェクトを作成する。パターンが不正だった場合はnullを返す。
+    /// </summary>
+    /// <param name="pattern">The regular expression pattern to match.</param>
+    /// <returns>A new instance of the System.Text.RegularExpressions.Regex class for the specified regular expression.</returns>
+    private static Regex? CreateRegex(string pattern)
+    {
+        try
+        {
+            return new Regex(pattern);
+        }
+        catch (RegexParseException)
+        {
+            return null;
         }
     }
 }
