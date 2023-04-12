@@ -312,4 +312,10 @@
   <data name="Button_OpenDestinationFolder.Content" xml:space="preserve">
     <value>保存先フォルダを開く</value>
   </data>
+  <data name="Switch_UseRegex.OffContent" xml:space="preserve">
+    <value>文字列</value>
+  </data>
+  <data name="Switch_UseRegex.OnContent" xml:space="preserve">
+    <value>正規表現</value>
+  </data>
 </root>

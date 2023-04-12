@@ -25,7 +25,7 @@ public sealed partial class ReplaceVmdPage : Page
 
     private void Search()
     {
-        SearchHelpers.HighlightSearch(this, PathsListView, ViewModel.SearchQuery);
+        SearchHelpers.HighlightSearch(this, PathsListView, ViewModel.SearchQuery, UseRegex.IsOn);
     }
 
     private void ContentArea_DragOver(object _, DragEventArgs e)
@@ -39,5 +39,10 @@ public sealed partial class ReplaceVmdPage : Page
         if (file is null) { return; }
 
         ViewModel.ReadVmd(file);
+    }
+
+    private void UseRegex_Toggled(object sender, RoutedEventArgs e)
+    {
+        Search();
     }
 }

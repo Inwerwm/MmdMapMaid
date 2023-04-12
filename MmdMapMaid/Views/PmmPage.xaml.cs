@@ -30,7 +30,7 @@ public sealed partial class PmmPage : Page
 
     private void Search()
     {
-        SearchHelpers.HighlightSearch(this, PathsListView, ViewModel.SearchQuery);
+        SearchHelpers.HighlightSearch(this, PathsListView, ViewModel.SearchQuery, UseRegex.IsOn);
     }
 
     private void ContentArea_DragOver(object _, DragEventArgs e)
@@ -44,5 +44,10 @@ public sealed partial class PmmPage : Page
         if (file is null) { return; }
 
         ViewModel.ReadPmm(file);
+    }
+
+    private void UseRegex_Toggled(object sender, RoutedEventArgs e)
+    {
+        Search();
     }
 }

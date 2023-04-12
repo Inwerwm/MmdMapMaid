@@ -312,4 +312,10 @@
   <data name="Button_OpenDestinationFolder.Content" xml:space="preserve">
     <value>Open destination folder</value>
   </data>
+  <data name="Switch_UseRegex.OffContent" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="Switch_UseRegex.OnContent" xml:space="preserve">
+    <value>Use Regex</value>
+  </data>
 </root>
