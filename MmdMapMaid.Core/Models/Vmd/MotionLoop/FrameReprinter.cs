@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography;
-using MikuMikuMethods;
+﻿using MikuMikuMethods;
 using MikuMikuMethods.Vmd;
 
 namespace MmdMapMaid.Core.Models.Vmd.MotionLoop;

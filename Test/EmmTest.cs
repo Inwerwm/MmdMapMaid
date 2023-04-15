@@ -1,5 +1,4 @@
 using MmdMapMaid.Core.Models.Emm;
-using NuGet.Frameworks;
 
 namespace Test;
 

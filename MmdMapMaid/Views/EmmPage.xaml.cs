@@ -2,7 +2,6 @@
 using Microsoft.UI.Xaml.Controls;
 using MmdMapMaid.Helpers;
 using MmdMapMaid.ViewModels;
-using Windows.Storage;
 
 namespace MmdMapMaid.Views;
 

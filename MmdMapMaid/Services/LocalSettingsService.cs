@@ -5,8 +5,6 @@ using MmdMapMaid.Core.Contracts.Services;
 using MmdMapMaid.Core.Helpers;
 using MmdMapMaid.Helpers;
 using MmdMapMaid.Models;
-
-using Windows.ApplicationModel;
 using Windows.Storage;
 
 namespace MmdMapMaid.Services;

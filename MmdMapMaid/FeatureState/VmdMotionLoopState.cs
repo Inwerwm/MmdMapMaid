@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using MmdMapMaid.Core.Models;
 using MmdMapMaid.Core.Models.Vmd;
 

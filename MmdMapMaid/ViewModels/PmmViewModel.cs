@@ -6,9 +6,7 @@ using Microsoft.UI.Xaml.Controls;
 using MmdMapMaid.FeatureState;
 using MmdMapMaid.Helpers;
 using MmdMapMaid.Models;
-using Windows.Media.Core;
 using Windows.Storage;
-using Windows.UI.Popups;
 
 namespace MmdMapMaid.ViewModels;
 
@@ -62,7 +60,8 @@ public partial class PmmViewModel : ObservableRecipient
 
     private void PathInfoChanged(object? sender, PropertyChangedEventArgs e)
     {
-       if(e.PropertyName == nameof(PathInformation.Path)) {
+        if (e.PropertyName == nameof(PathInformation.Path))
+        {
             OnPathChanged?.Invoke(sender, e);
         }
     }
