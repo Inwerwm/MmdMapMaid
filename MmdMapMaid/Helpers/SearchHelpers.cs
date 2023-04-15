@@ -11,7 +11,7 @@ namespace MmdMapMaid.Helpers;
 internal static class SearchHelpers
 {
 
-    public static void HighlightSearch(UserControl control, BindableRichEditBox[]? editBoxes, string query, bool useRegex)
+    public static void HighlightSearch(UserControl control, RichEditBox[]? editBoxes, string query, bool useRegex)
     {
         if (editBoxes is null) { return; }
         if (useRegex && !IsValidRegexPattern(query)) { return; }
