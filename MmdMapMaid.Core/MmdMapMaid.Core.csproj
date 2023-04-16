@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net7.0</TargetFramework>
 		<RootNamespace>MmdMapMaid.Core</RootNamespace>
 		<Platforms>x86;x64;arm64;AnyCPU</Platforms>
 		<ImplicitUsings>enable</ImplicitUsings>
@@ -8,12 +8,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<Reference Include="MikuMikuMethods">
-			<HintPath>..\..\MikuMikuMethods\MikuMikuMethods\bin\Release\net6.0\MikuMikuMethods.dll</HintPath>
-		</Reference>
+	  <Reference Include="MikuMikuMethods">
+	    <HintPath>..\..\MikuMikuMethods\MikuMikuMethods\bin\Release\net7.0\MikuMikuMethods.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 </Project>

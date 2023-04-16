@@ -2,6 +2,7 @@
 using MikuMikuMethods.Mme;
 using MikuMikuMethods.Mme.Element;
 using MikuMikuMethods.Pmm;
+using MikuMikuMethods.Pmx;
 
 namespace MmdMapMaid.Core.Models.Pmm;
 public class PmmPathReplacer
@@ -72,6 +73,35 @@ public class PmmPathReplacer
             path => Pmm.Accessories[targetIndex].Path = path,
             newPath,
             editingEmmTogether);
+    }
+
+    public void Remove(IEnumerable<int> targetModelIndices, IEnumerable<int> targetAccessoryIndices, bool editingEmmTogether)
+    {
+        var targetModels = targetModelIndices.Select(i => Pmm.Models[i]).ToArray();
+        var targetAcses = targetAccessoryIndices.Select(i => Pmm.Accessories[i]).ToArray();
+
+        foreach (var item in targetModels)
+        {
+            Pmm.Models.Remove(item);
+        }
+        foreach (var item in targetAcses)
+        {
+            Pmm.Accessories.Remove(item);
+        }
+
+        if (Emm is not null && editingEmmTogether)
+        {
+            remove(targetModels.Select(model => model.Path));
+            remove(targetAcses.Select(model => model.Path));
+        }
+
+        void remove(IEnumerable<string> paths)
+        {
+            foreach (var obj in paths.Select(FindTargetObject).Where(obj => obj is not null).Cast<EmmObject>())
+            {
+                Emm.RemoveObject(obj);
+            }
+        }
     }
 
     public string? Save(SaveOptions? options = null)

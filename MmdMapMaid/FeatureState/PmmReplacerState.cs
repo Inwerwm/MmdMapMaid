@@ -3,6 +3,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using MmdMapMaid.Core.Models.Pmm;
 using MmdMapMaid.Helpers;
 using MmdMapMaid.Models;
+using Windows.ApplicationModel;
+using Windows.Media.Core;
 using Windows.Storage;
 
 namespace MmdMapMaid.FeatureState;
@@ -46,6 +48,11 @@ public partial class PmmReplacerState : ObservableObject
     {
         Replacer = new(file.Path);
 
+        UpdatePathGroups();
+    }
+
+    private void UpdatePathGroups()
+    {
         ModelInfo.Clear();
         foreach (var (name, path, index) in Replacer.GetModels())
         {
@@ -76,6 +83,10 @@ public partial class PmmReplacerState : ObservableObject
             Replacer.ReplaceAccessoryPath(item.Index, item.Path, EnableEditEmm);
         }
 
+        //Replacer.Remove(ModelInfo.Where(info => info.IsRemoved).Select(info => info.Index).ToArray(), AcsInfo.Where(info => info.IsRemoved).Select(info => info.Index).ToArray(), EnableEditEmm);
+
         Replacer.Save();
+
+        UpdatePathGroups();
     }
 }
