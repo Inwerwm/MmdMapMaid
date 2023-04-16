@@ -16,19 +16,12 @@
             </Grid.ColumnDefinitions>
 
             <ScrollViewer Height="{x:Bind ContentArea.ViewportHeight, Mode=OneWay}" Grid.Column="0">
-                <ListView x:Name="EmmObjectsListView" ItemsSource="{x:Bind ViewModel.Extractor.EmmObjects, Mode=OneWay}"
-                          SelectionChanged="{x:Bind ViewModel.Extractor.UpdateSelectedObjects}"
-                          SelectionMode="Multiple"
-                          VerticalContentAlignment="Center">
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="models:IndexedFiledata">
-                            <StackPanel Margin="0,10">
-                                <TextBlock TextWrapping="Wrap" Text="{x:Bind Name}" Margin="0,5" FontSize="{StaticResource SemiLargeFontSize}" FontWeight="SemiBold" />
-                                <TextBlock TextWrapping="Wrap" Text="{x:Bind Path}" FontSize="{StaticResource SmallFontSize}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <ListView x:Name="EmmObjectsListView"
+                    ItemsSource="{x:Bind ViewModel.Extractor.EmmObjects, Mode=OneWay}"
+                    ItemTemplate="{StaticResource NamePathTemplate}"
+                    SelectionChanged="{x:Bind ViewModel.Extractor.UpdateSelectedObjects}"
+                    SelectionMode="Multiple"
+                    VerticalContentAlignment="Center" />
             </ScrollViewer>
 
             <ScrollViewer Height="{x:Bind ContentArea.ViewportHeight, Mode=OneWay}" Grid.Column="1">

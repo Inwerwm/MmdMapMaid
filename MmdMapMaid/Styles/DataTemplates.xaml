@@ -51,4 +51,11 @@
         </Grid>
     </DataTemplate>
 
+    <DataTemplate x:Key="NamePathTemplate">
+        <StackPanel Margin="0,10">
+            <TextBlock TextWrapping="Wrap" Text="{Binding Name}" Margin="0,5" FontSize="{StaticResource SemiLargeFontSize}" FontWeight="SemiBold" />
+            <TextBlock TextWrapping="Wrap" Text="{Binding Path}" FontSize="{StaticResource SmallFontSize}" />
+        </StackPanel>
+    </DataTemplate>
+
 </ResourceDictionary>

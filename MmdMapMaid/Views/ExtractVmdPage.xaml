@@ -14,21 +14,13 @@
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
 
-        <ScrollViewer VerticalAlignment="Stretch" Grid.Column="0">
-            <ListView x:Name="PmmModelsListView" ItemsSource="{x:Bind ViewModel.Extractor.PmmModels, Mode=OneWay}"
-                          SelectionChanged="{x:Bind ViewModel.Extractor.UpdateSelectedModels}"
-                          SelectionMode="Multiple"
-                          VerticalContentAlignment="Center">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models:PathInformation">
-                        <StackPanel Margin="0,10">
-                            <TextBlock TextWrapping="Wrap" Text="{x:Bind Name}" Margin="0,5" FontSize="{StaticResource SemiLargeFontSize}" FontWeight="SemiBold" />
-                            <TextBlock TextWrapping="Wrap" Text="{x:Bind Path}" FontSize="{StaticResource SmallFontSize}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </ScrollViewer>
+        <ListView x:Name="PmmModelsListView"
+            ItemsSource="{x:Bind ViewModel.Extractor.PmmModels, Mode=OneWay}"
+            ItemTemplate="{StaticResource NamePathTemplate}"
+            SelectionChanged="{x:Bind ViewModel.Extractor.UpdateSelectedModels}"
+            SelectionMode="Multiple"
+            VerticalContentAlignment="Stretch"
+            Margin="0,0,0,20" />
 
         <ScrollViewer VerticalAlignment="Stretch" Padding="0,0,20,0" Grid.Column="1">
             <StackPanel>
