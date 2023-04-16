@@ -31,6 +31,7 @@ public partial class ReplacementBoxViewModel : ObservableRecipient
     {
         _searchQuery = string.Empty;
         _replacement = string.Empty;
+        _useRegex = true;
     }
 
     [RelayCommand]
