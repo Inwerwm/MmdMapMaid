@@ -54,6 +54,7 @@
             <TextBlock x:Uid="Label_Settings" FontSize="{StaticResource TitleTextBlockFontSize}" />
             <StackPanel Orientation="Horizontal" >
                 <ToggleSwitch x:Uid="Switch_WithEditEmm" IsOn="{x:Bind ViewModel.ReplacerState.EnableEditEmm, Mode=TwoWay}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
+                <Button x:Uid="Button_ResetAll" Command="{x:Bind ViewModel.ResetAllCommand}" />
             </StackPanel>
         </StackPanel>
 

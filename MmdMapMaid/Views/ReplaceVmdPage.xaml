@@ -48,7 +48,7 @@
         <StackPanel Visibility="{x:Bind ViewModel.IsVmdLoaded, Converter={StaticResource boolToVisibility}, Mode=OneWay}" Grid.Row="4">
             <TextBlock x:Uid="Label_Settings" FontSize="{StaticResource TitleTextBlockFontSize}" />
             <StackPanel Orientation="Horizontal" >
-                
+                <Button x:Uid="Button_ResetAll" Command="{x:Bind ViewModel.ResetAllCommand}" />
             </StackPanel>
         </StackPanel>
 

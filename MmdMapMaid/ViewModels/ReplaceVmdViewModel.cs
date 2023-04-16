@@ -91,4 +91,13 @@ public partial class ReplaceVmdViewModel : ObservableRecipient
     }
 
     private bool CanWriteVmdExecute() => IsVmdLoaded;
+
+    [RelayCommand]
+    private void ResetAll()
+    {
+        foreach (var path in ReplacerState.PathGroups.SelectMany(g => g))
+        {
+            path.RestorePath();
+        }
+    }
 }

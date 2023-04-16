@@ -97,4 +97,13 @@ public partial class PmmViewModel : ObservableRecipient
     }
 
     private bool CanWritePmmExecute() => IsPmmLoaded;
+
+    [RelayCommand]
+    public void ResetAll()
+    {
+        foreach (var path in ReplacerState.PathGroups.SelectMany(g => g))
+        {
+            path.RestorePath();
+        }
+    }
 }

@@ -318,4 +318,7 @@
   <data name="Switch_UseRegex.OnContent" xml:space="preserve">
     <value>Use Regex</value>
   </data>
+  <data name="Button_ResetAll.Content" xml:space="preserve">
+    <value>Reset All</value>
+  </data>
 </root>
