@@ -14,46 +14,53 @@
         <CollectionViewSource x:Name="PathsViewSource" Source="{x:Bind ViewModel.ReplacerState.PathGroups}" IsSourceGrouped="True" />
     </Page.Resources>
     
-    <ScrollViewer x:Name="ContentArea" AllowDrop="True" DragOver="ContentArea_DragOver" Drop="ContentArea_Drop" Padding="0,20,30,30">
-        <StackPanel Spacing="5">
-            <Grid ColumnSpacing="15">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+    <Grid x:Name="ContentArea" AllowDrop="True" DragOver="ContentArea_DragOver" Drop="ContentArea_Drop" Padding="0,20,30,30" RowSpacing="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Grid ColumnSpacing="15" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-                <Button x:Uid="Button_ReadVmd" Command="{x:Bind ViewModel.ReadVmdCommand}" HorizontalAlignment="Stretch" Grid.Column="0" />
-                <Button x:Uid="Button_WriteVmd" Command="{x:Bind ViewModel.WriteVmdCommand}" HorizontalAlignment="Stretch" Grid.Column="1" />
-            </Grid>
-            <InfoBar Severity="{x:Bind ViewModel.WriteVmdInfoSeverty, Mode=OneWay}" Message="{x:Bind ViewModel.VmdWriteInfobarMessage, Mode=OneWay}" IsOpen="{x:Bind ViewModel.OpenCompleteMessage, Mode=TwoWay}" />
+            <Button x:Uid="Button_ReadVmd" Command="{x:Bind ViewModel.ReadVmdCommand}" HorizontalAlignment="Stretch" Grid.Column="0" />
+            <Button x:Uid="Button_WriteVmd" Command="{x:Bind ViewModel.WriteVmdCommand}" HorizontalAlignment="Stretch" Grid.Column="1" />
+        </Grid>
+        <InfoBar Severity="{x:Bind ViewModel.WriteVmdInfoSeverty, Mode=OneWay}" Message="{x:Bind ViewModel.VmdWriteInfobarMessage, Mode=OneWay}" IsOpen="{x:Bind ViewModel.OpenCompleteMessage, Mode=TwoWay}" Grid.Row="1" />
 
-            <TextBlock
-                x:Uid="DragAndDropPlaceHolder"
-                Visibility="{x:Bind ViewModel.IsVmdLoaded, Mode=OneWay, Converter={StaticResource negaBoolToVisibility}}"
-                Opacity="0.6"
-                HorizontalTextAlignment="Center"
-                Margin="50" />
+        <TextBlock
+            x:Uid="DragAndDropPlaceHolder"
+            Visibility="{x:Bind ViewModel.IsVmdLoaded, Mode=OneWay, Converter={StaticResource negaBoolToVisibility}}"
+            Opacity="0.6"
+            HorizontalTextAlignment="Center"
+            Margin="50"
+            Grid.Row="2"/>
 
-            <controls:ReplacementBox TextListView="{x:Bind PathsListView, Mode=OneWay}" Visibility="{x:Bind ViewModel.IsVmdLoaded, Converter={StaticResource boolToVisibility}, Mode=OneWay}" />
+        <controls:ReplacementBox TextListView="{x:Bind PathsListView, Mode=OneWay}" Visibility="{x:Bind ViewModel.IsVmdLoaded, Converter={StaticResource boolToVisibility}, Mode=OneWay}" Grid.Row="3" />
 
-            <ListView x:Name="PathsListView" ItemsSource="{x:Bind PathsViewSource.View}" ItemTemplate="{StaticResource EditablePathTemplate}" SelectionMode="None" >
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsStackPanel AreStickyGroupHeadersEnabled="True"/>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.GroupStyle>
-                    <GroupStyle >
-                        <GroupStyle.HeaderTemplate>
-                            <DataTemplate x:DataType="models:PathGroup">
-                                <Border AutomationProperties.Name="{x:Bind Key}">
-                                    <TextBlock Text="{x:Bind Key}" Style="{ThemeResource TitleTextBlockStyle}"/>
-                                </Border>
-                            </DataTemplate>
-                        </GroupStyle.HeaderTemplate>
-                    </GroupStyle>
-                </ListView.GroupStyle>
-            </ListView>
-        </StackPanel>
-    </ScrollViewer>
+        <ListView x:Name="PathsListView" ItemsSource="{x:Bind PathsViewSource.View}" ItemTemplate="{StaticResource EditablePathTemplate}" SelectionMode="None" Grid.Row="4" >
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsStackPanel AreStickyGroupHeadersEnabled="True"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.GroupStyle>
+                <GroupStyle >
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate x:DataType="models:PathGroup">
+                            <Border AutomationProperties.Name="{x:Bind Key}">
+                                <TextBlock Text="{x:Bind Key}" Style="{ThemeResource TitleTextBlockStyle}"/>
+                            </Border>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ListView.GroupStyle>
+        </ListView>
+    </Grid>
 </Page>
