@@ -7,79 +7,76 @@
     xmlns:models="using:MmdMapMaid.Models"
     mc:Ignorable="d">
 
-    <ScrollViewer x:Name="ContentArea" Padding="0,0,0,20">
-        <Grid ColumnSpacing="40">
+    <Grid x:Name="ContentArea" Padding="0,0,0,20" ColumnSpacing="40">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+
+        <ListView x:Name="EmmModelsListView"
+            ItemsSource="{x:Bind ViewModel.OrderMapper.EmmModels, Mode=OneWay}"
+            ItemTemplate="{StaticResource NamePathTemplate}"
+            SelectionChanged="{x:Bind ViewModel.OrderMapper.UpdateSelectedModels}"
+            SelectionMode="Multiple"
+            VerticalContentAlignment="Stretch"
+            Grid.Column="0" />
+
+        <Grid ColumnSpacing="5" RowSpacing="20" Grid.Column="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-            <ScrollViewer Grid.Column="0" Height="{x:Bind ContentArea.ViewportHeight, Mode=OneWay}">
-                <ListView x:Name="EmmModelsListView"
-                    ItemsSource="{x:Bind ViewModel.OrderMapper.EmmModels, Mode=OneWay}"
-                    ItemTemplate="{StaticResource NamePathTemplate}"
-                    SelectionChanged="{x:Bind ViewModel.OrderMapper.UpdateSelectedModels}"
-                    SelectionMode="Multiple"
-                    VerticalContentAlignment="Center" />
-            </ScrollViewer>
+            <Button x:Uid="Button_ReadEmm" Command="{x:Bind ViewModel.OrderMapper.ReadEmmCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="0" />
+            <TextBox 
+                x:Uid="EmmOrderMapper_EmmPath"
+                IsReadOnly="True" 
+                Text="{x:Bind ViewModel.OrderMapper.EmmPath, Mode=OneWay}" 
+                TextWrapping="Wrap" 
+                AllowDrop="True"
+                DragOver="EmmDragOver"
+                Drop="TargetEmmDrop"
+                Grid.Column="1" 
+                Grid.Row="0" />
 
-            <Grid ColumnSpacing="5" RowSpacing="20" Grid.Column="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+            <Button Command="{x:Bind ViewModel.OrderMapper.ReadSourcePmxCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="1" >
+                <TextBlock x:Uid="Button_ReadSourcePmx" TextWrapping="WrapWholeWords" />
+            </Button>
+            <TextBox
+                x:Uid="EmmOrderMapper_SourcePmxPath"
+                IsReadOnly="True"
+                Text="{x:Bind ViewModel.OrderMapper.SourcePmxPath, Mode=OneWay}"
+                TextWrapping="Wrap"
+                AllowDrop="True"
+                DragOver="EmmDragOver"
+                Drop="SourceModelDrop"
+                Grid.Column="1"
+                Grid.Row="1" />
 
-                <Button x:Uid="Button_ReadEmm" Command="{x:Bind ViewModel.OrderMapper.ReadEmmCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="0" />
-                <TextBox 
-                    x:Uid="EmmOrderMapper_EmmPath"
-                    IsReadOnly="True" 
-                    Text="{x:Bind ViewModel.OrderMapper.EmmPath, Mode=OneWay}" 
-                    TextWrapping="Wrap" 
-                    AllowDrop="True"
-                    DragOver="EmmDragOver"
-                    Drop="TargetEmmDrop"
-                    Grid.Column="1" 
-                    Grid.Row="0" />
+            <Button Command="{x:Bind ViewModel.OrderMapper.ReadDestinationPmxCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="2" >
+                <TextBlock x:Uid="Button_ReadDestinationPmx" TextWrapping="WrapWholeWords" />
+            </Button>
+            <TextBox
+                x:Uid="EmmOrderMapper_DestinationPmxPath"
+                IsReadOnly="True"
+                Text="{x:Bind ViewModel.OrderMapper.DestinationPmxPath, Mode=OneWay}"
+                TextWrapping="Wrap"
+                AllowDrop="True"
+                DragOver="EmmDragOver"
+                Drop="DestinationModelDrop"
+                Grid.Column="1"
+                Grid.Row="2" />
 
-                <Button Command="{x:Bind ViewModel.OrderMapper.ReadSourcePmxCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="1" >
-                    <TextBlock x:Uid="Button_ReadSourcePmx" TextWrapping="WrapWholeWords" />
-                </Button>
-                <TextBox
-                    x:Uid="EmmOrderMapper_SourcePmxPath"
-                    IsReadOnly="True"
-                    Text="{x:Bind ViewModel.OrderMapper.SourcePmxPath, Mode=OneWay}"
-                    TextWrapping="Wrap"
-                    AllowDrop="True"
-                    DragOver="EmmDragOver"
-                    Drop="SourceModelDrop"
-                    Grid.Column="1"
-                    Grid.Row="1" />
+            <Button x:Uid="Button_Execute" Command="{x:Bind ViewModel.OrderMapper.MapOrderCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" />
 
-                <Button Command="{x:Bind ViewModel.OrderMapper.ReadDestinationPmxCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="2" >
-                    <TextBlock x:Uid="Button_ReadDestinationPmx" TextWrapping="WrapWholeWords" />
-                </Button>
-                <TextBox
-                    x:Uid="EmmOrderMapper_DestinationPmxPath"
-                    IsReadOnly="True"
-                    Text="{x:Bind ViewModel.OrderMapper.DestinationPmxPath, Mode=OneWay}"
-                    TextWrapping="Wrap"
-                    AllowDrop="True"
-                    DragOver="EmmDragOver"
-                    Drop="DestinationModelDrop"
-                    Grid.Column="1"
-                    Grid.Row="2" />
-
-                <Button x:Uid="Button_Execute" Command="{x:Bind ViewModel.OrderMapper.MapOrderCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" />
-
-                <InfoBar Severity="Success" VerticalAlignment="Stretch" Title="{x:Bind ViewModel.ProgressTitle, Mode=OneWay}" IsOpen="{x:Bind ViewModel.OpenProgressInfobar, Mode=TwoWay}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" />
-            </Grid>
+            <InfoBar Severity="Success" VerticalAlignment="Stretch" Title="{x:Bind ViewModel.ProgressTitle, Mode=OneWay}" IsOpen="{x:Bind ViewModel.OpenProgressInfobar, Mode=TwoWay}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" />
         </Grid>
-    </ScrollViewer>
+    </Grid>
 </Page>
