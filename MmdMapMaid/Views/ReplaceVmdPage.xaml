@@ -11,9 +11,6 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <conv:BoolNegationConverter x:Key="negateBool" />
-        <conv:BoolToVisibilityConverter x:Key="boolToVisibility" />
-        <helpers:NegatedBoolToVisibility x:Key="negaBoolToVisibility" />
         <CollectionViewSource x:Name="PathsViewSource" Source="{x:Bind ViewModel.ReplacerState.PathGroups}" IsSourceGrouped="True" />
     </Page.Resources>
     
@@ -39,7 +36,7 @@
 
             <controls:ReplacementBox TextListView="{x:Bind PathsListView, Mode=OneWay}" Visibility="{x:Bind ViewModel.IsVmdLoaded, Converter={StaticResource boolToVisibility}, Mode=OneWay}" />
 
-            <ListView x:Name="PathsListView" ItemsSource="{x:Bind PathsViewSource.View}" SelectionMode="None" >
+            <ListView x:Name="PathsListView" ItemsSource="{x:Bind PathsViewSource.View}" ItemTemplate="{StaticResource EditablePathTemplate}" SelectionMode="None" >
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <ItemsStackPanel AreStickyGroupHeadersEnabled="True"/>
@@ -56,44 +53,6 @@
                         </GroupStyle.HeaderTemplate>
                     </GroupStyle>
                 </ListView.GroupStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models:PathInformation">
-                        <Grid ColumnSpacing="5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="50" />
-                                <ColumnDefinition Width="50" />
-                                <ColumnDefinition Width="50" />
-                                <ColumnDefinition Width="4*" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-
-                            <TextBlock Text="{x:Bind Name}" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="0,0,15,0" Grid.Column="0"/>
-                            <TextBlock Text="→" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1"/>
-                            <Button Command="{Binding RestorePathCommand}" IsEnabled="{x:Bind IsEdited, Mode=OneWay}" Grid.Column="2" Grid.Row="0" >
-                                <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe777;"/>
-                            </Button>
-                            <ToggleButton IsChecked="{x:Bind IsRemoved, Mode=TwoWay}" Grid.Column="3" Grid.Row="0" >
-                                <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe738;"/>
-                            </ToggleButton>
-                            <controls:BindableRichEditBox
-                                Text="{x:Bind Path, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                TextWrapping="Wrap"
-                                AcceptsReturn="False"
-                                ClipboardCopyFormat="PlainText"
-                                IsEnabled="{x:Bind IsRemoved, Mode=OneWay, Converter={StaticResource negateBool}}"
-                                IsSpellCheckEnabled="False"
-                                MaxLength="256"
-                                VerticalAlignment="Center"
-                                Grid.Column="4"
-                                Grid.Row="0" />
-                            <Border HorizontalAlignment="Stretch" BorderBrush="#4888" BorderThickness="1" Margin="0,0,5,0" Grid.Column="0" Grid.Row="1" />
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
             </ListView>
         </StackPanel>
     </ScrollViewer>

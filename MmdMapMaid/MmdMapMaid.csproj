@@ -18,6 +18,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Controls\ReplacementBox.xaml" />
+    <None Remove="Styles\DataTemplates.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -55,6 +56,9 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Styles\DataTemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Controls\ReplacementBox.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
