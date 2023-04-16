@@ -15,17 +15,20 @@ public partial class PathInformation : ObservableRecipient
     private bool _isEdited;
     [ObservableProperty]
     private bool _isRemoved;
+    [ObservableProperty]
+    private bool _isRemovable;
 
     public string InitialPath
     {
         get;
     }
 
-    public PathInformation(int index, string name, string path)
+    public PathInformation(int index, string name, string path, bool isRemovable = true)
     {
         _index = index;
         _name = name;
         _path = path;
+        _isRemovable = isRemovable;
 
         InitialPath = path;
 

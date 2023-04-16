@@ -56,13 +56,13 @@ public partial class PmmReplacerState : ObservableObject
         ModelInfo.Clear();
         foreach (var (name, path, index) in Replacer.GetModels())
         {
-            ModelInfo.Add(new(index, name, path));
+            ModelInfo.Add(new(index, name, path, false));
         }
 
         AcsInfo.Clear();
         foreach (var (name, path, index) in Replacer.GetAccessories())
         {
-            AcsInfo.Add(new(index, name, path));
+            AcsInfo.Add(new(index, name, path, false));
         }
 
         PathGroups.Clear();

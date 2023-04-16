@@ -15,8 +15,8 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="50" />
-                <ColumnDefinition Width="50" />
-                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="4*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -30,10 +30,10 @@
                     <Run FontFamily="{StaticResource SymbolThemeFontFamily}" Text="&#xe72a;"/>
                 </TextBlock.Inlines>
             </TextBlock>
-            <Button Command="{Binding RestorePathCommand}" IsEnabled="{Binding IsEdited, Mode=OneWay}" Grid.Column="2" Grid.Row="0" >
+            <Button Command="{Binding RestorePathCommand}" IsEnabled="{Binding IsEdited, Mode=OneWay}" Width="50" Grid.Column="2" Grid.Row="0" >
                 <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe777;"/>
             </Button>
-            <ToggleButton IsChecked="{Binding IsRemoved, Mode=TwoWay}" Grid.Column="3" Grid.Row="0" >
+            <ToggleButton IsChecked="{Binding IsRemoved, Mode=TwoWay}" Visibility="{Binding IsRemovable, Converter={StaticResource boolToVisibility}}" Width="50" Grid.Column="3" Grid.Row="0" >
                 <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe738;"/>
             </ToggleButton>
             <controls:BindableRichEditBox
