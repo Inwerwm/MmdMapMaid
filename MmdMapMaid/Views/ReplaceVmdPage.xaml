@@ -20,6 +20,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
@@ -43,8 +44,15 @@
             Grid.Row="2"/>
 
         <controls:ReplacementBox TextListView="{x:Bind PathsListView, Mode=OneWay}" Visibility="{x:Bind ViewModel.IsVmdLoaded, Converter={StaticResource boolToVisibility}, Mode=OneWay}" Grid.Row="3" />
+        
+        <StackPanel Visibility="{x:Bind ViewModel.IsVmdLoaded, Converter={StaticResource boolToVisibility}, Mode=OneWay}" Grid.Row="4">
+            <TextBlock x:Uid="Label_Settings" FontSize="{StaticResource TitleTextBlockFontSize}" />
+            <StackPanel Orientation="Horizontal" >
+                
+            </StackPanel>
+        </StackPanel>
 
-        <ListView x:Name="PathsListView" ItemsSource="{x:Bind PathsViewSource.View}" ItemTemplate="{StaticResource EditablePathTemplate}" SelectionMode="None" Grid.Row="4" >
+        <ListView x:Name="PathsListView" ItemsSource="{x:Bind PathsViewSource.View}" ItemTemplate="{StaticResource EditablePathTemplate}" SelectionMode="None" Grid.Row="5" >
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <ItemsStackPanel AreStickyGroupHeadersEnabled="True"/>

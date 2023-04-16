@@ -21,6 +21,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -36,8 +37,6 @@
 
             <Button x:Uid="Button_ReadPmm" Command="{x:Bind ViewModel.ReadPmmCommand}" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0" />
             <Button x:Uid="Button_WritePmm" Command="{x:Bind ViewModel.WritePmmCommand}" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="1" />
-
-            <ToggleSwitch x:Uid="Switch_WithEditEmm" IsOn="{x:Bind ViewModel.ReplacerState.EnableEditEmm, Mode=TwoWay}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
         </Grid>
         <InfoBar x:Uid="Pmm_WriteInfoBar" Severity="{x:Bind ViewModel.WritePmmInfoSeverty, Mode=OneWay}" Message="{x:Bind ViewModel.PmmWriteInfobarMessage, Mode=OneWay}" IsOpen="{x:Bind ViewModel.OpenCompleteMessage, Mode=TwoWay}" Grid.Row="1" />
 
@@ -51,7 +50,14 @@
 
         <controls:ReplacementBox TextListView="{x:Bind PathsListView, Mode=OneWay}" Visibility="{x:Bind ViewModel.IsPmmLoaded, Converter={StaticResource boolToVisibility}, Mode=OneWay}" Grid.Row="3" />
 
-        <ListView x:Name="PathsListView" ItemsSource="{x:Bind PathsViewSource.View}" ItemTemplate="{StaticResource EditablePathTemplate}" SelectionMode="None" Grid.Row="4" >
+        <StackPanel Visibility="{x:Bind ViewModel.IsPmmLoaded, Converter={StaticResource boolToVisibility}, Mode=OneWay}" Grid.Row="4">
+            <TextBlock x:Uid="Label_Settings" FontSize="{StaticResource TitleTextBlockFontSize}" />
+            <StackPanel Orientation="Horizontal" >
+                <ToggleSwitch x:Uid="Switch_WithEditEmm" IsOn="{x:Bind ViewModel.ReplacerState.EnableEditEmm, Mode=TwoWay}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
+            </StackPanel>
+        </StackPanel>
+
+        <ListView x:Name="PathsListView" ItemsSource="{x:Bind PathsViewSource.View}" ItemTemplate="{StaticResource EditablePathTemplate}" SelectionMode="None" Grid.Row="5" >
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <ItemsStackPanel AreStickyGroupHeadersEnabled="True"/>
