@@ -20,13 +20,6 @@ public partial class PmmViewModel : ObservableRecipient
     public bool _isPmmLoaded;
 
     [ObservableProperty]
-    private string _searchQuery;
-    [ObservableProperty]
-    private string _replacement;
-    [ObservableProperty]
-    private bool _useRegex;
-
-    [ObservableProperty]
     private InfoBarSeverity _writePmmInfoSeverty;
     [ObservableProperty]
     private bool _openCompleteMessage;
@@ -40,10 +33,6 @@ public partial class PmmViewModel : ObservableRecipient
         _replacerState = App.GetService<PmmReplacerState>();
         _openCompleteMessage = false;
         _pmmWriteInfobarMessage = "";
-
-        _searchQuery = "";
-        _replacement = "";
-        _useRegex = true;
 
         _isPmmLoaded = ReplacerState.IsPmmLoaded;
 
@@ -105,16 +94,6 @@ public partial class PmmViewModel : ObservableRecipient
         ReplacerState.WritePmm();
 
         NoticeEndWrite();
-    }
-
-    [RelayCommand]
-    private void ReplaceAll()
-    {
-        if (string.IsNullOrWhiteSpace(SearchQuery)) { return; }
-        foreach (var pathInfo in ReplacerState.PathGroups.SelectMany(g => g))
-        {
-            pathInfo.Path = UseRegex ? Regex.Replace(pathInfo.Path, SearchQuery, Replacement) : pathInfo.Path.Replace(SearchQuery, Replacement);
-        }
     }
 
     private bool CanWritePmmExecute() => IsPmmLoaded;

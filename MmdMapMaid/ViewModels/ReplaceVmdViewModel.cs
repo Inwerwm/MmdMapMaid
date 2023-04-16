@@ -20,13 +20,6 @@ public partial class ReplaceVmdViewModel : ObservableRecipient
     public bool _isVmdLoaded;
 
     [ObservableProperty]
-    private string _searchQuery;
-    [ObservableProperty]
-    private string _replacement;
-    [ObservableProperty]
-    private bool _useRegex;
-
-    [ObservableProperty]
     private InfoBarSeverity _writeVmdInfoSeverty;
     [ObservableProperty]
     private bool _openCompleteMessage;
@@ -40,10 +33,6 @@ public partial class ReplaceVmdViewModel : ObservableRecipient
         _replacerState = App.GetService<VmdReplacerState>();
         _openCompleteMessage = false;
         _vmdWriteInfobarMessage = "";
-
-        _searchQuery = "";
-        _replacement = "";
-        _useRegex = true;
 
         _isVmdLoaded = ReplacerState.IsVmdLoaded;
 
@@ -99,16 +88,6 @@ public partial class ReplaceVmdViewModel : ObservableRecipient
             NoticeEndWrite();
         }
         catch (OperationCanceledException) { }
-    }
-
-    [RelayCommand]
-    private void ReplaceAll()
-    {
-        if (string.IsNullOrWhiteSpace(SearchQuery)) { return; }
-        foreach (var pathInfo in ReplacerState.PathGroups.SelectMany(g => g))
-        {
-            pathInfo.Path = UseRegex ? Regex.Replace(pathInfo.Path, SearchQuery, Replacement) : pathInfo.Path.Replace(SearchQuery, Replacement);
-        }
     }
 
     private bool CanWriteVmdExecute() => IsVmdLoaded;

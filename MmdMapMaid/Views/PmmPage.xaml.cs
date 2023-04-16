@@ -14,32 +14,10 @@ public sealed partial class PmmPage : Page
         get;
     }
 
-    private BindableRichEditBox[] PathBoxes
-    {
-        get;
-        set;
-    }
-
     public PmmPage()
     {
         ViewModel = App.GetService<PmmViewModel>();
         InitializeComponent();
-
-        ViewModel.OnPathChanged += (_, _) =>
-        {
-            Search();
-        };
-        PathsListView.LayoutUpdated += (_, _) => PathBoxes = PathsListView.FindDescendants().OfType<BindableRichEditBox>().ToArray();
-    }
-
-    private void SearchQueryChanged(object sender, TextChangedEventArgs e)
-    {
-        Search();
-    }
-
-    private void Search()
-    {
-        SearchHelpers.HighlightSearch(this, PathBoxes, ViewModel.SearchQuery, UseRegex.IsOn);
     }
 
     private void ContentArea_DragOver(object _, DragEventArgs e)
@@ -53,10 +31,5 @@ public sealed partial class PmmPage : Page
         if (file is null) { return; }
 
         ViewModel.ReadPmm(file);
-    }
-
-    private void UseRegex_Toggled(object sender, RoutedEventArgs e)
-    {
-        Search();
     }
 }
