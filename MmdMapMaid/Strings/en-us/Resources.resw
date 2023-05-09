@@ -321,4 +321,7 @@
   <data name="Button_ResetAll.Content" xml:space="preserve">
     <value>Reset All</value>
   </data>
+  <data name="Shell_MorphInterpolation.Content" xml:space="preserve">
+    <value>MorphInterpolation</value>
+  </data>
 </root>

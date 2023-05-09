@@ -1,0 +1,23 @@
+<UserControl
+    x:Class="MmdMapMaid.Controls.EditableBezierCurve"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MmdMapMaid.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid>
+        <Viewbox>
+            <Grid>
+                <Border BorderBrush="Black" BorderThickness="4" Background="Transparent" Opacity="0.25" Width="{x:Bind Size, Mode=TwoWay}" Height="{x:Bind Size, Mode=TwoWay}" />
+                <Canvas x:Name="CurveCanvas" Width="{x:Bind Size, Mode=TwoWay}" Height="{x:Bind Size, Mode=TwoWay}">
+                    <Path x:Name="BezierPath" Stroke="Black" StrokeThickness="3" />
+                    <Ellipse x:Name="EarlierControlPointHandle" Width="20" Height="20" Fill="Blue" Canvas.ZIndex="100" />
+                    <Ellipse x:Name="LaterControlPointHandle" Width="20" Height="20" Fill="Red" Canvas.ZIndex="100" />
+                </Canvas>
+            </Grid>
+        </Viewbox>
+    </Grid>
+
+</UserControl>

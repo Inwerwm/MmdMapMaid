@@ -17,6 +17,7 @@
     <WindowsPackageType>None</WindowsPackageType>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Controls\EditableBezierCurve.xaml" />
     <None Remove="Controls\ReplacementBox.xaml" />
     <None Remove="Styles\DataTemplates.xaml" />
   </ItemGroup>
@@ -56,6 +57,9 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Controls\EditableBezierCurve.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Styles\DataTemplates.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
