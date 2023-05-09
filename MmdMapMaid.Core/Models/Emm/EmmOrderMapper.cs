@@ -54,7 +54,7 @@ public class EmmOrderMapper
         {
             var mappedSubset = new EmmMaterial[destinationModel.Materials.Count];
 
-            foreach (var (subset, i) in objSetting.Subsets.Select((s, i) => (s, i)))
+            foreach (var (subset, i) in objSetting.Subsets.Select((s, i) => (s, i)).TakeWhile((s, i) => i < indexMap.Length))
             {
                 var mappedIndex = indexMap[i];
                 if (mappedIndex == -1) { continue; }
