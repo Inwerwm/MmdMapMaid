@@ -16,7 +16,11 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <controls:EditableBezierCurve Size="{x:Bind Number.Value, Mode=TwoWay}"/>
-        <NumberBox x:Name="Number" Value="1000" Grid.Row="1"/>
+        <controls:EditableBezierCurve Size="{x:Bind Size.Value, Mode=TwoWay}" EarlierControlPoint="{x:Bind ViewModel.EarlierPoint, Mode=TwoWay}" LaterControlPoint="{x:Bind ViewModel.LaterPoint, Mode=TwoWay}" Origin="BottomLeft"/>
+        <StackPanel Grid.Column="1">
+            <NumberBox x:Name="Size" Value="1000"/>
+            <TextBlock Text="{x:Bind ViewModel.EarlierPoint, Mode=TwoWay}"/>
+            <TextBlock Text="{x:Bind ViewModel.LaterPoint, Mode=TwoWay}"/>
+        </StackPanel>
     </Grid>
 </Page>
