@@ -1,11 +1,8 @@
-using System.Reflection.Metadata;
-using Microsoft.UI;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Shapes;
-using Windows.Devices.Geolocation;
 using Windows.Foundation;
 
 namespace MmdMapMaid.Controls;
@@ -50,51 +47,6 @@ public sealed partial class EditableBezierCurve : UserControl
         set => SetValue(SizeProperty, value);
     }
 
-    private static void EarlierControlPointPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
-    {
-        var instance = ((EditableBezierCurve)dependencyObject);
-        instance.DrawCubicBezier(instance.StartPoint, instance.EarlierControlPoint, instance.LaterControlPoint, instance.EndPoint);
-
-        // 座標を更新
-        instance.UpdateLine(instance.EarlierLine, instance.StartPoint, instance.EarlierControlPoint);
-
-        instance.SetHandlePosition(instance.EarlierControlPointHandle, instance.EarlierControlPoint);
-    }
-
-    private static void LaterControlPointPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
-    {
-        var instance = ((EditableBezierCurve)dependencyObject);
-        instance.DrawCubicBezier(instance.StartPoint, instance.EarlierControlPoint, instance.LaterControlPoint, instance.EndPoint);
-
-        // 座標を更新
-        instance.UpdateLine(instance.LaterLine, instance.LaterControlPoint, instance.EndPoint);
-
-        instance.SetHandlePosition(instance.LaterControlPointHandle, instance.LaterControlPoint);
-    }
-
-    private static void SizePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
-    {
-        var instance = ((EditableBezierCurve)dependencyObject);
-        var newSize = (double)dependencyPropertyChangedEventArgs.NewValue;
-        var oldValue = (double)dependencyPropertyChangedEventArgs.OldValue;
-        var scale = oldValue == 0 ? 1 : newSize / oldValue;
-
-        instance.CurveCanvas.Width = newSize;
-        instance.CurveCanvas.Height = newSize;
-
-        instance.EndPoint = new Point(newSize, newSize);
-
-        instance.EarlierControlPoint = Mul(instance.EarlierControlPoint, scale);
-        instance.LaterControlPoint = Mul(instance.LaterControlPoint, scale);
-
-        instance.DrawCubicBezier(instance.StartPoint, instance.EarlierControlPoint, instance.LaterControlPoint, instance.EndPoint);
-
-        instance.UpdateLine(instance.EarlierLine, instance.StartPoint, instance.EarlierControlPoint);
-        instance.UpdateLine(instance.LaterLine, instance.LaterControlPoint, instance.EndPoint);
-    }
-
-    private static Point Mul(Point point, double scale) => new(point.X * scale, point.Y * scale);
-
     private Point StartPoint
     {
         get;
@@ -127,6 +79,59 @@ public sealed partial class EditableBezierCurve : UserControl
         AddDragHandlers(LaterControlPointHandle, p => LaterControlPoint = p);
     }
 
+    private static void EarlierControlPointPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+    {
+        var instance = ((EditableBezierCurve)dependencyObject);
+        instance.DrawCubicBezier(instance.StartPoint, instance.EarlierControlPoint, instance.LaterControlPoint, instance.EndPoint);
+        UpdateLine(instance.EarlierLine, instance.StartPoint, instance.EarlierControlPoint);
+        SetHandlePosition(instance.EarlierControlPointHandle, instance.EarlierControlPoint);
+    }
+
+    private static void LaterControlPointPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+    {
+        var instance = ((EditableBezierCurve)dependencyObject);
+        instance.DrawCubicBezier(instance.StartPoint, instance.EarlierControlPoint, instance.LaterControlPoint, instance.EndPoint);
+        UpdateLine(instance.LaterLine, instance.LaterControlPoint, instance.EndPoint);
+        SetHandlePosition(instance.LaterControlPointHandle, instance.LaterControlPoint);
+    }
+
+    private static void SizePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+    {
+        var instance = ((EditableBezierCurve)dependencyObject);
+        var newSize = (double)dependencyPropertyChangedEventArgs.NewValue;
+        var oldValue = (double)dependencyPropertyChangedEventArgs.OldValue;
+        var scale = oldValue == 0 ? 1 : newSize / oldValue;
+
+        instance.CurveCanvas.Width = newSize;
+        instance.CurveCanvas.Height = newSize;
+
+        instance.EndPoint = new Point(newSize, newSize);
+
+        instance.EarlierControlPoint = Mul(instance.EarlierControlPoint, scale);
+        instance.LaterControlPoint = Mul(instance.LaterControlPoint, scale);
+
+        instance.DrawCubicBezier(instance.StartPoint, instance.EarlierControlPoint, instance.LaterControlPoint, instance.EndPoint);
+
+        UpdateLine(instance.EarlierLine, instance.StartPoint, instance.EarlierControlPoint);
+        UpdateLine(instance.LaterLine, instance.LaterControlPoint, instance.EndPoint);
+    }
+
+    private static Point Mul(Point point, double scale) => new(point.X * scale, point.Y * scale);
+
+    private static void UpdateLine(Line line, Point start, Point end)
+    {
+        line.X1 = start.X;
+        line.Y1 = start.Y;
+        line.X2 = end.X;
+        line.Y2 = end.Y;
+    }
+
+    private static void SetHandlePosition(Ellipse handle, Point position)
+    {
+        Canvas.SetLeft(handle, position.X - handle.Width / 2);
+        Canvas.SetTop(handle, position.Y - handle.Height / 2);
+    }
+
     private void DrawCubicBezier(Point p0, Point p1, Point p2, Point p3)
     {
         var pathFigure = new PathFigure { StartPoint = p0 };
@@ -141,20 +146,6 @@ public sealed partial class EditableBezierCurve : UserControl
         pathGeometry.Figures.Add(pathFigure);
 
         BezierPath.Data = pathGeometry;
-    }
-
-    private void UpdateLine(Line line, Point start, Point end)
-    {
-        line.X1 = start.X;
-        line.Y1 = start.Y;
-        line.X2 = end.X;
-        line.Y2 = end.Y;
-    }
-
-    private void SetHandlePosition(Ellipse handle, Point position)
-    {
-        Canvas.SetLeft(handle, position.X - handle.Width / 2);
-        Canvas.SetTop(handle, position.Y - handle.Height / 2);
     }
 
     private void AddDragHandlers(Ellipse handle, Action<Point> onDrag)
