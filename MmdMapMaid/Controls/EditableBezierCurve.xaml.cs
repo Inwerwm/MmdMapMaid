@@ -67,56 +67,74 @@ public sealed partial class EditableBezierCurve : UserControl
         StartPoint = new Point(0, 0);
         EndPoint = new Point(Size, Size);
 
-        EarlierControlPoint = new Point(250, 250);
-        LaterControlPoint = new Point(750, 750);
+        // ‰Šú’l‚ð 0.0 ` 1.0 ‚Ì”ÍˆÍ‚ÉÝ’è
+        EarlierControlPoint = new Point(0.25, 0.25);
+        LaterControlPoint = new Point(0.75, 0.75);
 
-        DrawCubicBezier(StartPoint, EarlierControlPoint, LaterControlPoint, EndPoint);
+        // •`‰æŽž‚ÉÀ•W‚ðŒvŽZ
+        DrawCubicBezier(
+            StartPoint,
+            CalculateCanvasCoordinates(EarlierControlPoint),
+            CalculateCanvasCoordinates(LaterControlPoint),
+            EndPoint
+        );
 
-        SetHandlePosition(EarlierControlPointHandle, EarlierControlPoint);
-        SetHandlePosition(LaterControlPointHandle, LaterControlPoint);
+        SetHandlePosition(EarlierControlPointHandle, CalculateCanvasCoordinates(EarlierControlPoint));
+        SetHandlePosition(LaterControlPointHandle, CalculateCanvasCoordinates(LaterControlPoint));
 
-        AddDragHandlers(EarlierControlPointHandle, p => EarlierControlPoint = p);
-        AddDragHandlers(LaterControlPointHandle, p => LaterControlPoint = p);
+        AddDragHandlers(EarlierControlPointHandle, p => EarlierControlPoint = CalculateNormalizedCoordinates(p));
+        AddDragHandlers(LaterControlPointHandle, p => LaterControlPoint = CalculateNormalizedCoordinates(p));
     }
 
     private static void EarlierControlPointPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
     {
         var instance = ((EditableBezierCurve)dependencyObject);
-        instance.DrawCubicBezier(instance.StartPoint, instance.EarlierControlPoint, instance.LaterControlPoint, instance.EndPoint);
-        UpdateLine(instance.EarlierLine, instance.StartPoint, instance.EarlierControlPoint);
-        SetHandlePosition(instance.EarlierControlPointHandle, instance.EarlierControlPoint);
+        instance.DrawCubicBezier(
+            instance.StartPoint,
+            instance.CalculateCanvasCoordinates(instance.EarlierControlPoint),
+            instance.CalculateCanvasCoordinates(instance.LaterControlPoint),
+            instance.EndPoint
+        );
+        UpdateLine(instance.EarlierLine, instance.StartPoint, instance.CalculateCanvasCoordinates(instance.EarlierControlPoint));
+        SetHandlePosition(instance.EarlierControlPointHandle, instance.CalculateCanvasCoordinates(instance.EarlierControlPoint));
     }
 
     private static void LaterControlPointPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
     {
         var instance = ((EditableBezierCurve)dependencyObject);
-        instance.DrawCubicBezier(instance.StartPoint, instance.EarlierControlPoint, instance.LaterControlPoint, instance.EndPoint);
-        UpdateLine(instance.LaterLine, instance.LaterControlPoint, instance.EndPoint);
-        SetHandlePosition(instance.LaterControlPointHandle, instance.LaterControlPoint);
+        instance.DrawCubicBezier(
+            instance.StartPoint,
+            instance.CalculateCanvasCoordinates(instance.EarlierControlPoint),
+            instance.CalculateCanvasCoordinates(instance.LaterControlPoint),
+            instance.EndPoint
+        );
+        UpdateLine(instance.LaterLine, instance.CalculateCanvasCoordinates(instance.LaterControlPoint), instance.EndPoint);
+        SetHandlePosition(instance.LaterControlPointHandle, instance.CalculateCanvasCoordinates(instance.LaterControlPoint));
     }
 
     private static void SizePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
     {
         var instance = ((EditableBezierCurve)dependencyObject);
         var newSize = (double)dependencyPropertyChangedEventArgs.NewValue;
-        var oldValue = (double)dependencyPropertyChangedEventArgs.OldValue;
-        var scale = oldValue == 0 ? 1 : newSize / oldValue;
 
         instance.CurveCanvas.Width = newSize;
         instance.CurveCanvas.Height = newSize;
 
         instance.EndPoint = new Point(newSize, newSize);
 
-        instance.EarlierControlPoint = Mul(instance.EarlierControlPoint, scale);
-        instance.LaterControlPoint = Mul(instance.LaterControlPoint, scale);
+        instance.DrawCubicBezier(
+            instance.StartPoint,
+            instance.CalculateCanvasCoordinates(instance.EarlierControlPoint),
+            instance.CalculateCanvasCoordinates(instance.LaterControlPoint),
+            instance.EndPoint
+        );
 
-        instance.DrawCubicBezier(instance.StartPoint, instance.EarlierControlPoint, instance.LaterControlPoint, instance.EndPoint);
+        UpdateLine(instance.EarlierLine, instance.StartPoint, instance.CalculateCanvasCoordinates(instance.EarlierControlPoint));
+        UpdateLine(instance.LaterLine, instance.CalculateCanvasCoordinates(instance.LaterControlPoint), instance.EndPoint);
 
-        UpdateLine(instance.EarlierLine, instance.StartPoint, instance.EarlierControlPoint);
-        UpdateLine(instance.LaterLine, instance.LaterControlPoint, instance.EndPoint);
+        SetHandlePosition(instance.EarlierControlPointHandle, instance.CalculateCanvasCoordinates(instance.EarlierControlPoint));
+        SetHandlePosition(instance.LaterControlPointHandle, instance.CalculateCanvasCoordinates(instance.LaterControlPoint));
     }
-
-    private static Point Mul(Point point, double scale) => new(point.X * scale, point.Y * scale);
 
     private static void UpdateLine(Line line, Point start, Point end)
     {
@@ -130,6 +148,16 @@ public sealed partial class EditableBezierCurve : UserControl
     {
         Canvas.SetLeft(handle, position.X - handle.Width / 2);
         Canvas.SetTop(handle, position.Y - handle.Height / 2);
+    }
+
+    private Point CalculateNormalizedCoordinates(Point canvasPoint)
+    {
+        return new Point(canvasPoint.X / Size, canvasPoint.Y / Size);
+    }
+
+    private Point CalculateCanvasCoordinates(Point normalizedPoint)
+    {
+        return new Point(normalizedPoint.X * Size, normalizedPoint.Y * Size);
     }
 
     private void DrawCubicBezier(Point p0, Point p1, Point p2, Point p3)
