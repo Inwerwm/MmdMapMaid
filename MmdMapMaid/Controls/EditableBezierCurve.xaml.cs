@@ -3,6 +3,9 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Shapes;
+using MikuMikuMethods.Common;
+using MmdMapMaid.Core.Models.Bezier;
+using MmdMapMaid.Helpers;
 using Windows.Foundation;
 
 namespace MmdMapMaid.Controls;
@@ -21,21 +24,21 @@ public sealed partial class EditableBezierCurve : UserControl
             nameof(EarlierControlPoint),
             typeof(Point),
             typeof(EditableBezierCurve),
-            new PropertyMetadata(default(Point), EarlierControlPointPropertyChanged));
+            new PropertyMetadata(new Point(0.25, 0.25), EarlierControlPointPropertyChanged));
 
     public static readonly DependencyProperty LaterControlPointProperty =
         DependencyProperty.Register(
             nameof(LaterControlPoint),
             typeof(Point),
             typeof(EditableBezierCurve),
-            new PropertyMetadata(default(Point), LaterControlPointPropertyChanged));
+            new PropertyMetadata(new Point(0.75, 0.75), LaterControlPointPropertyChanged));
 
     public static readonly DependencyProperty SizeProperty =
         DependencyProperty.Register(
             nameof(Size),
             typeof(double),
             typeof(EditableBezierCurve),
-            new PropertyMetadata(default(double), SizePropertyChanged));
+            new PropertyMetadata(1000.0, SizePropertyChanged));
 
     public static readonly DependencyProperty OriginPositionProperty =
         DependencyProperty.Register(
@@ -43,6 +46,20 @@ public sealed partial class EditableBezierCurve : UserControl
             typeof(OriginPosition),
             typeof(EditableBezierCurve),
             new PropertyMetadata(default(OriginPosition), OriginPositionPropertyChanged));
+
+    public static readonly DependencyProperty XDivisionsProperty =
+        DependencyProperty.Register(
+            nameof(XDivisions),
+            typeof(int),
+            typeof(EditableBezierCurve),
+            new PropertyMetadata(10, XDivisionsPropertyChanged));
+
+    public static readonly DependencyProperty ApproximationAccuracyProperty =
+        DependencyProperty.Register(
+            nameof(ApproximationAccuracy),
+            typeof(double),
+            typeof(EditableBezierCurve),
+            new PropertyMetadata(0.05, ApproximationAccuracyPropertyChanged));
 
     public Point EarlierControlPoint
     {
@@ -60,6 +77,18 @@ public sealed partial class EditableBezierCurve : UserControl
     {
         get => (double)GetValue(SizeProperty);
         set => SetValue(SizeProperty, value);
+    }
+
+    public int XDivisions
+    {
+        get => (int)GetValue(XDivisionsProperty);
+        set => SetValue(XDivisionsProperty, value < 2 ? 2 : value);
+    }
+
+    public double ApproximationAccuracy
+    {
+        get => (double)GetValue(ApproximationAccuracyProperty);
+        set => SetValue(ApproximationAccuracyProperty, value);
     }
 
     public OriginPosition Origin
@@ -84,14 +113,8 @@ public sealed partial class EditableBezierCurve : UserControl
     {
         InitializeComponent();
 
-        Size = 1000;
-
         StartPoint = GetStartPoint();
         EndPoint = GetEndPoint();
-
-        // ‰Šú’l‚ð 0.0 ` 1.0 ‚Ì”ÍˆÍ‚ÉÝ’è
-        EarlierControlPoint = new Point(0.25, 0.25);
-        LaterControlPoint = new Point(0.75, 0.75);
 
         // •`‰æŽž‚ÉÀ•W‚ðŒvŽZ
         DrawCubicBezier(
@@ -106,6 +129,8 @@ public sealed partial class EditableBezierCurve : UserControl
 
         AddDragHandlers(EarlierControlPointHandle, p => EarlierControlPoint = CalculateNormalizedCoordinates(p));
         AddDragHandlers(LaterControlPointHandle, p => LaterControlPoint = CalculateNormalizedCoordinates(p));
+
+        DrawSampledBezierPath();
     }
 
     private Point GetStartPoint()
@@ -143,6 +168,8 @@ public sealed partial class EditableBezierCurve : UserControl
         );
         UpdateLine(instance.EarlierLine, instance.StartPoint, instance.CalculateCanvasCoordinates(instance.EarlierControlPoint));
         SetHandlePosition(instance.EarlierControlPointHandle, instance.CalculateCanvasCoordinates(instance.EarlierControlPoint));
+
+        instance.DrawSampledBezierPath();
     }
 
     private static void LaterControlPointPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
@@ -156,6 +183,8 @@ public sealed partial class EditableBezierCurve : UserControl
         );
         UpdateLine(instance.LaterLine, instance.CalculateCanvasCoordinates(instance.LaterControlPoint), instance.EndPoint);
         SetHandlePosition(instance.LaterControlPointHandle, instance.CalculateCanvasCoordinates(instance.LaterControlPoint));
+
+        instance.DrawSampledBezierPath();
     }
 
     private static void SizePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
@@ -180,6 +209,10 @@ public sealed partial class EditableBezierCurve : UserControl
 
         SetHandlePosition(instance.EarlierControlPointHandle, instance.CalculateCanvasCoordinates(instance.EarlierControlPoint));
         SetHandlePosition(instance.LaterControlPointHandle, instance.CalculateCanvasCoordinates(instance.LaterControlPoint));
+
+        instance.DrawSampledBezierPath();
+
+        instance.DrawLatticePath();
     }
 
     private static void OriginPositionPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
@@ -200,6 +233,23 @@ public sealed partial class EditableBezierCurve : UserControl
 
         SetHandlePosition(instance.EarlierControlPointHandle, instance.CalculateCanvasCoordinates(instance.EarlierControlPoint));
         SetHandlePosition(instance.LaterControlPointHandle, instance.CalculateCanvasCoordinates(instance.LaterControlPoint));
+
+        instance.DrawSampledBezierPath();
+
+        instance.DrawLatticePath();
+    }
+
+    private static void XDivisionsPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+    {
+        var instance = ((EditableBezierCurve)dependencyObject);
+        instance.DrawSampledBezierPath();
+        instance.DrawLatticePath();
+    }
+
+    private static void ApproximationAccuracyPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+    {
+        var instance = ((EditableBezierCurve)dependencyObject);
+        instance.DrawSampledBezierPath();
     }
 
     private static void UpdateLine(Line line, Point start, Point end)
@@ -219,7 +269,7 @@ public sealed partial class EditableBezierCurve : UserControl
     private Point CalculateNormalizedCoordinates(Point canvasPoint)
     {
         var x = canvasPoint.X / Size;
-        double y = canvasPoint.Y / Size;
+        var y = canvasPoint.Y / Size;
 
         switch (Origin)
         {
@@ -260,7 +310,6 @@ public sealed partial class EditableBezierCurve : UserControl
         return new Point(x, y);
     }
 
-
     private void DrawCubicBezier(Point p0, Point p1, Point p2, Point p3)
     {
         var pathFigure = new PathFigure { StartPoint = p0 };
@@ -275,6 +324,51 @@ public sealed partial class EditableBezierCurve : UserControl
         pathGeometry.Figures.Add(pathFigure);
 
         BezierPath.Data = pathGeometry;
+    }
+
+    private void DrawSampledBezierPath()
+    {
+        var p0 = new Point2<double>(0, 0);
+        var p1 = EarlierControlPoint.ToPoint2();
+        var p2 = LaterControlPoint.ToPoint2();
+        var p3 = new Point2<double>(1, 1);
+
+        var xStep = 1.0 / XDivisions;
+        var sampledPoints = BezierCurve.SampleCubicBezierCurve(p0, p1, p2, p3, xStep, 0.0001);
+        var simplifiedPoints = SimplifyPath.Simplify(sampledPoints, ApproximationAccuracy);
+
+        var pathFigure = new PathFigure { StartPoint = CalculateCanvasCoordinates(p0.ToPoint()) };
+
+        for (var i = 0; i < simplifiedPoints.Count; i++)
+        {
+            pathFigure.Segments.Add(new LineSegment { Point = CalculateCanvasCoordinates(simplifiedPoints[i].ToPoint()) });
+        }
+
+        pathFigure.Segments.Add(new LineSegment { Point = CalculateCanvasCoordinates(p3.ToPoint()) });
+
+        var pathGeometry = new PathGeometry();
+        pathGeometry.Figures.Add(pathFigure);
+
+        SampledBezierPath.Data = pathGeometry;
+    }
+
+    private void DrawLatticePath()
+    {
+        var pathFigures = Enumerable.Range(1, XDivisions)
+            .Select(i => (double)i / XDivisions)
+            .Select(pos =>
+            {
+                var pathFigure = new PathFigure { StartPoint = CalculateCanvasCoordinates(new Point(pos, 0)) };
+                pathFigure.Segments.Add(new LineSegment { Point = CalculateCanvasCoordinates(new Point(pos, 1)) });
+                return pathFigure;
+            });
+
+        var pathGeometry = new PathGeometry();
+        foreach (var pathFigure in pathFigures)
+        {
+            pathGeometry.Figures.Add(pathFigure);
+        }
+        LatticePath.Data = pathGeometry;
     }
 
     private void AddDragHandlers(Ellipse handle, Action<Point> onDrag)
