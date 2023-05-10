@@ -52,12 +52,11 @@ public sealed partial class EditableBezierCurve : UserControl
 
     private static void EarlierControlPointPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
     {
-
         var instance = ((EditableBezierCurve)dependencyObject);
         instance.DrawCubicBezier(instance.StartPoint, instance.EarlierControlPoint, instance.LaterControlPoint, instance.EndPoint);
 
-        instance.CurveCanvas.Children.Remove(instance.EarlierLine);
-        instance.EarlierLine = instance.DrawLine(instance.StartPoint, instance.EarlierControlPoint);
+        // 座標を更新
+        instance.UpdateLine(instance.EarlierLine, instance.StartPoint, instance.EarlierControlPoint);
 
         instance.SetHandlePosition(instance.EarlierControlPointHandle, instance.EarlierControlPoint);
     }
@@ -67,8 +66,8 @@ public sealed partial class EditableBezierCurve : UserControl
         var instance = ((EditableBezierCurve)dependencyObject);
         instance.DrawCubicBezier(instance.StartPoint, instance.EarlierControlPoint, instance.LaterControlPoint, instance.EndPoint);
 
-        instance.CurveCanvas.Children.Remove(instance.LaterLine);
-        instance.LaterLine = instance.DrawLine(instance.LaterControlPoint, instance.EndPoint);
+        // 座標を更新
+        instance.UpdateLine(instance.LaterLine, instance.LaterControlPoint, instance.EndPoint);
 
         instance.SetHandlePosition(instance.LaterControlPointHandle, instance.LaterControlPoint);
     }
@@ -85,19 +84,16 @@ public sealed partial class EditableBezierCurve : UserControl
 
         instance.EndPoint = new Point(newSize, newSize);
 
-        instance.EarlierControlPoint = mul(instance.EarlierControlPoint, scale);
-        instance.LaterControlPoint = mul(instance.LaterControlPoint, scale);
+        instance.EarlierControlPoint = Mul(instance.EarlierControlPoint, scale);
+        instance.LaterControlPoint = Mul(instance.LaterControlPoint, scale);
 
         instance.DrawCubicBezier(instance.StartPoint, instance.EarlierControlPoint, instance.LaterControlPoint, instance.EndPoint);
 
-        instance.CurveCanvas.Children.Remove(instance.EarlierLine);
-        instance.CurveCanvas.Children.Remove(instance.LaterLine);
-
-        instance.EarlierLine = instance.DrawLine(instance.StartPoint, instance.EarlierControlPoint);
-        instance.LaterLine = instance.DrawLine(instance.LaterControlPoint, instance.EndPoint);
+        instance.UpdateLine(instance.EarlierLine, instance.StartPoint, instance.EarlierControlPoint);
+        instance.UpdateLine(instance.LaterLine, instance.LaterControlPoint, instance.EndPoint);
     }
 
-    private static Point mul(Point point, double scale) => new(point.X * scale, point.Y * scale);
+    private static Point Mul(Point point, double scale) => new(point.X * scale, point.Y * scale);
 
     private Point StartPoint
     {
@@ -105,18 +101,6 @@ public sealed partial class EditableBezierCurve : UserControl
     }
 
     private Point EndPoint
-    {
-        get;
-        set;
-    }
-
-    private Line EarlierLine
-    {
-        get;
-        set;
-    }
-
-    private Line LaterLine
     {
         get;
         set;
@@ -159,21 +143,12 @@ public sealed partial class EditableBezierCurve : UserControl
         BezierPath.Data = pathGeometry;
     }
 
-    private Line DrawLine(Point start, Point end)
+    private void UpdateLine(Line line, Point start, Point end)
     {
-        var line = new Line
-        {
-            X1 = start.X,
-            Y1 = start.Y,
-            X2 = end.X,
-            Y2 = end.Y,
-            Stroke = new SolidColorBrush(Colors.Black),
-            StrokeThickness = 2
-        };
-
-        CurveCanvas.Children.Add(line);
-
-        return line;
+        line.X1 = start.X;
+        line.Y1 = start.Y;
+        line.X2 = end.X;
+        line.Y2 = end.Y;
     }
 
     private void SetHandlePosition(Ellipse handle, Point position)
@@ -185,7 +160,6 @@ public sealed partial class EditableBezierCurve : UserControl
     private void AddDragHandlers(Ellipse handle, Action<Point> onDrag)
     {
         var isDragging = false;
-        var lastPosition = new Point();
 
         handle.PointerPressed += (s, e) =>
         {
@@ -193,7 +167,6 @@ public sealed partial class EditableBezierCurve : UserControl
                 e.GetCurrentPoint(null).Properties.IsLeftButtonPressed)
             {
                 isDragging = true;
-                lastPosition = e.GetCurrentPoint(CurveCanvas).Position;
                 handle.CapturePointer(e.Pointer);
             }
         };
@@ -203,17 +176,11 @@ public sealed partial class EditableBezierCurve : UserControl
             if (isDragging)
             {
                 var currentPosition = e.GetCurrentPoint(CurveCanvas).Position;
-                var delta = new Point(currentPosition.X - lastPosition.X, currentPosition.Y - lastPosition.Y);
 
-                var newPosition = new Point(Canvas.GetLeft(handle) + delta.X + handle.Width / 2, Canvas.GetTop(handle) + delta.Y + handle.Height / 2);
+                currentPosition.X = Math.Clamp(currentPosition.X, 0, CurveCanvas.Width);
+                currentPosition.Y = Math.Clamp(currentPosition.Y, 0, CurveCanvas.Height);
 
-                // Clip the newPosition to the Canvas bounds
-                newPosition.X = Math.Clamp(newPosition.X, 0, CurveCanvas.Width);
-                newPosition.Y = Math.Clamp(newPosition.Y, 0, CurveCanvas.Height);
-
-                onDrag(newPosition);
-
-                lastPosition = currentPosition;
+                onDrag(currentPosition);
             }
         };
 
