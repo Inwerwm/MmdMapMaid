@@ -68,6 +68,7 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
     {
         if (SelectedModel is null)
         {
+            sender.ItemsSource = null;
             return;
         }
 
