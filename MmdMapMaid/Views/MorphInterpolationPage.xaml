@@ -28,7 +28,7 @@
             Grid.Column="0" Margin="50" VerticalAlignment="Top" />
         
         <StackPanel Spacing="5" Padding="20, 0" Grid.Column="1">
-            <AutoSuggestBox x:Uid="TextBox_MorphName" FontSize="28" />
+            <AutoSuggestBox x:Uid="TextBox_MorphName" FontSize="28" TextChanged="{x:Bind ViewModel.UpdateSuggest}" SuggestionChosen="{x:Bind ViewModel.SuggestionChosen}" />
             <TextBlock x:Uid="Label_FrameLength" Margin="0,15,0,0"/>
             <NumberBox Minimum="2" Value="{x:Bind ViewModel.FrameLength, Mode=TwoWay}" SpinButtonPlacementMode="Inline" />
             <TextBlock x:Uid="Label_Accuracy" Margin="0,15,0,0"/>
@@ -40,6 +40,7 @@
         <ListView
             ItemsSource="{x:Bind ViewModel.Models}"
             ItemTemplate="{StaticResource NamePathCard}"
+            SelectedItem="{x:Bind ViewModel.SelectedModel, Mode=TwoWay}"
             SelectionMode="Single"
             VerticalContentAlignment="Stretch"
             Grid.Column="2" />

@@ -1,5 +1,8 @@
 ﻿using System.Collections.ObjectModel;
+using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml.Controls;
 using MmdMapMaid.Models;
 using Windows.Foundation;
 
@@ -25,33 +28,62 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
     [ObservableProperty]
     private ObservableCollection<PathInformation> _models;
 
+    [ObservableProperty]
+    private PathInformation? _selectedModel;
+
+    private Dictionary<PathInformation, string[]> MorphNames
+    {
+        get;
+    }
+
     public MorphInterpolationViewModel()
     {
         EarlierPoint = new(0.25, 0.25);
         LaterPoint = new(0.75, 0.75);
 
         _models = new();
-        Models.Add(makePathInfo("aaa", "aaa/aaa"));
-        Models.Add(makePathInfo("bbb", "aaa/bbb"));
+        MorphNames = new();
+
+        MakePathInfo("aaa", "bbb");
+        MakePathInfo("ccc", "ddd");
     }
 
-    private int itemId;
-    private PathInformation makePathInfo(string name, string path)
+    private void MakePathInfo(string name, string path)
     {
-        var info = new PathInformation(itemId++, name, path);
+        var info = new PathInformation(0, name, path);
         info.PropertyChanged += (s, e) =>
         {
             if (((PathInformation)s).IsRemoved)
             {
                 Models.Remove(info);
+                MorphNames.Remove(info);
             }
         };
 
-        return info;
+        Models.Add(info);
+        MorphNames.Add(info, new[] { name, path });
     }
 
-    public void UpdateSelectedModel(object _, Microsoft.UI.Xaml.Controls.SelectionChangedEventArgs e)
+    public void UpdateSuggest(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
     {
-        
+        if (SelectedModel is null)
+        {
+            return;
+        }
+
+        if (args.Reason != AutoSuggestionBoxTextChangeReason.UserInput)
+        {
+            return;
+        }
+
+        sender.ItemsSource = MorphNames[SelectedModel].Where(name => sender.Text == string.Empty || CultureInfo.CurrentCulture.CompareInfo.IndexOf(
+            name,
+            sender.Text,
+            CompareOptions.IgnoreCase | CompareOptions.IgnoreKanaType | CompareOptions.IgnoreWidth) >= 0).ToArray();
+    }
+
+    public void SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+    {
+        sender.Text = args.SelectedItem.ToString();
     }
 }
