@@ -333,4 +333,7 @@
   <data name="TextBox_MorphName.PlaceholderText" xml:space="preserve">
     <value>モーフ名</value>
   </data>
+  <data name="Button_ReadPmx.Content" xml:space="preserve">
+    <value>PMX ファイルを読み込む</value>
+  </data>
 </root>

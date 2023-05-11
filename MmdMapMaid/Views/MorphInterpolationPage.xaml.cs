@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-
+using MmdMapMaid.Helpers;
 using MmdMapMaid.ViewModels;
 
 namespace MmdMapMaid.Views;
@@ -25,5 +25,18 @@ public sealed partial class MorphInterpolationPage : Page
             Reason = AutoSuggestionBoxTextChangeReason.UserInput
         });
         MorphNameSuggestBox.IsSuggestionListOpen = true;
+    }
+
+    private void Grid_DragOver(object sender, DragEventArgs e)
+    {
+        StorageHelper.SetAcceptedOperation(e);
+    }
+
+    private async void Grid_Drop(object sender, DragEventArgs e)
+    {
+        var file = await StorageHelper.ReadDropedFile(e, ".pmx");
+        if (file is null) { return; }
+
+        ViewModel.ReadPmx(file);
     }
 }

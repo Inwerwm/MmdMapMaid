@@ -1,10 +1,14 @@
 ﻿using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Xml.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
+using MikuMikuMethods.Pmx;
+using MmdMapMaid.Helpers;
 using MmdMapMaid.Models;
 using Windows.Foundation;
+using Windows.Storage;
 
 namespace MmdMapMaid.ViewModels;
 
@@ -40,28 +44,10 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
     {
         EarlierPoint = new(0.25, 0.25);
         LaterPoint = new(0.75, 0.75);
+        MorphName = "";
 
         _models = new();
         MorphNames = new();
-
-        MakePathInfo("aaa", "bbb");
-        MakePathInfo("ccc", "ddd");
-    }
-
-    private void MakePathInfo(string name, string path)
-    {
-        var info = new PathInformation(0, name, path);
-        info.PropertyChanged += (s, e) =>
-        {
-            if (((PathInformation)s).IsRemoved)
-            {
-                Models.Remove(info);
-                MorphNames.Remove(info);
-            }
-        };
-
-        Models.Add(info);
-        MorphNames.Add(info, new[] { name, path });
     }
 
     public void UpdateSuggest(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -86,5 +72,40 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
     public void SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
     {
         sender.Text = args.SelectedItem.ToString();
+    }
+
+    public void ReadPmx(StorageFile file)
+    {
+        try
+        {
+            if (!File.Exists(file.Path)) { return; }
+
+            var model = new PmxModel(file.Path);
+
+            var info = new PathInformation(0, model.ModelInfo.Name, file.Path);
+            info.PropertyChanged += (s, e) =>
+            {
+                if (((PathInformation)s).IsRemoved)
+                {
+                    Models.Remove(info);
+                    MorphNames.Remove(info);
+                }
+            };
+
+            Models.Add(info);
+            MorphNames.Add(info, model.Morphs.Select(morph => morph.Name).ToArray());
+        }
+        catch
+        {
+            // 読み込みでエラーが起きたら何もせず終わり
+        }
+    }
+
+    [RelayCommand]
+    private async Task ReadPmxAsync()
+    {
+        var pmxFile = await StorageHelper.PickSingleFileAsync(".pmx");
+        if (pmxFile is null) { return; }
+        ReadPmx(pmxFile);
     }
 }

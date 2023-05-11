@@ -37,12 +37,21 @@
             <Slider x:Name="TrueCurveOpacity" Minimum="0" Maximum="1" Value="1" StepFrequency="0.001" />
         </StackPanel>
 
-        <ListView
-            ItemsSource="{x:Bind ViewModel.Models}"
-            ItemTemplate="{StaticResource NamePathCard}"
-            SelectedItem="{x:Bind ViewModel.SelectedModel, Mode=TwoWay}"
-            SelectionMode="Single"
-            VerticalContentAlignment="Stretch"
-            Grid.Column="2" />
+        <Grid RowSpacing="10"  AllowDrop="True" DragOver="Grid_DragOver" Drop="Grid_Drop" Grid.Column="2" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Button x:Uid="Button_ReadPmx" Command="{x:Bind ViewModel.ReadPmxCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0"/>
+
+            <ListView
+                ItemsSource="{x:Bind ViewModel.Models}"
+                ItemTemplate="{StaticResource NamePathCard}"
+                SelectedItem="{x:Bind ViewModel.SelectedModel, Mode=TwoWay}"
+                SelectionMode="Single"
+                VerticalContentAlignment="Stretch"
+                Grid.Row="1" />
+        </Grid>
     </Grid>
 </Page>

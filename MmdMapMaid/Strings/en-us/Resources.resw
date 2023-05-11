@@ -336,4 +336,7 @@
   <data name="TextBox_MorphName.PlaceholderText" xml:space="preserve">
     <value>Morph Name</value>
   </data>
+  <data name="Button_ReadPmx.Content" xml:space="preserve">
+    <value>Read Pmx File</value>
+  </data>
 </root>
