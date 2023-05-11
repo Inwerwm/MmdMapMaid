@@ -321,7 +321,7 @@ public sealed partial class EditableBezierCurve : UserControl
 
     private void DrawLatticePath()
     {
-        var pathFigures = Enumerable.Range(1, XDivisions)
+        var pathFigures = Enumerable.Range(1, XDivisions - 1)
             .Select(i => (double)i / XDivisions)
             .Select(pos =>
             {
