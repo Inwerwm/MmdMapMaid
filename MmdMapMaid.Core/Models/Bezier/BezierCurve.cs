@@ -17,7 +17,7 @@ public class BezierCurve
         return point;
     }
 
-    public static List<Point2<double>> SampleCubicBezierCurve(Point2<double> p0, Point2<double> p1, Point2<double> p2, Point2<double> p3, double xStep, double precision = 0.01)
+    public static List<Point2<double>> SampleCubicBezierCurve(Point2<double> p0, Point2<double> p1, Point2<double> p2, Point2<double> p3, double xStep, double precision = 0.0001)
     {
         var sampledPoints = new List<Point2<double>>();
         double t = 0;
