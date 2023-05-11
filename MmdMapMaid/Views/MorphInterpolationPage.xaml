@@ -37,8 +37,11 @@
             <Slider x:Name="TrueCurveOpacity" Minimum="0" Maximum="1" Value="1" StepFrequency="0.001" />
         </StackPanel>
 
-        <ListView Grid.Column="2">
-            
-        </ListView>
+        <ListView
+            ItemsSource="{x:Bind ViewModel.Models}"
+            ItemTemplate="{StaticResource NamePathCard}"
+            SelectionMode="Single"
+            VerticalContentAlignment="Stretch"
+            Grid.Column="2" />
     </Grid>
 </Page>

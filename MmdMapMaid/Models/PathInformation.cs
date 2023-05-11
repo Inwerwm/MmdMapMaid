@@ -51,4 +51,10 @@ public partial class PathInformation : ObservableRecipient
         Path = InitialPath;
         IsRemoved = false;
     }
+
+    [RelayCommand]
+    public void Remove()
+    {
+        IsRemoved = true;
+    }
 }
