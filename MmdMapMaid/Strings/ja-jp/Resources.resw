@@ -321,4 +321,13 @@
   <data name="Button_ResetAll.Content" xml:space="preserve">
     <value>全て取消</value>
   </data>
+  <data name="Label_Accuracy.Text" xml:space="preserve">
+    <value>間引き精度</value>
+  </data>
+  <data name="Label_TrueCurveOpacity.Text" xml:space="preserve">
+    <value>理論曲線透過度</value>
+  </data>
+  <data name="Label_XStep.Text" xml:space="preserve">
+    <value>フレーム数</value>
+  </data>
 </root>

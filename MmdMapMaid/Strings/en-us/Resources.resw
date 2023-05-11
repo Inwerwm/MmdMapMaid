@@ -324,4 +324,13 @@
   <data name="Shell_MorphInterpolation.Content" xml:space="preserve">
     <value>MorphInterpolation</value>
   </data>
+  <data name="Label_Accuracy.Text" xml:space="preserve">
+    <value>Approximation Accuracy</value>
+  </data>
+  <data name="Label_TrueCurveOpacity.Text" xml:space="preserve">
+    <value>True Curve Opacity</value>
+  </data>
+  <data name="Label_XStep.Text" xml:space="preserve">
+    <value>Frame Count</value>
+  </data>
 </root>
