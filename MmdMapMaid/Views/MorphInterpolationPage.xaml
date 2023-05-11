@@ -20,13 +20,13 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <controls:EditableBezierCurve Size="{x:Bind Size.Value, Mode=TwoWay}" EarlierControlPoint="{x:Bind ViewModel.EarlierPoint, Mode=TwoWay}" LaterControlPoint="{x:Bind ViewModel.LaterPoint, Mode=TwoWay}" Origin="BottomLeft" XDivisions="{x:Bind XStep.Value, Mode=TwoWay, Converter={StaticResource DoubleToIntConverter}}" ApproximationAccuracy="{x:Bind Accuracy.Value, Mode=TwoWay}"/>
+        <controls:EditableBezierCurve Size="250" EarlierControlPoint="{x:Bind ViewModel.EarlierPoint, Mode=TwoWay}" LaterControlPoint="{x:Bind ViewModel.LaterPoint, Mode=TwoWay}" Origin="BottomLeft" XDivisions="{x:Bind XStep.Value, Mode=TwoWay, Converter={StaticResource DoubleToIntConverter}}" ApproximationAccuracy="{x:Bind Accuracy.Value, Mode=TwoWay}" TrueCurveOpacity="{x:Bind TrueCurveOpacity.Value, Mode=OneWay}"/>
         <StackPanel Grid.Column="1">
-            <NumberBox x:Name="Size" Value="1000"/>
             <TextBlock Text="{x:Bind ViewModel.EarlierPoint, Mode=TwoWay}"/>
             <TextBlock Text="{x:Bind ViewModel.LaterPoint, Mode=TwoWay}"/>
             <Slider x:Name="XStep" Minimum="2" Maximum="20" Value="10" StepFrequency="1" />
             <Slider x:Name="Accuracy" Minimum="0" Maximum="1" Value="0.05" StepFrequency="0.001" />
+            <Slider x:Name="TrueCurveOpacity" Minimum="0" Maximum="1" Value="0.5" StepFrequency="0.001" />
         </StackPanel>
     </Grid>
 </Page>
