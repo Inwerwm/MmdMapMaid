@@ -12,6 +12,7 @@
 
     <Grid x:Name="ContentArea">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
@@ -26,13 +27,18 @@
             Origin="BottomLeft"
             Grid.Column="0" Margin="50" VerticalAlignment="Top" />
         
-        <StackPanel Padding="20, 0" Grid.Column="1">
-            <TextBlock x:Uid="Label_FrameLength"/>
+        <StackPanel Spacing="5" Padding="20, 0" Grid.Column="1">
+            <AutoSuggestBox x:Uid="TextBox_MorphName" FontSize="28" />
+            <TextBlock x:Uid="Label_FrameLength" Margin="0,15,0,0"/>
             <NumberBox Minimum="2" Value="{x:Bind ViewModel.FrameLength, Mode=TwoWay}" SpinButtonPlacementMode="Inline" />
-            <TextBlock x:Uid="Label_Accuracy"/>
+            <TextBlock x:Uid="Label_Accuracy" Margin="0,15,0,0"/>
             <Slider Minimum="0" Maximum="1" Value="{x:Bind ViewModel.Accuracy, Mode=TwoWay}" StepFrequency="0.001" />
-            <TextBlock x:Uid="Label_TrueCurveOpacity"/>
+            <TextBlock x:Uid="Label_TrueCurveOpacity" Margin="0,15,0,0"/>
             <Slider x:Name="TrueCurveOpacity" Minimum="0" Maximum="1" Value="1" StepFrequency="0.001" />
         </StackPanel>
+
+        <ListView Grid.Column="2">
+            
+        </ListView>
     </Grid>
 </Page>

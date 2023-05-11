@@ -58,4 +58,20 @@
         </StackPanel>
     </DataTemplate>
 
+    <DataTemplate x:Key="NamePathCard">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Margin="0,10" Grid.Column="0">
+                <TextBlock TextWrapping="Wrap" Text="{Binding Name}" Margin="0,5" FontSize="{StaticResource SemiLargeFontSize}" FontWeight="SemiBold" />
+                <TextBlock TextWrapping="Wrap" Text="{Binding Path}" FontSize="{StaticResource SmallFontSize}" />
+            </StackPanel>
+            
+            
+        </Grid>
+    </DataTemplate>
+
 </ResourceDictionary>

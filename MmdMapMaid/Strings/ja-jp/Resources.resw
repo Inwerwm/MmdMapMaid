@@ -330,4 +330,7 @@
   <data name="Label_FrameLength.Text" xml:space="preserve">
     <value>フレーム長</value>
   </data>
+  <data name="TextBox_MorphName.PlaceholderText" xml:space="preserve">
+    <value>モーフ名</value>
+  </data>
 </root>
