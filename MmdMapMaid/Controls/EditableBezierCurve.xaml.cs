@@ -61,6 +61,13 @@ public sealed partial class EditableBezierCurve : UserControl
             typeof(EditableBezierCurve),
             new PropertyMetadata(0.05, ApproximationAccuracyPropertyChanged));
 
+    public static readonly DependencyProperty TrueCurveOpacityProperty =
+        DependencyProperty.Register(
+            nameof(TrueCurveOpacity),
+            typeof(double),
+            typeof(EditableBezierCurve),
+            new PropertyMetadata(default(double)));
+
     public Point EarlierControlPoint
     {
         get => (Point)GetValue(EarlierControlPointProperty);
@@ -91,38 +98,23 @@ public sealed partial class EditableBezierCurve : UserControl
         set => SetValue(ApproximationAccuracyProperty, value);
     }
 
+    public double TrueCurveOpacity
+    {
+        get => (double)GetValue(TrueCurveOpacityProperty);
+        set => SetValue(TrueCurveOpacityProperty, value);
+    }
+
     public OriginPosition Origin
     {
         get => (OriginPosition)GetValue(OriginPositionProperty);
         set => SetValue(OriginPositionProperty, value);
     }
 
-    private Point StartPoint
-    {
-        get;
-        set;
-    }
-
-    private Point EndPoint
-    {
-        get;
-        set;
-    }
-
     public EditableBezierCurve()
     {
         InitializeComponent();
 
-        StartPoint = GetStartPoint();
-        EndPoint = GetEndPoint();
-
-        // ï`âÊéûÇ…ç¿ïWÇåvéZ
-        DrawCubicBezier(
-            StartPoint,
-            CalculateCanvasCoordinates(EarlierControlPoint),
-            CalculateCanvasCoordinates(LaterControlPoint),
-            EndPoint
-        );
+        DrawCubicBezier();
 
         SetHandlePosition(EarlierControlPointHandle, CalculateCanvasCoordinates(EarlierControlPoint));
         SetHandlePosition(LaterControlPointHandle, CalculateCanvasCoordinates(LaterControlPoint));
@@ -160,13 +152,8 @@ public sealed partial class EditableBezierCurve : UserControl
     private static void EarlierControlPointPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
     {
         var instance = ((EditableBezierCurve)dependencyObject);
-        instance.DrawCubicBezier(
-            instance.StartPoint,
-            instance.CalculateCanvasCoordinates(instance.EarlierControlPoint),
-            instance.CalculateCanvasCoordinates(instance.LaterControlPoint),
-            instance.EndPoint
-        );
-        UpdateLine(instance.EarlierLine, instance.StartPoint, instance.CalculateCanvasCoordinates(instance.EarlierControlPoint));
+        instance.DrawCubicBezier();
+        UpdateLine(instance.EarlierLine, instance.GetStartPoint(), instance.CalculateCanvasCoordinates(instance.EarlierControlPoint));
         SetHandlePosition(instance.EarlierControlPointHandle, instance.CalculateCanvasCoordinates(instance.EarlierControlPoint));
 
         instance.DrawSampledBezierPath();
@@ -175,13 +162,8 @@ public sealed partial class EditableBezierCurve : UserControl
     private static void LaterControlPointPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
     {
         var instance = ((EditableBezierCurve)dependencyObject);
-        instance.DrawCubicBezier(
-            instance.StartPoint,
-            instance.CalculateCanvasCoordinates(instance.EarlierControlPoint),
-            instance.CalculateCanvasCoordinates(instance.LaterControlPoint),
-            instance.EndPoint
-        );
-        UpdateLine(instance.LaterLine, instance.CalculateCanvasCoordinates(instance.LaterControlPoint), instance.EndPoint);
+        instance.DrawCubicBezier();
+        UpdateLine(instance.LaterLine, instance.CalculateCanvasCoordinates(instance.LaterControlPoint), instance.GetEndPoint());
         SetHandlePosition(instance.LaterControlPointHandle, instance.CalculateCanvasCoordinates(instance.LaterControlPoint));
 
         instance.DrawSampledBezierPath();
@@ -195,17 +177,10 @@ public sealed partial class EditableBezierCurve : UserControl
         instance.CurveCanvas.Width = newSize;
         instance.CurveCanvas.Height = newSize;
 
-        instance.EndPoint = instance.GetEndPoint();
+        instance.DrawCubicBezier();
 
-        instance.DrawCubicBezier(
-            instance.StartPoint,
-            instance.CalculateCanvasCoordinates(instance.EarlierControlPoint),
-            instance.CalculateCanvasCoordinates(instance.LaterControlPoint),
-            instance.EndPoint
-        );
-
-        UpdateLine(instance.EarlierLine, instance.StartPoint, instance.CalculateCanvasCoordinates(instance.EarlierControlPoint));
-        UpdateLine(instance.LaterLine, instance.CalculateCanvasCoordinates(instance.LaterControlPoint), instance.EndPoint);
+        UpdateLine(instance.EarlierLine, instance.GetStartPoint(), instance.CalculateCanvasCoordinates(instance.EarlierControlPoint));
+        UpdateLine(instance.LaterLine, instance.CalculateCanvasCoordinates(instance.LaterControlPoint), instance.GetEndPoint());
 
         SetHandlePosition(instance.EarlierControlPointHandle, instance.CalculateCanvasCoordinates(instance.EarlierControlPoint));
         SetHandlePosition(instance.LaterControlPointHandle, instance.CalculateCanvasCoordinates(instance.LaterControlPoint));
@@ -218,18 +193,10 @@ public sealed partial class EditableBezierCurve : UserControl
     private static void OriginPositionPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
     {
         var instance = ((EditableBezierCurve)dependencyObject);
-        instance.StartPoint = instance.GetStartPoint();
-        instance.EndPoint = instance.GetEndPoint();
+        instance.DrawCubicBezier();
 
-        instance.DrawCubicBezier(
-            instance.StartPoint,
-            instance.CalculateCanvasCoordinates(instance.EarlierControlPoint),
-            instance.CalculateCanvasCoordinates(instance.LaterControlPoint),
-            instance.EndPoint
-        );
-
-        UpdateLine(instance.EarlierLine, instance.StartPoint, instance.CalculateCanvasCoordinates(instance.EarlierControlPoint));
-        UpdateLine(instance.LaterLine, instance.CalculateCanvasCoordinates(instance.LaterControlPoint), instance.EndPoint);
+        UpdateLine(instance.EarlierLine, instance.GetStartPoint(), instance.CalculateCanvasCoordinates(instance.EarlierControlPoint));
+        UpdateLine(instance.LaterLine, instance.CalculateCanvasCoordinates(instance.LaterControlPoint), instance.GetEndPoint());
 
         SetHandlePosition(instance.EarlierControlPointHandle, instance.CalculateCanvasCoordinates(instance.EarlierControlPoint));
         SetHandlePosition(instance.LaterControlPointHandle, instance.CalculateCanvasCoordinates(instance.LaterControlPoint));
@@ -310,14 +277,14 @@ public sealed partial class EditableBezierCurve : UserControl
         return new Point(x, y);
     }
 
-    private void DrawCubicBezier(Point p0, Point p1, Point p2, Point p3)
+    private void DrawCubicBezier()
     {
-        var pathFigure = new PathFigure { StartPoint = p0 };
+        var pathFigure = new PathFigure { StartPoint = GetStartPoint() };
         pathFigure.Segments.Add(new BezierSegment
         {
-            Point1 = p1,
-            Point2 = p2,
-            Point3 = p3,
+            Point1 = CalculateCanvasCoordinates(EarlierControlPoint),
+            Point2 = CalculateCanvasCoordinates(LaterControlPoint),
+            Point3 = GetEndPoint(),
         });
 
         var pathGeometry = new PathGeometry();
@@ -334,7 +301,7 @@ public sealed partial class EditableBezierCurve : UserControl
         var p3 = new Point2<double>(1, 1);
 
         var xStep = 1.0 / XDivisions;
-        var sampledPoints = BezierCurve.SampleCubicBezierCurve(p0, p1, p2, p3, xStep, 0.0001);
+        var sampledPoints = BezierCurve.SampleCubicBezierCurve(p0, p1, p2, p3, xStep);
         var simplifiedPoints = SimplifyPath.Simplify(sampledPoints, ApproximationAccuracy);
 
         var pathFigure = new PathFigure { StartPoint = CalculateCanvasCoordinates(p0.ToPoint()) };

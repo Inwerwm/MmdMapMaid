@@ -10,11 +10,11 @@
     <Grid>
         <Viewbox>
             <Grid>
-                <Border BorderBrush="Black" BorderThickness="4" Background="White" Opacity="0.25" Width="{x:Bind Size, Mode=TwoWay}" Height="{x:Bind Size, Mode=TwoWay}" />
+                <Border BorderBrush="Black" BorderThickness="4" Opacity="0.25" Width="{x:Bind Size, Mode=TwoWay}" Height="{x:Bind Size, Mode=TwoWay}" />
                 <Canvas x:Name="CurveCanvas" Width="{x:Bind Size, Mode=TwoWay}" Height="{x:Bind Size, Mode=TwoWay}">
                     <Path x:Name="LatticePath" Stroke="Black" StrokeThickness="2" Opacity="0.5" />
-                    <Path x:Name="BezierPath" Stroke="Green" StrokeThickness="3" />
-                    <Path x:Name="SampledBezierPath" Stroke="Black" StrokeThickness="10" />
+                    <Path x:Name="BezierPath" Stroke="Green" StrokeThickness="3" Opacity="{x:Bind TrueCurveOpacity, Mode=TwoWay}" />
+                    <Path x:Name="SampledBezierPath" Stroke="Black" StrokeThickness="6" />
                     <Line x:Name="EarlierLine" Stroke="Black" StrokeThickness="2" />
                     <Line x:Name="LaterLine" Stroke="Black" StrokeThickness="2" />
                     <Ellipse x:Name="EarlierControlPointHandle" Width="20" Height="20" Fill="Blue" />
