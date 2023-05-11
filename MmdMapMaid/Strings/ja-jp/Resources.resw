@@ -327,7 +327,7 @@
   <data name="Label_TrueCurveOpacity.Text" xml:space="preserve">
     <value>理論曲線透過度</value>
   </data>
-  <data name="Label_XStep.Text" xml:space="preserve">
-    <value>フレーム数</value>
+  <data name="Label_FrameLength.Text" xml:space="preserve">
+    <value>フレーム長</value>
   </data>
 </root>

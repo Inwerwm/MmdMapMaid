@@ -15,17 +15,22 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
 
-        <controls:EditableBezierCurve Size="250" EarlierControlPoint="{x:Bind ViewModel.EarlierPoint, Mode=TwoWay}" LaterControlPoint="{x:Bind ViewModel.LaterPoint, Mode=TwoWay}" Origin="BottomLeft" TrueCurveOpacity="{x:Bind TrueCurveOpacity.Value, Mode=OneWay}"/>
-        <StackPanel Grid.Column="1">
-            <TextBlock x:Uid="Label_XStep"/>
-            <NumberBox Minimum="2" Value="10" SpinButtonPlacementMode="Inline" />
+        <controls:EditableBezierCurve 
+            Size="250"
+            EarlierControlPoint="{x:Bind ViewModel.EarlierPoint, Mode=TwoWay}"
+            LaterControlPoint="{x:Bind ViewModel.LaterPoint, Mode=TwoWay}"
+            XDivisions="{x:Bind ViewModel.FrameLength, Mode=TwoWay}"
+            ApproximationAccuracy="{x:Bind ViewModel.Accuracy, Mode=TwoWay}"
+            TrueCurveOpacity="{x:Bind TrueCurveOpacity.Value, Mode=OneWay}"
+            Origin="BottomLeft"
+            Grid.Column="0" Margin="50" VerticalAlignment="Top" />
+        
+        <StackPanel Padding="20, 0" Grid.Column="1">
+            <TextBlock x:Uid="Label_FrameLength"/>
+            <NumberBox Minimum="2" Value="{x:Bind ViewModel.FrameLength, Mode=TwoWay}" SpinButtonPlacementMode="Inline" />
             <TextBlock x:Uid="Label_Accuracy"/>
-            <Slider Minimum="0" Maximum="1" Value="0.05" StepFrequency="0.001" />
+            <Slider Minimum="0" Maximum="1" Value="{x:Bind ViewModel.Accuracy, Mode=TwoWay}" StepFrequency="0.001" />
             <TextBlock x:Uid="Label_TrueCurveOpacity"/>
             <Slider x:Name="TrueCurveOpacity" Minimum="0" Maximum="1" Value="1" StepFrequency="0.001" />
         </StackPanel>

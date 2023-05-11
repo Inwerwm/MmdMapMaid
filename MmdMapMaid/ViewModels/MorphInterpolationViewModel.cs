@@ -11,6 +11,12 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
     [ObservableProperty]
     private Point _laterPoint;
 
+    [ObservableProperty]
+    private int _frameLength;
+
+    [ObservableProperty]
+    private double _accuracy;
+
     public MorphInterpolationViewModel()
     {
         EarlierPoint = new(0.25, 0.25);

@@ -330,7 +330,7 @@
   <data name="Label_TrueCurveOpacity.Text" xml:space="preserve">
     <value>True Curve Opacity</value>
   </data>
-  <data name="Label_XStep.Text" xml:space="preserve">
-    <value>Frame Count</value>
+  <data name="Label_FrameLength.Text" xml:space="preserve">
+    <value>Frame Length</value>
   </data>
 </root>
