@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 using MmdMapMaid.ViewModels;
 
@@ -15,5 +16,14 @@ public sealed partial class MorphInterpolationPage : Page
     {
         ViewModel = App.GetService<MorphInterpolationViewModel>();
         InitializeComponent();
+    }
+
+    private void MorphNameSuggestBox_GotFocus(object sender, RoutedEventArgs e)
+    {
+        ViewModel.UpdateSuggest(MorphNameSuggestBox, new()
+        {
+            Reason = AutoSuggestionBoxTextChangeReason.UserInput
+        });
+        MorphNameSuggestBox.IsSuggestionListOpen = true;
     }
 }
