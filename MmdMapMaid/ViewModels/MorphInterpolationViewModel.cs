@@ -1,10 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Xml.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
 using MikuMikuMethods.Pmx;
+using MmdMapMaid.Core.Models.Vmd;
 using MmdMapMaid.Helpers;
 using MmdMapMaid.Models;
 using Windows.Foundation;
@@ -107,5 +107,15 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
         var pmxFile = await StorageHelper.PickSingleFileAsync(".pmx");
         if (pmxFile is null) { return; }
         ReadPmx(pmxFile);
+    }
+
+    [RelayCommand]
+    private async Task WriteVmdAsync()
+    {
+        var savePath = await StorageHelper.PickSaveFileAsync($"ip_{MorphName}.vmd", new KeyValuePair<string, IList<string>>("VMD ファイル", new[] { ".vmd" }));
+        if (savePath is null) { return; }
+
+        var points = MorphInterpolater.CreateInterpolatedPoints(EarlierPoint.ToPoint2(), LaterPoint.ToPoint2(), FrameLength, Accuracy);
+        MorphInterpolater.WriteVmd(savePath.Path, null, MorphName, FrameLength, points.Prepend(MorphInterpolater.StartPoint).Append(MorphInterpolater.EndPoint), new() { EnableBackup = false });
     }
 }

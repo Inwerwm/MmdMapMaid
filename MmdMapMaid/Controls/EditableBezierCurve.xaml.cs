@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Shapes;
 using MikuMikuMethods.Common;
 using MmdMapMaid.Core.Models.Bezier;
+using MmdMapMaid.Core.Models.Vmd;
 using MmdMapMaid.Helpers;
 using Windows.Foundation;
 
@@ -295,23 +296,16 @@ public sealed partial class EditableBezierCurve : UserControl
 
     private void DrawSampledBezierPath()
     {
-        var p0 = new Point2<double>(0, 0);
-        var p1 = EarlierControlPoint.ToPoint2();
-        var p2 = LaterControlPoint.ToPoint2();
-        var p3 = new Point2<double>(1, 1);
+        var simplifiedPoints = MorphInterpolater.CreateInterpolatedPoints(EarlierControlPoint.ToPoint2(), LaterControlPoint.ToPoint2(), XDivisions, ApproximationAccuracy);
 
-        var xStep = 1.0 / XDivisions;
-        var sampledPoints = BezierCurve.SampleCubicBezierCurve(p0, p1, p2, p3, xStep);
-        var simplifiedPoints = SimplifyPath.Simplify(sampledPoints, ApproximationAccuracy);
+        var pathFigure = new PathFigure { StartPoint = CalculateCanvasCoordinates(MorphInterpolater.StartPoint.ToPoint()) };
 
-        var pathFigure = new PathFigure { StartPoint = CalculateCanvasCoordinates(p0.ToPoint()) };
-
-        for (var i = 0; i < simplifiedPoints.Count; i++)
+        foreach (var p in simplifiedPoints)
         {
-            pathFigure.Segments.Add(new LineSegment { Point = CalculateCanvasCoordinates(simplifiedPoints[i].ToPoint()) });
+            pathFigure.Segments.Add(new LineSegment { Point = CalculateCanvasCoordinates(p.ToPoint()) });
         }
 
-        pathFigure.Segments.Add(new LineSegment { Point = CalculateCanvasCoordinates(p3.ToPoint()) });
+        pathFigure.Segments.Add(new LineSegment { Point = CalculateCanvasCoordinates(MorphInterpolater.EndPoint.ToPoint()) });
 
         var pathGeometry = new PathGeometry();
         pathGeometry.Figures.Add(pathFigure);

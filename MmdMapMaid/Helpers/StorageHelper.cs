@@ -26,7 +26,16 @@ class StorageHelper
 
     public static async Task<StorageFile> PickSaveFileAsync(params KeyValuePair<string, IList<string>>[] fileTypes)
     {
+        return await PickSaveFileAsync(null!, fileTypes);
+    }
+
+    public static async Task<StorageFile> PickSaveFileAsync(string suggestedFileName, params KeyValuePair<string, IList<string>>[] fileTypes)
+    {
         var savePicker = new FileSavePicker();
+        if(suggestedFileName != null)
+        {
+            savePicker.SuggestedFileName = suggestedFileName;
+        }
 
         foreach (var type in fileTypes)
         {
