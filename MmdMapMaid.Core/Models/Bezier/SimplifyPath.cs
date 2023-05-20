@@ -3,55 +3,31 @@
 namespace MmdMapMaid.Core.Models.Bezier;
 public class SimplifyPath
 {
-    private static double PointLineDistance(Point2<double> point, Point2<double> lineStart, Point2<double> lineEnd)
-    {
-        var lineDirection = new Point2<double>(lineEnd.X - lineStart.X, lineEnd.Y - lineStart.Y);
-        var pointDirection = new Point2<double>(point.X - lineStart.X, point.Y - lineStart.Y);
+    private static double TriangleArea(Point2<double> a, Point2<double> b, Point2<double> c) =>
+        Math.Abs(((a.X * (b.Y - c.Y)) + (b.X * (c.Y - a.Y)) + (c.X * (a.Y - b.Y))) / 2.0);
 
-        var projectedLength = pointDirection.X * lineDirection.X + pointDirection.Y * lineDirection.Y;
-        var projectedPoint = new Point2<double>(lineStart.X + (lineDirection.X * projectedLength), lineStart.Y + (lineDirection.Y * projectedLength));
+    public static List<Point2<double>> Simplify(List<Point2<double>> points, double approximationAccuracy) =>
+        SimplifyRecursive(points, approximationAccuracy);
 
-        return Math.Sqrt((point.X - projectedPoint.X) * (point.X - projectedPoint.X) + (point.Y - projectedPoint.Y) * (point.Y - projectedPoint.Y));
-    }
-
-    private static void DouglasPeucker(List<Point2<double>> points, int startIndex, int endIndex, double epsilon, List<Point2<double>> simplifiedPoints)
-    {
-        double maxDistance = 0;
-        var maxIndex = 0;
-
-        for (var i = startIndex + 1; i < endIndex; i++)
-        {
-            var distance = PointLineDistance(points[i], points[startIndex], points[endIndex]);
-
-            if (distance > maxDistance)
-            {
-                maxDistance = distance;
-                maxIndex = i;
-            }
-        }
-
-        if (maxDistance > epsilon)
-        {
-            DouglasPeucker(points, startIndex, maxIndex, epsilon, simplifiedPoints);
-            DouglasPeucker(points, maxIndex, endIndex, epsilon, simplifiedPoints);
-        }
-        else
-        {
-            simplifiedPoints.Add(points[startIndex]);
-        }
-    }
-
-    public static List<Point2<double>> Simplify(List<Point2<double>> points, double approximationAccuracy)
+    private static List<Point2<double>> SimplifyRecursive(List<Point2<double>> points, double approximationAccuracy)
     {
         if (points.Count < 3)
         {
             return points;
         }
 
-        var simplifiedPoints = new List<Point2<double>>();
-        DouglasPeucker(points, 0, points.Count - 1, approximationAccuracy, simplifiedPoints);
-        simplifiedPoints.Add(points[^1]);
+        var simplifiedPoints = points
+            .Skip(1)
+            .Take(points.Count - 2)
+            .Select((p, index) => (point: p, area: TriangleArea(points[index], p, points[index + 2])))
+            .Where(p => p.area > approximationAccuracy)
+            .Select(p => p.point)
+            .Prepend(points.First())
+            .Append(points.Last())
+            .ToList();
 
-        return simplifiedPoints;
+        return (simplifiedPoints.Count == points.Count)
+            ? simplifiedPoints
+            : SimplifyRecursive(simplifiedPoints, approximationAccuracy);
     }
 }
