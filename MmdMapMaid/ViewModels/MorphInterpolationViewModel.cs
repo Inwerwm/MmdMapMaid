@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
 using MikuMikuMethods.Pmx;
+using MmdMapMaid.Contracts.Services;
 using MmdMapMaid.Core.Models.Vmd;
 using MmdMapMaid.Helpers;
 using MmdMapMaid.Models;
@@ -14,6 +15,10 @@ namespace MmdMapMaid.ViewModels;
 
 public partial class MorphInterpolationViewModel : ObservableRecipient
 {
+    private const string SettingsKeyOfMorphNames = "MorphNames";
+
+    private readonly ILocalSettingsService _localSettingsService;
+
     [ObservableProperty]
     private Point _earlierPoint;
 
@@ -38,16 +43,24 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
     private Dictionary<PathInformation, string[]> MorphNames
     {
         get;
+        set;
     }
 
-    public MorphInterpolationViewModel()
+    public MorphInterpolationViewModel(ILocalSettingsService localSettingsService)
     {
+        _localSettingsService = localSettingsService;
+
         EarlierPoint = new(0.25, 0.25);
         LaterPoint = new(0.75, 0.75);
-        MorphName = "";
+        _morphName = "";
 
         _models = new();
         MorphNames = new();
+    }
+
+    public async Task InitializeAsync()
+    {
+        MorphNames = await _localSettingsService.ReadSettingAsync<Dictionary<PathInformation, string[]>>(SettingsKeyOfMorphNames) ?? new();
     }
 
     public void UpdateSuggest(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
