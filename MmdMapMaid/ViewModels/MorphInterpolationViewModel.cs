@@ -85,7 +85,7 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
             var info = new PathInformation(0, model.ModelInfo.Name, file.Path);
             info.PropertyChanged += (s, e) =>
             {
-                if (((PathInformation)s).IsRemoved)
+                if (s is PathInformation pathInfo && pathInfo.IsRemoved)
                 {
                     Models.Remove(info);
                     MorphNames.Remove(info);
