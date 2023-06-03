@@ -56,8 +56,6 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
         set;
     }
 
-    private JsonSerializerOptions SerializerOptions => _localSettingsService.CreateOptionWithDictionaryConverter<PathInformation, string[]>();
-
     public MorphInterpolationViewModel(ILocalSettingsService localSettingsService)
     {
         _localSettingsService = localSettingsService;
@@ -65,8 +63,9 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
         EarlierPoint = new(0.25, 0.25);
         LaterPoint = new(0.75, 0.75);
         _morphName = "";
+        _log = "";
 
-        MorphNames = _localSettingsService.ReadSetting<Dictionary<PathInformation, string[]>>(SettingsKeyOfMorphNames, SerializerOptions) ?? new();
+        MorphNames = _localSettingsService.ReadSetting<Dictionary<PathInformation, string[]>>(SettingsKeyOfMorphNames, Factory.CreateJsonSerializerOptions()) ?? new();
         _models = new(MorphNames.Keys);
 
         foreach (var model in MorphNames.Keys)
@@ -113,7 +112,7 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
             Models.Add(info);
             MorphNames.Add(info, model.Morphs.Select(morph => morph.Name).ToArray());
 
-            _localSettingsService.SaveSetting(SettingsKeyOfMorphNames, MorphNames, SerializerOptions);
+            _localSettingsService.SaveSetting(SettingsKeyOfMorphNames, MorphNames, Factory.CreateJsonSerializerOptions());
         }
         catch
         {
@@ -129,7 +128,7 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
             MorphNames.Remove(info);
         }
 
-        _localSettingsService.SaveSetting(SettingsKeyOfMorphNames, MorphNames, SerializerOptions);
+        _localSettingsService.SaveSetting(SettingsKeyOfMorphNames, MorphNames, Factory.CreateJsonSerializerOptions());
     }
 
     [RelayCommand]
