@@ -59,6 +59,11 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
 
         MorphNames = _localSettingsService.ReadSetting<Dictionary<PathInformation, string[]>>(SettingsKeyOfMorphNames, SerializerOptions) ?? new();
         _models = new(MorphNames.Keys);
+
+        foreach (var model in MorphNames.Keys)
+        {
+            model.PropertyChanged += (s, e) => RemoveModel(s, e, model);
+        }
     }
 
     public void UpdateSuggest(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -94,14 +99,7 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
             var model = new PmxModel(file.Path);
 
             var info = new PathInformation(0, model.ModelInfo.Name, file.Path);
-            info.PropertyChanged += (s, e) =>
-            {
-                if (s is PathInformation pathInfo && pathInfo.IsRemoved)
-                {
-                    Models.Remove(info);
-                    MorphNames.Remove(info);
-                }
-            };
+            info.PropertyChanged += (s, e) => RemoveModel(s, e, info);
 
             Models.Add(info);
             MorphNames.Add(info, model.Morphs.Select(morph => morph.Name).ToArray());
@@ -112,6 +110,17 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
         {
             // 読み込みでエラーが起きたら何もせず終わり
         }
+    }
+
+    private void RemoveModel(object? sender, System.ComponentModel.PropertyChangedEventArgs e, PathInformation info)
+    {
+        if (sender is PathInformation pathInfo && pathInfo.IsRemoved)
+        {
+            Models.Remove(info);
+            MorphNames.Remove(info);
+        }
+
+        _localSettingsService.SaveSetting(SettingsKeyOfMorphNames, MorphNames, SerializerOptions);
     }
 
     [RelayCommand]
