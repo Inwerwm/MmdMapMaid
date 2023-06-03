@@ -2,7 +2,6 @@
 using MikuMikuMethods.Mme;
 using MikuMikuMethods.Mme.Element;
 using MikuMikuMethods.Pmm;
-using MikuMikuMethods.Pmx;
 
 namespace MmdMapMaid.Core.Models.Pmm;
 public class PmmPathReplacer

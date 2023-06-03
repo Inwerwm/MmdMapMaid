@@ -3,8 +3,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using MmdMapMaid.Core.Models.Pmm;
 using MmdMapMaid.Helpers;
 using MmdMapMaid.Models;
-using Windows.ApplicationModel;
-using Windows.Media.Core;
 using Windows.Storage;
 
 namespace MmdMapMaid.FeatureState;
