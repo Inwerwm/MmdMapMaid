@@ -1,33 +1,36 @@
 ﻿using System.Text;
-
+using System.Text.Json;
 using MmdMapMaid.Core.Contracts.Services;
 
-using Newtonsoft.Json;
 
 namespace MmdMapMaid.Core.Services;
 
 public class FileService : IFileService
 {
-    public T Read<T>(string folderPath, string fileName)
+    public T? Read<T>(string folderPath, string fileName, JsonSerializerOptions? options = null)
     {
+        options ??= new JsonSerializerOptions();
+
         var path = Path.Combine(folderPath, fileName);
         if (File.Exists(path))
         {
             var json = File.ReadAllText(path);
-            return JsonConvert.DeserializeObject<T>(json);
+            return JsonSerializer.Deserialize<T>(json, options);
         }
 
         return default;
     }
 
-    public void Save<T>(string folderPath, string fileName, T content)
+    public void Save<T>(string folderPath, string fileName, T content, JsonSerializerOptions? options = null)
     {
+        options ??= new JsonSerializerOptions();
+
         if (!Directory.Exists(folderPath))
         {
             Directory.CreateDirectory(folderPath);
         }
 
-        var fileContent = JsonConvert.SerializeObject(content);
+        var fileContent = JsonSerializer.Serialize(content, options);
         File.WriteAllText(Path.Combine(folderPath, fileName), fileContent, Encoding.UTF8);
     }
 
