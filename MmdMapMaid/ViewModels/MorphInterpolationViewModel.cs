@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
@@ -15,7 +16,9 @@ namespace MmdMapMaid.ViewModels;
 
 public partial class MorphInterpolationViewModel : ObservableRecipient
 {
-    private readonly IFeatureSettingService _featureSettingService;
+    private const string SettingsKeyOfMorphNames = "MorphNames";
+
+    private readonly ILocalSettingsService _localSettingsService;
 
     [ObservableProperty]
     private Point _earlierPoint;
@@ -44,16 +47,18 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
         set;
     }
 
-    public MorphInterpolationViewModel(IFeatureSettingService featureSettingService)
+    private JsonSerializerOptions SerializerOptions => _localSettingsService.CreateOptionWithDictionaryConverter<PathInformation, string[]>();
+
+    public MorphInterpolationViewModel(ILocalSettingsService localSettingsService)
     {
-        _featureSettingService = featureSettingService;
+        _localSettingsService = localSettingsService;
 
         EarlierPoint = new(0.25, 0.25);
         LaterPoint = new(0.75, 0.75);
         _morphName = "";
 
-        _models = new();
-        MorphNames = _featureSettingService.MorphNames;
+        MorphNames = _localSettingsService.ReadSetting<Dictionary<PathInformation, string[]>>(SettingsKeyOfMorphNames, SerializerOptions) ?? new();
+        _models = new(MorphNames.Keys);
     }
 
     public void UpdateSuggest(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -80,7 +85,7 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
         sender.Text = args.SelectedItem.ToString();
     }
 
-    public async Task ReadPmxAsync(StorageFile file)
+    public void ReadPmx(StorageFile file)
     {
         try
         {
@@ -101,7 +106,7 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
             Models.Add(info);
             MorphNames.Add(info, model.Morphs.Select(morph => morph.Name).ToArray());
 
-            await _featureSettingService.SetMorphNamesAsync(MorphNames);
+            _localSettingsService.SaveSetting(SettingsKeyOfMorphNames, MorphNames, SerializerOptions);
         }
         catch
         {
@@ -114,7 +119,7 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
     {
         var pmxFile = await StorageHelper.PickSingleFileAsync(".pmx");
         if (pmxFile is null) { return; }
-        await ReadPmxAsync(pmxFile);
+        ReadPmx(pmxFile);
     }
 
     [RelayCommand]

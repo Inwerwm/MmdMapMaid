@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using System.Text.Json;
+using Microsoft.Extensions.Options;
 
 using MmdMapMaid.Contracts.Services;
 using MmdMapMaid.Core.Contracts.Services;
@@ -46,13 +47,13 @@ public class LocalSettingsService : ILocalSettingsService
         }
     }
 
-    public async Task<T?> ReadSettingAsync<T>(string key)
+    public async Task<T?> ReadSettingAsync<T>(string key, JsonSerializerOptions? options = null)
     {
         if (RuntimeHelper.IsMSIX)
         {
             if (ApplicationData.Current.LocalSettings.Values.TryGetValue(key, out var obj))
             {
-                return await Json.ToObjectAsync<T>((string)obj);
+                return await Json.ToObjectAsync<T>((string)obj, options);
             }
         }
         else
@@ -61,26 +62,82 @@ public class LocalSettingsService : ILocalSettingsService
 
             if (_settings != null && _settings.TryGetValue(key, out var obj))
             {
-                return await Json.ToObjectAsync<T>((string)obj);
+                return await Json.ToObjectAsync<T>((string)obj, options);
             }
         }
 
         return default;
     }
 
-    public async Task SaveSettingAsync<T>(string key, T value)
+    public async Task SaveSettingAsync<T>(string key, T value, JsonSerializerOptions? options = null)
     {
         if (RuntimeHelper.IsMSIX)
         {
-            ApplicationData.Current.LocalSettings.Values[key] = await Json.StringifyAsync(value);
+            ApplicationData.Current.LocalSettings.Values[key] = await Json.StringifyAsync(value, options);
         }
         else
         {
             await InitializeAsync();
 
-            _settings[key] = await Json.StringifyAsync(value);
+            _settings[key] = await Json.StringifyAsync(value, options);
 
             await Task.Run(() => _fileService.Save(_applicationDataFolder, _localsettingsFile, _settings));
         }
+    }
+
+    private void Initialize()
+    {
+        if (!_isInitialized)
+        {
+            _settings = _fileService.Read<IDictionary<string, object>>(_applicationDataFolder, _localsettingsFile) ?? new Dictionary<string, object>();
+
+            _isInitialized = true;
+        }
+    }
+
+    public T? ReadSetting<T>(string key, JsonSerializerOptions? options = null)
+    {
+        if (RuntimeHelper.IsMSIX)
+        {
+            if (ApplicationData.Current.LocalSettings.Values.TryGetValue(key, out var obj))
+            {
+                return Json.ToObject<T>((string)obj, options);
+            }
+        }
+        else
+        {
+            Initialize();
+
+            if (_settings != null && _settings.TryGetValue(key, out var obj))
+            {
+                return Json.ToObject<T>((string)obj, options);
+            }
+        }
+
+        return default;
+    }
+
+    public void SaveSetting<T>(string key, T value, JsonSerializerOptions? options = null)
+    {
+        if (RuntimeHelper.IsMSIX)
+        {
+            ApplicationData.Current.LocalSettings.Values[key] = Json.Stringify(value, options);
+        }
+        else
+        {
+            Initialize();
+
+            _settings[key] = Json.Stringify(value, options);
+
+            _fileService.Save(_applicationDataFolder, _localsettingsFile, _settings);
+        }
+    }
+
+    public JsonSerializerOptions CreateOptionWithDictionaryConverter<TKey, TValue>() where TKey : notnull
+    {
+        var opt = new JsonSerializerOptions();
+        opt.Converters.Add(new NonStringKeyDictionaryConverter<TKey, TValue>());
+
+        return opt;
     }
 }
