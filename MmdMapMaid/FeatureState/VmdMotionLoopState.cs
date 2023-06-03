@@ -1,11 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using MmdMapMaid.Contracts.Services;
 using MmdMapMaid.Core.Models;
 using MmdMapMaid.Core.Models.Vmd;
+using MmdMapMaid.Services;
 
 namespace MmdMapMaid.FeatureState;
 
 internal partial class VmdMotionLoopState : ObservableObject
 {
+    private const string SettingsKeyOfElementVmdPath = "LoopMotionElementVmdPath";
+    private const string SettingsKeyOfMotionLooper = "MotionLooper";
+
+    ILocalSettingsService _localSettingsService;
+
     private MotionLooper MotionLooper
     {
         get;
@@ -41,19 +48,23 @@ internal partial class VmdMotionLoopState : ObservableObject
     [ObservableProperty]
     private int _plotCount;
 
-    public VmdMotionLoopState()
+    public VmdMotionLoopState(ILocalSettingsService localSettingsService)
     {
-        _elementVmdPath = Properties.Settings.Default.ElementVmdPath;
+        _localSettingsService = localSettingsService;
 
-        Bpm = Properties.Settings.Default.Bpm;
+        _elementVmdPath = _localSettingsService.ReadSetting<string>(SettingsKeyOfElementVmdPath) ?? string.Empty;
+
+        var settings = _localSettingsService.ReadSetting<MotionLooper>(SettingsKeyOfMotionLooper) ?? null;
+
+        Bpm = settings?.IntervalCalculator.BPM ?? 120;
         MotionLooper.IntervalCalculator.BPM = Bpm;
 
         Interval = MotionLooper.IntervalCalculator.Interval ?? 1;
 
-        Frequency = Properties.Settings.Default.Frequency;
-        Beat = Properties.Settings.Default.Beat;
-        LoopCount = Properties.Settings.Default.LoopCount;
-        PlotCountOffset = Properties.Settings.Default.PlotCountOffset;
+        Frequency = settings?.DuplicationCounter.Frequency ?? 1;
+        Beat = settings?.DuplicationCounter.Beat ?? 4;
+        LoopCount = settings?.DuplicationCounter.LoopCount ?? 4;
+        PlotCountOffset = settings?.DuplicationCounter.CountOffset ?? 0;
 
         MotionLooper.DuplicationCounter.Frequency = Frequency;
         MotionLooper.DuplicationCounter.Beat = Beat;
@@ -69,7 +80,7 @@ internal partial class VmdMotionLoopState : ObservableObject
         switch (e.PropertyName)
         {
             case nameof(ElementVmdPath):
-                Properties.Settings.Default.ElementVmdPath = ElementVmdPath;
+                _localSettingsService.SaveSetting(SettingsKeyOfElementVmdPath, ElementVmdPath);
                 break;
             case nameof(Bpm):
                 if (IsIntervalUpdating) { break; }
@@ -78,7 +89,7 @@ internal partial class VmdMotionLoopState : ObservableObject
                 MotionLooper.IntervalCalculator.BPM = Bpm;
                 Interval = MotionLooper.IntervalCalculator.Interval ?? 1;
 
-                Properties.Settings.Default.Bpm = Bpm;
+                _localSettingsService.SaveSetting(SettingsKeyOfMotionLooper, MotionLooper);
 
                 IsIntervalUpdating = false;
                 break;
@@ -89,33 +100,31 @@ internal partial class VmdMotionLoopState : ObservableObject
                 MotionLooper.IntervalCalculator.Interval = Interval;
                 Bpm = MotionLooper.IntervalCalculator.BPM ?? 1;
 
-                Properties.Settings.Default.Bpm = Bpm;
+                _localSettingsService.SaveSetting(SettingsKeyOfMotionLooper, MotionLooper);
 
                 IsIntervalUpdating = false;
                 break;
             case nameof(Frequency):
                 MotionLooper.DuplicationCounter.Frequency = Frequency;
                 PlotCount = MotionLooper.DuplicationCounter.ElementCount;
-                Properties.Settings.Default.Frequency = Frequency;
+                _localSettingsService.SaveSetting(SettingsKeyOfMotionLooper, MotionLooper);
                 break;
             case nameof(Beat):
                 MotionLooper.DuplicationCounter.Beat = Beat;
                 PlotCount = MotionLooper.DuplicationCounter.ElementCount;
-                Properties.Settings.Default.Beat = Beat;
+                _localSettingsService.SaveSetting(SettingsKeyOfMotionLooper, MotionLooper);
                 break;
             case nameof(LoopCount):
                 MotionLooper.DuplicationCounter.LoopCount = LoopCount;
                 PlotCount = MotionLooper.DuplicationCounter.ElementCount;
-                Properties.Settings.Default.LoopCount = LoopCount;
+                _localSettingsService.SaveSetting(SettingsKeyOfMotionLooper, MotionLooper);
                 break;
             case nameof(PlotCountOffset):
                 MotionLooper.DuplicationCounter.CountOffset = PlotCountOffset;
                 PlotCount = MotionLooper.DuplicationCounter.ElementCount;
-                Properties.Settings.Default.PlotCountOffset = PlotCountOffset;
+                _localSettingsService.SaveSetting(SettingsKeyOfMotionLooper, MotionLooper);
                 break;
         }
-
-        Properties.Settings.Default.Save();
     }
 
     public string Execute()

@@ -18,10 +18,10 @@ public class MotionLooper
         get;
     }
 
-    public MotionLooper()
+    public MotionLooper(DuplicationCounter? duplicationCounter = null, IntervalCalculator? intervalCalculator = null)
     {
-        DuplicationCounter = new();
-        IntervalCalculator = new(30);
+        DuplicationCounter = duplicationCounter ?? new();
+        IntervalCalculator = intervalCalculator ?? new(30);
         FrameReprinter = new();
     }
 

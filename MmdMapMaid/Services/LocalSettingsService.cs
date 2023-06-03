@@ -91,7 +91,7 @@ public class LocalSettingsService : ILocalSettingsService
 
         _settings[key] = value;
 
-        _fileService.Save(_applicationDataFolder, _localsettingsFile, _settings, options);
+        _fileService.Save(_applicationDataFolder, _localsettingsFile, _settings, options ?? Factory.CreateJsonSerializerOptions());
     }
 
     public async Task SaveSettingAsync<T>(string key, T value, JsonSerializerOptions? options = null)
@@ -100,6 +100,6 @@ public class LocalSettingsService : ILocalSettingsService
 
         _settings[key] = value;
 
-        await Task.Run(() => _fileService.Save(_applicationDataFolder, _localsettingsFile, _settings, options));
+        await Task.Run(() => _fileService.Save(_applicationDataFolder, _localsettingsFile, _settings, options ?? Factory.CreateJsonSerializerOptions()));
     }
 }

@@ -39,9 +39,12 @@ public class IntervalCalculator
         }
     }
 
-    public IntervalCalculator(double baseFrameRate)
+    public IntervalCalculator(double baseFrameRate, double? bpm = 120, double? interval = 15)
     {
         BaseFrameRate = baseFrameRate;
+
+        this.bpm = bpm;
+        this.interval = interval;
     }
 
     private static double? FilterPositiveOnly(double? value) =>

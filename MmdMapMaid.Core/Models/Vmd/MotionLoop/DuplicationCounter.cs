@@ -31,6 +31,14 @@ public class DuplicationCounter
         get; set;
     }
 
+    public DuplicationCounter(int frequency = 1, int beat = 4, int loopCount = 4, int countOffset = 0)
+    {
+        Frequency = frequency;
+        Beat = beat;
+        LoopCount = loopCount;
+        CountOffset = countOffset;
+    }
+
     /// <summary>
     /// 複製回数
     /// </summary>
