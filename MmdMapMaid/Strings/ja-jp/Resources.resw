@@ -336,4 +336,7 @@
   <data name="Button_ReadPmx.Content" xml:space="preserve">
     <value>PMX ファイルを読み込む</value>
   </data>
+  <data name="Log_SavePath" xml:space="preserve">
+    <value>保存場所</value>
+  </data>
 </root>

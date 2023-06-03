@@ -16,6 +16,7 @@ public sealed partial class MorphInterpolationPage : Page
     {
         ViewModel = App.GetService<MorphInterpolationViewModel>();
         InitializeComponent();
+        ViewModel.AppendLog = TextBoxLog.CreateLogWriter();
     }
 
     private void MorphNameSuggestBox_GotFocus(object sender, RoutedEventArgs e)

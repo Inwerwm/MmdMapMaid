@@ -16,15 +16,7 @@ public sealed partial class MotionLoopPage : Page
     {
         ViewModel = App.GetService<MotionLoopViewModel>();
         InitializeComponent();
-        ViewModel.AppendLog = (log) =>
-        {
-            TextBoxLog.Text = $"""
-            {DateTime.Now}
-            {log}
-
-            {TextBoxLog.Text}
-            """;
-        };
+        ViewModel.AppendLog = TextBoxLog.CreateLogWriter();
     }
 
     private void ContentArea_DragOver(object _, DragEventArgs e)

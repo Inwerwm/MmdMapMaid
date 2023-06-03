@@ -45,7 +45,7 @@
                 <Button x:Uid="Button_WriteVmd" Command="{x:Bind ViewModel.WriteVmdCommand}" Height="50" Margin="0,15,0,0" HorizontalAlignment="Stretch" />
             </StackPanel>
 
-            <TextBox AcceptsReturn="True" IsReadOnly="True" Margin="20" Grid.Row="1"/>
+            <TextBox x:Name="TextBoxLog" AcceptsReturn="True" IsReadOnly="True" Margin="20" Grid.Row="1"/>
         </Grid>
 
         <Grid RowSpacing="10"  AllowDrop="True" DragOver="Grid_DragOver" Drop="Grid_Drop" Grid.Column="2" >

@@ -36,12 +36,21 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
     private string _morphName;
 
     [ObservableProperty]
+    private string _log;
+
+    [ObservableProperty]
     private ObservableCollection<PathInformation> _models;
 
     [ObservableProperty]
     private PathInformation? _selectedModel;
 
     private Dictionary<PathInformation, string[]> MorphNames
+    {
+        get;
+        set;
+    }
+
+    public Action<string>? AppendLog
     {
         get;
         set;
@@ -139,5 +148,6 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
 
         var points = MorphInterpolater.CreateInterpolatedPoints(EarlierPoint.ToPoint2(), LaterPoint.ToPoint2(), FrameLength, Accuracy);
         MorphInterpolater.WriteVmd(savePath.Path, null, MorphName, FrameLength, points.Prepend(MorphInterpolater.StartPoint).Append(MorphInterpolater.EndPoint), new() { EnableBackup = false });
+        AppendLog?.Invoke($"{"Log_SavePath".GetLocalized()}: {savePath.Path}");
     }
 }

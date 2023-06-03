@@ -339,4 +339,7 @@
   <data name="Button_ReadPmx.Content" xml:space="preserve">
     <value>Read Pmx File</value>
   </data>
+  <data name="Log_SavePath" xml:space="preserve">
+    <value>Save Path</value>
+  </data>
 </root>
