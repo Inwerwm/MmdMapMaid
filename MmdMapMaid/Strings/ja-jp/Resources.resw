@@ -339,4 +339,7 @@
   <data name="Log_SavePath" xml:space="preserve">
     <value>保存場所</value>
   </data>
+  <data name="Shell_MorphInterpolation.Content" xml:space="preserve">
+    <value>VMD モーフ補間</value>
+  </data>
 </root>

@@ -75,7 +75,7 @@
                 </NavigationViewItem>
                 <NavigationViewItem x:Uid="Shell_MorphInterpolation" helpers:NavigationHelper.NavigateTo="MmdMapMaid.ViewModels.MorphInterpolationViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7c3;"/>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xef90;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>

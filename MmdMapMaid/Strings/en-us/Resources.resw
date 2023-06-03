@@ -322,7 +322,7 @@
     <value>Reset All</value>
   </data>
   <data name="Shell_MorphInterpolation.Content" xml:space="preserve">
-    <value>MorphInterpolation</value>
+    <value>Vmd Morph Interpolation</value>
   </data>
   <data name="Label_Accuracy.Text" xml:space="preserve">
     <value>Approximation Accuracy</value>
