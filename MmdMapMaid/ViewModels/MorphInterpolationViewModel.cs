@@ -15,9 +15,7 @@ namespace MmdMapMaid.ViewModels;
 
 public partial class MorphInterpolationViewModel : ObservableRecipient
 {
-    private const string SettingsKeyOfMorphNames = "MorphNames";
-
-    private readonly ILocalSettingsService _localSettingsService;
+    private readonly IFeatureSettingService _featureSettingService;
 
     [ObservableProperty]
     private Point _earlierPoint;
@@ -46,21 +44,16 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
         set;
     }
 
-    public MorphInterpolationViewModel(ILocalSettingsService localSettingsService)
+    public MorphInterpolationViewModel(IFeatureSettingService featureSettingService)
     {
-        _localSettingsService = localSettingsService;
+        _featureSettingService = featureSettingService;
 
         EarlierPoint = new(0.25, 0.25);
         LaterPoint = new(0.75, 0.75);
         _morphName = "";
 
         _models = new();
-        MorphNames = new();
-    }
-
-    public async Task InitializeAsync()
-    {
-        MorphNames = await _localSettingsService.ReadSettingAsync<Dictionary<PathInformation, string[]>>(SettingsKeyOfMorphNames) ?? new();
+        MorphNames = _featureSettingService.MorphNames;
     }
 
     public void UpdateSuggest(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -87,7 +80,7 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
         sender.Text = args.SelectedItem.ToString();
     }
 
-    public void ReadPmx(StorageFile file)
+    public async Task ReadPmxAsync(StorageFile file)
     {
         try
         {
@@ -107,6 +100,8 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
 
             Models.Add(info);
             MorphNames.Add(info, model.Morphs.Select(morph => morph.Name).ToArray());
+
+            await _featureSettingService.SetMorphNamesAsync(MorphNames);
         }
         catch
         {
@@ -119,7 +114,7 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
     {
         var pmxFile = await StorageHelper.PickSingleFileAsync(".pmx");
         if (pmxFile is null) { return; }
-        ReadPmx(pmxFile);
+        await ReadPmxAsync(pmxFile);
     }
 
     [RelayCommand]

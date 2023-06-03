@@ -37,6 +37,6 @@ public sealed partial class MorphInterpolationPage : Page
         var file = await StorageHelper.ReadDropedFile(e, ".pmx");
         if (file is null) { return; }
 
-        ViewModel.ReadPmx(file);
+        await ViewModel.ReadPmxAsync(file);
     }
 }
