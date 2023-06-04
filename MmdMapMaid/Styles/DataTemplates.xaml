@@ -59,7 +59,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="NamePathCard">
-        <Grid>
+        <Grid ColumnSpacing="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="50"/>

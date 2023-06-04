@@ -33,7 +33,7 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             
-            <StackPanel Spacing="5" Padding="20, 0" Grid.Row="0">
+            <StackPanel Spacing="3" Padding="15, 0" Grid.Row="0">
                 <AutoSuggestBox x:Uid="TextBox_MorphName" x:Name="MorphNameSuggestBox" Text="{x:Bind ViewModel.MorphName, Mode=TwoWay}" FontSize="28" TextChanged="{x:Bind ViewModel.UpdateSuggest}" SuggestionChosen="{x:Bind ViewModel.SuggestionChosen}" GotFocus="MorphNameSuggestBox_GotFocus"/>
                 <TextBlock x:Uid="Label_FrameLength" Margin="0,15,0,0"/>
                 <NumberBox Minimum="2" Value="{x:Bind ViewModel.FrameLength, Mode=TwoWay}" SpinButtonPlacementMode="Inline" />
@@ -41,7 +41,6 @@
                 <Slider Minimum="0.0" Maximum="0.1" StepFrequency="0.001" Value="{x:Bind ViewModel.Accuracy, Mode=TwoWay}" />
                 <TextBlock x:Uid="Label_TrueCurveOpacity" Margin="0,15,0,0"/>
                 <Slider x:Name="TrueCurveOpacity" Minimum="0" Maximum="1" Value="1" StepFrequency="0.001" />
-                <Border BorderBrush="Gray" BorderThickness="2" CornerRadius="4" Opacity="50"  Margin="0,15,0,0"/>
                 <Button x:Uid="Button_WriteVmd" Command="{x:Bind ViewModel.WriteVmdCommand}" Height="50" Margin="0,15,0,0" HorizontalAlignment="Stretch" />
             </StackPanel>
 
