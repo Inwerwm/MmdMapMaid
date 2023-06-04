@@ -296,14 +296,12 @@ public sealed partial class EditableBezierCurve : UserControl
     {
         var simplifiedPoints = MorphInterpolater.CreateInterpolatedPoints(EarlierControlPoint.ToPoint2(), LaterControlPoint.ToPoint2(), XDivisions, ApproximationAccuracy);
 
-        var pathFigure = new PathFigure { StartPoint = CalculateCanvasCoordinates(MorphInterpolater.StartPoint.ToPoint()) };
+        var pathFigure = new PathFigure { StartPoint = CalculateCanvasCoordinates(simplifiedPoints[0].ToPoint()) };
 
-        foreach (var p in simplifiedPoints)
+        foreach (var p in simplifiedPoints.Skip(1))
         {
             pathFigure.Segments.Add(new LineSegment { Point = CalculateCanvasCoordinates(p.ToPoint()) });
         }
-
-        pathFigure.Segments.Add(new LineSegment { Point = CalculateCanvasCoordinates(MorphInterpolater.EndPoint.ToPoint()) });
 
         var pathGeometry = new PathGeometry();
         pathGeometry.Figures.Add(pathFigure);

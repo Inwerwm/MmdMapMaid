@@ -17,24 +17,46 @@ public class BezierCurve
         return point;
     }
 
-    public static List<Point2<double>> SampleCubicBezierCurve(Point2<double> p0, Point2<double> p1, Point2<double> p2, Point2<double> p3, double xStep, double precision = 0.0001)
+    public static List<Point2<double>> SampleCubicBezierCurve(Point2<double> p0, Point2<double> p1, Point2<double> p2, Point2<double> p3, int divisionCount, double precision)
     {
-        var sampledPoints = new List<Point2<double>>();
-        double t = 0;
-        var currentX = p0.X;
+        // 分割したx座標の範囲を計算
+        var xMin = p0.X;
+        var xMax = p3.X;
+        var xStep = (xMax - xMin) / divisionCount;
 
-        while (t <= 1.0)
-        {
-            var point = CalculateCubicBezierPoint(t, p0, p1, p2, p3);
-            if (System.Math.Abs(point.X - currentX) >= xStep)
-            {
-                sampledPoints.Add(point);
-                currentX = point.X;
-            }
+        // divisionCountから2を引くことで最初と最後の点を除外
+        var range = Enumerable.Range(1, divisionCount - 1);
 
-            t += precision;
-        }
+        var sampledPoints = range.AsParallel()
+            .Select(i => xMin + i * xStep)
+            .Select(x => BinarySearchForT(p0, p1, p2, p3, x, precision))
+            .Select(t => CalculateCubicBezierPoint(t, p0, p1, p2, p3))
+            .Prepend(p0)
+            .Append(p3)
+            .OrderBy(point => point.X)
+            .ToList();
 
         return sampledPoints;
     }
+
+    private static double BinarySearchForT(Point2<double> p0, Point2<double> p1, Point2<double> p2, Point2<double> p3, double x, double precision)
+    {
+        double tLow = 0, tHigh = 1;
+        double tMid = 0;
+
+        while (tHigh - tLow > precision)
+        {
+            tMid = (tLow + tHigh) / 2;
+            var point = CalculateCubicBezierPoint(tMid, p0, p1, p2, p3);
+
+            if (point.X > x)
+                tHigh = tMid;
+            else
+                tLow = tMid;
+        }
+
+        return tMid;
+    }
+
+
 }

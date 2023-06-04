@@ -8,11 +8,9 @@ public static class MorphInterpolater
     public static Point2<double> StartPoint => new(0, 0);
     public static Point2<double> EndPoint => new(1, 1);
 
-    public static List<Point2<double>> CreateInterpolatedPoints(Point2<double> earlierControlPoint, Point2<double> laterControlPoint, int frameLength, double accuracy)
+    public static List<Point2<double>> CreateInterpolatedPoints(Point2<double> earlierControlPoint, Point2<double> laterControlPoint, int frameLength, double accuracy, double precision = 0.001)
     {
-        var xStep = 1.0 / frameLength;
-
-        var sampledPoints = BezierCurve.SampleCubicBezierCurve(StartPoint, earlierControlPoint, laterControlPoint, EndPoint, xStep);
+        var sampledPoints = BezierCurve.SampleCubicBezierCurve(StartPoint, earlierControlPoint, laterControlPoint, EndPoint, frameLength, precision);
         return SimplifyPath.Simplify(sampledPoints, accuracy);
     }
 

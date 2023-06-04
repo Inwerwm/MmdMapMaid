@@ -144,8 +144,8 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
         var savePath = await StorageHelper.PickSaveFileAsync($"ip_{MorphName}.vmd", new KeyValuePair<string, IList<string>>("VMD ファイル", new[] { ".vmd" }));
         if (savePath is null) { return; }
 
-        var points = MorphInterpolater.CreateInterpolatedPoints(EarlierPoint.ToPoint2(), LaterPoint.ToPoint2(), FrameLength, Accuracy);
-        MorphInterpolater.WriteVmd(savePath.Path, null, MorphName, FrameLength, points.Prepend(MorphInterpolater.StartPoint).Append(MorphInterpolater.EndPoint), new() { EnableBackup = false });
+        var points = MorphInterpolater.CreateInterpolatedPoints(EarlierPoint.ToPoint2(), LaterPoint.ToPoint2(), FrameLength, Accuracy, 0.00001);
+        MorphInterpolater.WriteVmd(savePath.Path, null, MorphName, FrameLength, points, new() { EnableBackup = false });
         AppendLog?.Invoke($"{"Log_SavePath".GetLocalized()}: {savePath.Path}");
     }
 }
