@@ -22,6 +22,7 @@ public class PageService : IPageService
         Configure<ReplaceVmdViewModel, ReplaceVmdPage>();
         Configure<MotionLoopViewModel, MotionLoopPage>();
         Configure<MorphInterpolationViewModel, MorphInterpolationPage>();
+        Configure<VmdRangeEditViewModel, VmdRangeEditPage>();
     }
 
     public Type GetPageType(string key)

@@ -342,4 +342,7 @@
   <data name="Log_SavePath" xml:space="preserve">
     <value>Save Path</value>
   </data>
+  <data name="Shell_VmdRangeEdit.Content" xml:space="preserve">
+    <value>Vmd Range Edit</value>
+  </data>
 </root>

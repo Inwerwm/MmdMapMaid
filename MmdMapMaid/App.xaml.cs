@@ -67,6 +67,8 @@ public partial class App : Application
             services.AddSingleton<IFileService, FileService>();
 
             // Views and ViewModels
+            services.AddTransient<VmdRangeEditViewModel>();
+            services.AddTransient<VmdRangeEditPage>();
             services.AddSingleton<MorphInterpolationViewModel>();
             services.AddTransient<MorphInterpolationPage>();
             services.AddTransient<MotionLoopViewModel>();
