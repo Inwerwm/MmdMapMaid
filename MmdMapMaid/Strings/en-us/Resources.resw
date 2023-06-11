@@ -124,10 +124,10 @@
     <value>MmdMapMaid</value>
   </data>
   <data name="Shell_Pmm.Content" xml:space="preserve">
-    <value>Pmm Management</value>
+    <value>PMM Management</value>
   </data>
   <data name="Shell_Emm.Content" xml:space="preserve">
-    <value>Emm Management</value>
+    <value>EMM Management</value>
   </data>
   <data name="Settings_Theme.Text" xml:space="preserve">
     <value>Theme</value>
@@ -148,7 +148,7 @@
     <value>Write Pmm File</value>
   </data>
   <data name="Message_PmmWriteComplete" xml:space="preserve">
-    <value>Pmm file has been written.</value>
+    <value>PMM file has been written.</value>
   </data>
   <data name="Message_Writing" xml:space="preserve">
     <value>Writing...</value>
@@ -163,7 +163,7 @@
     <value>Read model of original material order</value>
   </data>
   <data name="Message_EmmWriteComplete" xml:space="preserve">
-    <value>Emm file has been written.</value>
+    <value>EMM file has been written.</value>
   </data>
   <data name="Button_ReplaceAll.Content" xml:space="preserve">
     <value>Replace all</value>
@@ -193,22 +193,22 @@
     <value>Drag &amp; Drop here</value>
   </data>
   <data name="Shell_ExtractEmd.Content" xml:space="preserve">
-    <value>Emd Extraction</value>
+    <value>EMD Extraction</value>
   </data>
   <data name="Button_SelectEmdSaveDirectory.Content" xml:space="preserve">
     <value>Select folder to save EMD</value>
   </data>
   <data name="Message_EmdWriteComplete" xml:space="preserve">
-    <value>Emd file has been written.</value>
+    <value>EMD file has been written.</value>
   </data>
   <data name="DragAndDropPlaceHolder.Text" xml:space="preserve">
     <value>Drag &amp; Drop here</value>
   </data>
   <data name="Shell_ExtractVmd.Content" xml:space="preserve">
-    <value>Vmd Extraction</value>
+    <value>VMD Extraction</value>
   </data>
   <data name="Message_VmdWriteComplete" xml:space="preserve">
-    <value>Vmd file has been written.</value>
+    <value>VMD file has been written.</value>
   </data>
   <data name="DragAndDropTextBox.PlaceholderText" xml:space="preserve">
     <value>Drag &amp; Drop here</value>
@@ -250,7 +250,7 @@
     <value>Settings</value>
   </data>
   <data name="Shell_ReplaceVmd.Content" xml:space="preserve">
-    <value>Vmd Management</value>
+    <value>VMD Management</value>
   </data>
   <data name="DisplayName_Morph" xml:space="preserve">
     <value>Morph</value>
@@ -322,7 +322,7 @@
     <value>Reset All</value>
   </data>
   <data name="Shell_MorphInterpolation.Content" xml:space="preserve">
-    <value>Vmd Morph Interpolation</value>
+    <value>VMD Morph Interpolation</value>
   </data>
   <data name="Label_Accuracy.Text" xml:space="preserve">
     <value>Approximation Accuracy</value>
@@ -343,6 +343,6 @@
     <value>Save Path</value>
   </data>
   <data name="Shell_VmdRangeEdit.Content" xml:space="preserve">
-    <value>Vmd Range Edit</value>
+    <value>VMD Range Edit</value>
   </data>
 </root>

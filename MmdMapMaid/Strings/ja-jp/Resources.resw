@@ -163,7 +163,7 @@
     <value>材質順変更前の PMX モデルを読み込む</value>
   </data>
   <data name="Message_EmmWriteComplete" xml:space="preserve">
-    <value>Emm ファイルの書き込みが完了しました</value>
+    <value>EMM ファイルの書き込みが完了しました</value>
   </data>
   <data name="Button_ReplaceAll.Content" xml:space="preserve">
     <value>すべて置換</value>
@@ -208,7 +208,7 @@
     <value>VMD 抽出</value>
   </data>
   <data name="Message_VmdWriteComplete" xml:space="preserve">
-    <value>Vmd ファイルの書き込みが完了しました</value>
+    <value>VMD ファイルの書き込みが完了しました</value>
   </data>
   <data name="DragAndDropTextBox.PlaceholderText" xml:space="preserve">
     <value>ここにドラッグ&amp;ドロップ</value>
