@@ -1,4 +1,5 @@
-﻿using MikuMikuMethods.Extension;
+﻿using System.Numerics;
+using MikuMikuMethods.Extension;
 using MikuMikuMethods.Vmd;
 
 namespace MmdMapMaid.Core.Models.Vmd;
@@ -10,7 +11,7 @@ public static class VmdRangeEditor
             new(frames[1].Name, frames[1].Frame, frames[1].InterpolationCurves)
             {
                 Position = frames[0].Position + scale * (frames[1].Position - frames[0].Position),
-                Rotation = frames[0].Rotation.Scale(frames[1].Rotation, scale)
+                Rotation = Quaternion.Slerp(frames[0].Rotation, frames[1].Rotation, scale)
             }
         });
 
