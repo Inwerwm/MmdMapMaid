@@ -15,17 +15,14 @@ public partial class VmdRangeEditViewModel : ObservableRecipient
     [ObservableProperty]
     private float _offsetScale;
 
-    private string? VmdPath
-    {
-        get;
-        set;
-    }
+    [ObservableProperty]
+    private string _vmdPath;
 
     public VmdRangeEditViewModel()
     {
-
         EnableOffsetScaling = true;
         OffsetScale = 1.0f;
+        _vmdPath = "";
     }
 
     internal void ReadVmd(StorageFile file) => ReadVmd(file.Path);
