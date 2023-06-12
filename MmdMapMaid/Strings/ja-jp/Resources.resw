@@ -345,4 +345,10 @@
   <data name="Shell_VmdRangeEdit.Content" xml:space="preserve">
     <value>VMD 区間編集</value>
   </data>
+  <data name="Description_ScaleOffset.Content" xml:space="preserve">
+    <value>第二フレーム変化量スケーリング</value>
+  </data>
+  <data name="Label_Scale.Text" xml:space="preserve">
+    <value>拡縮率</value>
+  </data>
 </root>

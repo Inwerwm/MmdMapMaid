@@ -3,10 +3,39 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     mc:Ignorable="d">
 
-    <Grid x:Name="ContentArea">
-        
+    <Grid x:Name="ContentArea" ColumnSpacing="15" AllowDrop="True" DragOver="ContentArea_DragOver" Drop="ContentArea_DropAsync">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Button x:Uid="Button_ReadVmd" Command="{x:Bind ViewModel.ReadVmdCommand}" HorizontalAlignment="Stretch" Grid.Column="0" />
+        <Button x:Uid="Button_WriteVmd" Command="{x:Bind ViewModel.WriteVmdCommand}" HorizontalAlignment="Stretch" Grid.Column="1" />
+
+        <controls:DockPanel Padding="5" LastChildFill="False" Grid.Row="1" Grid.ColumnSpan="2">
+            <Expander x:Name="ScaleOffsetArea" IsExpanded="True" HorizontalAlignment="Stretch" controls:DockPanel.Dock="Top">
+                <Expander.Header>
+                    <CheckBox x:Uid="Description_ScaleOffset" IsChecked="{x:Bind ViewModel.EnableOffsetScaling, Mode=TwoWay}" />
+                </Expander.Header>
+                <Expander.Content>
+                    <Grid Margin="15">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBlock x:Uid="Label_Scale" Grid.Row="0"/>
+                        <NumberBox Value="{x:Bind ViewModel.OffsetScale, Mode=TwoWay}" SmallChange="0.25" SpinButtonPlacementMode="Inline" Width="250" Grid.Row="1"/>
+                    </Grid>
+                </Expander.Content>
+            </Expander>
+        </controls:DockPanel>
     </Grid>
 </Page>
