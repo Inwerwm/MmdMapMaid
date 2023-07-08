@@ -5,33 +5,34 @@ using MikuMikuMethods.Vmd;
 namespace MmdMapMaid.Core.Models.Vmd;
 public static class VmdRangeEditor
 {
-    public static IEnumerable<VmdMotionFrame> ScaleOffset(IEnumerable<VmdMotionFrame> motionFrames, float scale) =>
-        ExcludeRanges(motionFrames).SelectMany(frames => new[] {
+    public static IEnumerable<IVmdFrame> ScaleOffset(IEnumerable<IVmdFrame> frames, float scale) =>
+        TakeFirstTwoFramesPerBone(frames).SelectMany(frames => new[]
+        {
             frames[0],
-            new(frames[1].Name, frames[1].Frame, frames[1].InterpolationCurves)
+            (frames[0], frames[1]) switch
             {
-                Position = frames[0].Position + scale * (frames[1].Position - frames[0].Position),
-                Rotation = Quaternion.Slerp(frames[0].Rotation, frames[1].Rotation, scale)
+                (VmdMotionFrame motionFirstFrame, VmdMotionFrame motionSecondFrame) =>
+                    new VmdMotionFrame(motionSecondFrame.Name, motionSecondFrame.Frame, motionSecondFrame.InterpolationCurves)
+                    {
+                        Position = motionFirstFrame.Position + scale * (motionSecondFrame.Position - motionFirstFrame.Position),
+                        Rotation = Quaternion.Lerp(motionFirstFrame.Rotation, motionSecondFrame.Rotation, scale)
+                    },
+                (VmdCameraFrame cameraFirstFrame, VmdCameraFrame cameraSecondFrame) =>
+                    new VmdCameraFrame(cameraSecondFrame.Frame, cameraSecondFrame.InterpolationCurves)
+                    {
+                        Position = cameraFirstFrame.Position + scale * (cameraSecondFrame.Position - cameraFirstFrame.Position),
+                        Rotation = cameraFirstFrame.Rotation + scale * (cameraSecondFrame.Rotation - cameraFirstFrame.Rotation)
+                    },
+                _ => throw new NotImplementedException()
             }
         });
 
-    public static IEnumerable<VmdCameraFrame> ScaleOffset(IEnumerable<VmdCameraFrame> motionFrames, float scale) =>
-        ExcludeRanges(motionFrames).SelectMany(frames => new[] {
-            frames[0],
-            new(frames[1].Frame, frames[1].InterpolationCurves)
-            {
-                Position = frames[0].Position + scale * (frames[1].Position - frames[0].Position),
-                Rotation = frames[0].Rotation + scale * (frames[1].Rotation - frames[0].Rotation)
-            }
-        });
-
-    private static IEnumerable<T[]> ExcludeRanges<T>(IEnumerable<T> motionFrames)where T : IVmdFrame => motionFrames
+    private static IEnumerable<T[]> TakeFirstTwoFramesPerBone<T>(IEnumerable<T> motionFrames) where T : IVmdFrame => motionFrames
         .GroupBy(frame => frame.Name)
-        .Select(group =>
-            group
-                .OrderBy(frame => frame.Frame)
-                .Take(2)
-                .ToArray()
+        .Select(group => group
+            .OrderBy(frame => frame.Frame)
+            .Take(2)
+            .ToArray()
         )
         .Where(frames => frames.Length == 2);
 }

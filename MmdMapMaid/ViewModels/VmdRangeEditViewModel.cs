@@ -20,7 +20,6 @@ public partial class VmdRangeEditViewModel : ObservableRecipient
 
     public VmdRangeEditViewModel()
     {
-        EnableOffsetScaling = true;
         OffsetScale = 1.0f;
         _vmdPath = "";
     }
@@ -48,16 +47,17 @@ public partial class VmdRangeEditViewModel : ObservableRecipient
             ModelName = vmd.ModelName,
         };
 
+        var frames = vmd.Kind switch
+        {
+            VmdKind.Camera => vmd.CameraFrames.ToList<IVmdFrame>(),
+            VmdKind.Model => vmd.MotionFrames.ToList<IVmdFrame>(),
+            _ => throw new NotImplementedException(),
+        };
+
         if (EnableOffsetScaling)
         {
-            var frames = vmd.Kind switch
-            {
-                VmdKind.Camera => VmdRangeEditor.ScaleOffset(vmd.CameraFrames, OffsetScale).Cast<IVmdFrame>(),
-                VmdKind.Model => VmdRangeEditor.ScaleOffset(vmd.MotionFrames, OffsetScale).Cast<IVmdFrame>(),
-                _ => throw new NotImplementedException(),
-            };
-
-            result.AddFrames(frames);
+            var scaledFrames = VmdRangeEditor.ScaleOffset(frames, OffsetScale);
+            result.AddFrames(scaledFrames);
         }
 
         new Core.Models.SaveOptions().SaveWithBackupAndReturnCreatedPath(VmdPath, vmd.Write);

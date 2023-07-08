@@ -31,7 +31,7 @@
 
   <ItemGroup>
     <Reference Include="MikuMikuMethods">
-      <HintPath>..\..\MikuMikuMethods\MikuMikuMethods\bin\Release\net6.0\MikuMikuMethods.dll</HintPath>
+      <HintPath>..\..\MikuMikuMethods\MikuMikuMethods\bin\Release\net7.0\MikuMikuMethods.dll</HintPath>
     </Reference>
   </ItemGroup>
 
