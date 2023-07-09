@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System.Runtime.InteropServices.WindowsRuntime;
+using CommunityToolkit.WinUI.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using CommunityToolkit.WinUI.UI;
 using MmdMapMaid.Helpers;
 using MmdMapMaid.ViewModels;
 

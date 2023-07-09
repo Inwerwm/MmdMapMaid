@@ -31,7 +31,7 @@ public partial class ReplacementBoxViewModel : ObservableRecipient
     private void ReplaceAll()
     {
         if (string.IsNullOrWhiteSpace(SearchQuery)) { return; }
-        if(RichEditBoxes is null) { return; }
+        if (RichEditBoxes is null) { return; }
 
         foreach (var box in RichEditBoxes)
         {

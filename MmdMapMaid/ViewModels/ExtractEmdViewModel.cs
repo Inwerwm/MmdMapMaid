@@ -19,7 +19,7 @@ public partial class ExtractEmdViewModel : ObservableRecipient
     public ExtractEmdViewModel()
     {
         Extractor = App.GetService<EmdExtractorState>();
-        
+
         _progressTitle = "";
         _openProgressInfobar = false;
         Extractor.OnCompleted += (_, e) =>

@@ -47,7 +47,7 @@ public partial class VmdReplacerState : ObservableObject
 
     private void UpdateGroups()
     {
-        if(Replacer is null) { return; }
+        if (Replacer is null) { return; }
 
         MotionInfo.Clear();
         foreach (var (name, i) in Replacer.GetMotions().Select((name, i) => (name, i)))
@@ -71,7 +71,7 @@ public partial class VmdReplacerState : ObservableObject
         if (Replacer is null) { return; }
 
         var savePath = await StorageHelper.PickSaveFileAsync(new KeyValuePair<string, IList<string>>("VMD ファイル", new[] { ".vmd" }));
-        if(savePath is null) { throw new OperationCanceledException(); }
+        if (savePath is null) { throw new OperationCanceledException(); }
 
         foreach (var item in MotionInfo.Where(info => info.IsEdited))
         {

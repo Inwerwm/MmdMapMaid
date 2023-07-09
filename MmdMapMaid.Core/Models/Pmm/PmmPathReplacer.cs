@@ -107,7 +107,7 @@ public class PmmPathReplacer
     {
         options ??= new SaveOperations();
 
-        if(Emm is not null)
+        if (Emm is not null)
         {
             options.SaveAndBackupFile(EmmPath, savePath => Emm.Write(savePath));
         }

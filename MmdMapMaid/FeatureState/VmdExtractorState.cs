@@ -107,8 +107,8 @@ internal partial class VmdExtractorState : ObservableObject
 
     private async void ReadLastFrame()
     {
-        if(DispatcherQueue is null) { return; }
-        if(Extractor is null) { return; }
+        if (DispatcherQueue is null) { return; }
+        if (Extractor is null) { return; }
 
         LastFrameCancellation?.Cancel();
         LastFrameCancellation = new();
@@ -141,8 +141,8 @@ internal partial class VmdExtractorState : ObservableObject
     [RelayCommand(CanExecute = nameof(CanExtractExecute))]
     public void Extract()
     {
-        if(Extractor is null) { return; }
-        if(SelectedPmmModels is null) { return; }
+        if (Extractor is null) { return; }
+        if (SelectedPmmModels is null) { return; }
 
         if (DoesExtractCamera)
         {

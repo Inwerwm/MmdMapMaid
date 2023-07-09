@@ -47,7 +47,7 @@ public record SaveOperations(bool EnableOverwrite = true, bool EnableBackup = tr
     private string? GetNewlyCreatedPath(string savePath, string backupPath)
     {
         return !EnableOverwrite ? savePath
-            : EnableBackup ? backupPath 
+            : EnableBackup ? backupPath
             : null;
     }
 
@@ -72,5 +72,5 @@ public record SaveOperations(bool EnableOverwrite = true, bool EnableBackup = tr
     /// <param name="suffix">追加するサフィックス</param>
     /// <returns>サフィックスが追加された新しいファイル名</returns>
     public static string AppendSuffixToFilename(string fullPath, string suffix) =>
-        Path.Combine(Path.GetDirectoryName(fullPath) ?? ".",  Path.GetFileNameWithoutExtension(fullPath) + suffix + Path.GetExtension(fullPath));
+        Path.Combine(Path.GetDirectoryName(fullPath) ?? ".", Path.GetFileNameWithoutExtension(fullPath) + suffix + Path.GetExtension(fullPath));
 }

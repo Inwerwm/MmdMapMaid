@@ -1,7 +1,7 @@
-﻿using Windows.Storage.Pickers;
-using Windows.Storage;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 
 namespace MmdMapMaid.Helpers;
 
@@ -32,7 +32,7 @@ class StorageHelper
     public static async Task<StorageFile> PickSaveFileAsync(string suggestedFileName, params KeyValuePair<string, IList<string>>[] fileTypes)
     {
         var savePicker = new FileSavePicker();
-        if(suggestedFileName != null)
+        if (suggestedFileName != null)
         {
             savePicker.SuggestedFileName = suggestedFileName;
         }

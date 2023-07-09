@@ -19,7 +19,7 @@ public partial class EmmViewModel : ObservableRecipient
     public EmmViewModel()
     {
         OrderMapper = App.GetService<EmmOrderMapperState>();
-        
+
         _progressTitle = "";
 
         OrderMapper.OnMapCompleted += (_, e) =>

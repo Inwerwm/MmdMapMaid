@@ -29,7 +29,7 @@ public class EmdExtractor
         var targetEffect = Emm.EffectSettings[effectIndex];
 
         var emd = targetEffect.ObjectSettings.FirstOrDefault(s => s.Object == targetObject)?.ToEmd();
-        if(emd is null) { return; }
+        if (emd is null) { return; }
 
         emd.Write(Path.Combine(saveDirectory, $"{targetEffect.Name}_{Path.GetFileNameWithoutExtension(targetObject.Path)}.emd"));
     }
