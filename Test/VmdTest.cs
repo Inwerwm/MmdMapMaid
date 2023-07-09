@@ -84,4 +84,60 @@ internal class VmdTest
             Assert.That(secondFrame.Rotation, Is.EqualTo(new Vector3(1.5f, 1.5f, 1.5f)));
         });
     }
+
+    [Test]
+    public void GenerateAlignedFramesTest()
+    {
+        // Arrange
+        var guide = new List<IVmdFrame>
+        {
+            new VmdMotionFrame("guide", 0),
+            new VmdMotionFrame("guide", 5),
+            new VmdMotionFrame("guide", 10),
+            new VmdMotionFrame("guide", 15)
+        };
+
+        var source = new List<IVmdFrame>
+        {
+            new VmdMotionFrame("a", 1),
+            new VmdMotionFrame("a", 4),
+            new VmdMotionFrame("b", 0),
+            new VmdMotionFrame("b", 6),
+            new VmdMotionFrame("b", 9),
+        };
+
+        // Act
+        var result = VmdRangeEditor.GenerateAlignedFrames(source, guide).ToList();
+
+        // Assert
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Has.Count.EqualTo(8));
+
+            Assert.That(result[0].Name, Is.EqualTo("a"));
+            Assert.That(result[0].Frame, Is.EqualTo(1));
+
+            Assert.That(result[1].Name, Is.EqualTo("a"));
+            Assert.That(result[1].Frame, Is.EqualTo(4));
+
+            Assert.That(result[2].Name, Is.EqualTo("a"));
+            Assert.That(result[2].Frame, Is.EqualTo(11));
+
+            Assert.That(result[3].Name, Is.EqualTo("a"));
+            Assert.That(result[3].Frame, Is.EqualTo(14));
+
+            Assert.That(result[4].Name, Is.EqualTo("b"));
+            Assert.That(result[4].Frame, Is.EqualTo(0));
+
+            Assert.That(result[5].Name, Is.EqualTo("b"));
+            Assert.That(result[5].Frame, Is.EqualTo(6));
+
+            Assert.That(result[6].Name, Is.EqualTo("b"));
+            Assert.That(result[6].Frame, Is.EqualTo(9));
+
+            Assert.That(result[7].Name, Is.EqualTo("b"));
+            Assert.That(result[7].Frame, Is.EqualTo(15));
+        });
+    }
+
 }
