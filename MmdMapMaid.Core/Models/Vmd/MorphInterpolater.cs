@@ -14,7 +14,7 @@ public static class MorphInterpolater
         return SimplifyPath.Simplify(sampledPoints, accuracy);
     }
 
-    public static string? WriteVmd(string savePath, string? modelName, string morphName, int frameLength, IEnumerable<Point2<double>> weights, SaveOptions? options = null)
+    public static string? WriteVmd(string savePath, string? modelName, string morphName, int frameLength, IEnumerable<Point2<double>> weights, SaveOperations? options = null)
     {
         options ??= new();
         modelName ??= "InterpolatedMorphWeights";
@@ -29,6 +29,6 @@ public static class MorphInterpolater
             }).ToList()
         };
 
-        return options.SaveWithBackupAndReturnCreatedPath(savePath, vmd.Write);
+        return options.SaveAndBackupFile(savePath, vmd.Write);
     }
 }

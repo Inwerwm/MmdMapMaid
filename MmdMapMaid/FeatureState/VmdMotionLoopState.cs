@@ -131,9 +131,9 @@ internal partial class VmdMotionLoopState : ObservableObject
         var elementVmd = MotionLooper.ReadFile(ElementVmdPath);
         var loopMotion = MotionLooper.CreateLoopMotion(elementVmd);
 
-        var save = new SaveOptions(EnableBackup: false);
-        var savePath = SaveOptions.AddSuffixTo(ElementVmdPath, "_loop");
-        save.SaveWithBackupAndReturnCreatedPath(savePath, loopMotion.Write);
+        var save = new SaveOperations(EnableBackup: false);
+        var savePath = SaveOperations.AppendSuffixToFilename(ElementVmdPath, "_loop");
+        save.SaveAndBackupFile(savePath, loopMotion.Write);
 
         return $$"""
         総数: {{elementVmd.GetAllFrames().Count()}} → {{loopMotion.GetAllFrames().Count()}}

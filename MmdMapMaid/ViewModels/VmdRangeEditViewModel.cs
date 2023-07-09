@@ -87,7 +87,7 @@ public partial class VmdRangeEditViewModel : ObservableRecipient
         }
 
         vmd.ModelName = modelName;
-        new Core.Models.SaveOptions().SaveWithBackupAndReturnCreatedPath(VmdPath, vmd.Write);
+        new Core.Models.SaveOperations().SaveAndBackupFile(VmdPath, vmd.Write);
     }
 
     private void ApplyFrameModification(VocaloidMotionData result, Func<VocaloidMotionData, IEnumerable<IVmdFrame>> modificationFunc)

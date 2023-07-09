@@ -103,14 +103,14 @@ public class PmmPathReplacer
         }
     }
 
-    public string? Save(SaveOptions? options = null)
+    public string? Save(SaveOperations? options = null)
     {
-        options ??= new SaveOptions();
+        options ??= new SaveOperations();
 
         if(Emm is not null)
         {
-            options.SaveWithBackupAndReturnCreatedPath(EmmPath, savePath => Emm.Write(savePath));
+            options.SaveAndBackupFile(EmmPath, savePath => Emm.Write(savePath));
         }
-        return options.SaveWithBackupAndReturnCreatedPath(PmmPath, savePath => Pmm.Write(savePath));
+        return options.SaveAndBackupFile(PmmPath, savePath => Pmm.Write(savePath));
     }
 }
