@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MikuMikuMethods.Vmd;
+using MmdMapMaid.Contracts.Services;
 using MmdMapMaid.Core.Models.Vmd;
 using MmdMapMaid.Helpers;
 using Windows.Storage;
@@ -9,6 +10,11 @@ namespace MmdMapMaid.ViewModels;
 
 public partial class VmdRangeEditViewModel : ObservableRecipient
 {
+    private const string SettingsKeyOfVmdPath = "VmdRangeEditVmdPath";
+    private const string SettingsKeyOfGuideVmdPath = "VmdRangeEditGuideVmdPath";
+    private const string SettingsKeyOfGuideOffset = "VmdRangeEditGuideOffset";
+    private const string SettingsKeyOfOffsetScale = "VmdRangeEditOffsetScale";
+
     [ObservableProperty]
     private bool _enableOffsetScaling;
 
@@ -33,12 +39,26 @@ public partial class VmdRangeEditViewModel : ObservableRecipient
     [ObservableProperty]
     private int _guideOffset;
 
-    public VmdRangeEditViewModel()
+    public VmdRangeEditViewModel(ILocalSettingsService localSettingsService)
     {
         OffsetScale = 1.0f;
-        _vmdPath = "";
-        _guideVmdPath = "";
+        _vmdPath = localSettingsService.ReadSetting<string>(SettingsKeyOfVmdPath) ?? string.Empty;
+        _guideVmdPath = localSettingsService.ReadSetting<string>(SettingsKeyOfGuideVmdPath) ?? string.Empty;
+        _guideOffset = localSettingsService.ReadSetting<int>(SettingsKeyOfGuideOffset);
+        _offsetScale = localSettingsService.ReadSetting<float>(SettingsKeyOfOffsetScale);
         _vmdWriteInfobarMessage = "Message_VmdWriteComplete".GetLocalized();
+
+        PropertyChanged += (sender, e) =>
+        {
+            _ = e.PropertyName switch
+            {
+                nameof(VmdPath) => localSettingsService.SaveSettingAsync(SettingsKeyOfVmdPath, VmdPath),
+                nameof(GuideVmdPath) => localSettingsService.SaveSettingAsync(SettingsKeyOfGuideVmdPath, GuideVmdPath),
+                nameof(GuideOffset) => localSettingsService.SaveSettingAsync(SettingsKeyOfGuideOffset, GuideOffset),
+                nameof(OffsetScale) => localSettingsService.SaveSettingAsync(SettingsKeyOfOffsetScale, OffsetScale),
+                _ => null
+            };
+        };
     }
 
     internal void ReadVmd(StorageFile file) => ReadVmd(file.Path);
