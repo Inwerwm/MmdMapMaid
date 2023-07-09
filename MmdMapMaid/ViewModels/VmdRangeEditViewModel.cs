@@ -16,6 +16,12 @@ public partial class VmdRangeEditViewModel : ObservableRecipient
     private bool _enableGenerateAlignedFrames;
 
     [ObservableProperty]
+    private string _vmdWriteInfobarMessage;
+
+    [ObservableProperty]
+    private bool _openCompleteMessage;
+
+    [ObservableProperty]
     private float _offsetScale;
 
     [ObservableProperty]
@@ -32,12 +38,43 @@ public partial class VmdRangeEditViewModel : ObservableRecipient
         OffsetScale = 1.0f;
         _vmdPath = "";
         _guideVmdPath = "";
+        _vmdWriteInfobarMessage = "Message_VmdWriteComplete".GetLocalized();
     }
 
     internal void ReadVmd(StorageFile file) => ReadVmd(file.Path);
 
+    private async Task OpenCompleteMessageAutoClose()
+    {
+        var src = new CancellationTokenSource();
+        void onOpenCompleteMessageChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(OpenCompleteMessage))
+            {
+                src.Cancel();
+            }
+        }
+
+        try
+        {
+            OpenCompleteMessage = true;
+            PropertyChanged += onOpenCompleteMessageChanged;
+
+            await Task.Delay(1000, src.Token);
+        }
+        finally
+        {
+            PropertyChanged -= onOpenCompleteMessageChanged;
+        }
+
+        if (!src.IsCancellationRequested)
+        {
+            OpenCompleteMessage = false;
+        }
+    }
+
+
     [RelayCommand]
-    private async void ReadVmd()
+    private async Task ReadVmd()
     {
         var file = await StorageHelper.PickSingleFileAsync(".vmd");
         if (file is null)
@@ -53,7 +90,7 @@ public partial class VmdRangeEditViewModel : ObservableRecipient
     }
 
     [RelayCommand]
-    public async void ReadGuideVmd()
+    public async Task ReadGuideVmd()
     {
         var file = await StorageHelper.PickSingleFileAsync(".vmd");
         if (file is null)
@@ -71,7 +108,7 @@ public partial class VmdRangeEditViewModel : ObservableRecipient
     [RelayCommand]
     private void WriteVmd()
     {
-        if (VmdPath is null) { return; }
+        if (string.IsNullOrWhiteSpace(VmdPath)) { return; }
 
         var vmd = new VocaloidMotionData(VmdPath);
         var modelName = vmd.ModelName;
@@ -81,13 +118,20 @@ public partial class VmdRangeEditViewModel : ObservableRecipient
             ApplyFrameModification(vmd, frames => VmdRangeEditor.ScaleOffset(frames, OffsetScale));
         }
 
-        if (EnableGenerateAlignedFrames)
+        if (EnableGenerateAlignedFrames && string.IsNullOrWhiteSpace(GuideVmdPath))
         {
             ApplyFrameModification(vmd, frames => VmdRangeEditor.GenerateAlignedFrames(frames, new VocaloidMotionData(GuideVmdPath)));
         }
 
         vmd.ModelName = modelName;
-        new Core.Models.SaveOperations().SaveAndBackupFile(VmdPath, vmd.Write);
+
+        var saveOperations = new Core.Models.SaveOperations()
+        {
+            EnableOverwrite = false
+        };
+        saveOperations.SaveAndBackupFile(VmdPath, vmd.Write);
+
+        _ = OpenCompleteMessageAutoClose();
     }
 
     private void ApplyFrameModification(VocaloidMotionData result, Func<VocaloidMotionData, IEnumerable<IVmdFrame>> modificationFunc)
@@ -97,5 +141,4 @@ public partial class VmdRangeEditViewModel : ObservableRecipient
         result.Clear();
         result.AddFrames(modified);
     }
-
 }

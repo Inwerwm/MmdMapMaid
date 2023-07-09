@@ -24,6 +24,7 @@
         <TextBox Text="{x:Bind ViewModel.VmdPath, Mode=OneWay}" DragOver="ContentArea_DragOver" Drop="ContentArea_DropAsync" IsReadOnly="True" Grid.Row="1" Grid.ColumnSpan="2"/>
 
         <controls:DockPanel LastChildFill="False" Grid.Row="2" Grid.ColumnSpan="2">
+            <InfoBar Severity="Success" Message="{x:Bind ViewModel.VmdWriteInfobarMessage}" IsOpen="{x:Bind ViewModel.OpenCompleteMessage, Mode=TwoWay}" controls:DockPanel.Dock="Top"/>
             <Expander x:Name="ScaleOffsetArea" IsExpanded="{x:Bind ViewModel.EnableOffsetScaling, Mode=TwoWay}" HorizontalAlignment="Stretch" controls:DockPanel.Dock="Top">
                 <Expander.Header>
                     <CheckBox x:Uid="Description_ScaleOffset" IsChecked="{x:Bind ViewModel.EnableOffsetScaling, Mode=TwoWay}" />
