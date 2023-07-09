@@ -351,4 +351,16 @@
   <data name="Label_Scale.Text" xml:space="preserve">
     <value>Scale</value>
   </data>
+  <data name="Button_ReadGuideVmd.Content" xml:space="preserve">
+    <value>Read guide Vmd file</value>
+  </data>
+  <data name="Description_GenerateAlignedFrames.Content" xml:space="preserve">
+    <value>Generate Aligned Frames</value>
+  </data>
+  <data name="TextBox_GuideVmd.PlaceholderText" xml:space="preserve">
+    <value>Guide Vmd file</value>
+  </data>
+  <data name="Label_GuideOffset.Text" xml:space="preserve">
+    <value>Guide Offset</value>
+  </data>
 </root>

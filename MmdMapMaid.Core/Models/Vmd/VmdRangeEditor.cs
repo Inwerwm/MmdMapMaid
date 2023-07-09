@@ -24,7 +24,7 @@ public static class VmdRangeEditor
                         Position = cameraFirstFrame.Position + scale * (cameraSecondFrame.Position - cameraFirstFrame.Position),
                         Rotation = cameraFirstFrame.Rotation + scale * (cameraSecondFrame.Rotation - cameraFirstFrame.Rotation)
                     },
-                _ => throw new NotImplementedException()
+                (IVmdFrame, IVmdFrame secondFrame) => secondFrame
             }
         });
 

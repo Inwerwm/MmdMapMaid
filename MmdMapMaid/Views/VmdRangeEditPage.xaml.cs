@@ -15,15 +15,6 @@ public sealed partial class VmdRangeEditPage : Page
     {
         ViewModel = App.GetService<VmdRangeEditViewModel>();
         InitializeComponent();
-        ViewModel.PropertyChanged += (sender, e) =>
-        {
-            switch (e.PropertyName)
-            {
-                case nameof(ViewModel.EnableOffsetScaling):
-                    ScaleOffsetArea.IsExpanded = ViewModel.EnableOffsetScaling;
-                    break;
-            }
-        };
     }
 
     private void ContentArea_DragOver(object sender, Microsoft.UI.Xaml.DragEventArgs e)
@@ -37,5 +28,13 @@ public sealed partial class VmdRangeEditPage : Page
         if (file is null) { return; }
 
         ViewModel.ReadVmd(file);
+    }
+
+    private async void GenerateAlignedFramesArea_DropAsync(object sender, Microsoft.UI.Xaml.DragEventArgs e)
+    {
+        var file = await StorageHelper.ReadDropedFile(e, ".vmd");
+        if (file is null) { return; }
+
+        ViewModel.ReadGuideVmd(file.Path);
     }
 }

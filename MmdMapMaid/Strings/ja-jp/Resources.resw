@@ -351,4 +351,16 @@
   <data name="Label_Scale.Text" xml:space="preserve">
     <value>拡縮率</value>
   </data>
+  <data name="Button_ReadGuideVmd.Content" xml:space="preserve">
+    <value>ガイド VMD ファイルを読み込む</value>
+  </data>
+  <data name="Description_GenerateAlignedFrames.Content" xml:space="preserve">
+    <value>ガイドに沿ってフレームを配置</value>
+  </data>
+  <data name="TextBox_GuideVmd.PlaceholderText" xml:space="preserve">
+    <value>ガイド VMD</value>
+  </data>
+  <data name="Label_GuideOffset.Text" xml:space="preserve">
+    <value>ガイドのオフセット</value>
+  </data>
 </root>
