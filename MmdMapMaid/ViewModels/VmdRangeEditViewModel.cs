@@ -138,9 +138,14 @@ public partial class VmdRangeEditViewModel : ObservableRecipient
             ApplyFrameModification(vmd, frames => VmdRangeEditor.ScaleOffset(frames, OffsetScale));
         }
 
-        if (EnableGenerateAlignedFrames && string.IsNullOrWhiteSpace(GuideVmdPath))
+        if (EnableGenerateAlignedFrames && !string.IsNullOrWhiteSpace(GuideVmdPath))
         {
-            ApplyFrameModification(vmd, frames => VmdRangeEditor.GenerateAlignedFrames(frames, new VocaloidMotionData(GuideVmdPath)));
+            ApplyFrameModification(vmd, frames => VmdRangeEditor.GenerateAlignedFrames(frames, new VocaloidMotionData(GuideVmdPath).Select(f =>
+            {
+                var clone = (IVmdFrame)f.Clone();
+                clone.Frame += (uint)GuideOffset;
+                return clone;
+            })));
         }
 
         vmd.ModelName = modelName;
