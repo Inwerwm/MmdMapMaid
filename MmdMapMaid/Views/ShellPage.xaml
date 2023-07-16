@@ -80,7 +80,7 @@
                 </NavigationViewItem>
                 <NavigationViewItem x:Uid="Shell_VmdRangeEdit" helpers:NavigationHelper.NavigateTo="MmdMapMaid.ViewModels.VmdRangeEditViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7c3;"/>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe75d;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
