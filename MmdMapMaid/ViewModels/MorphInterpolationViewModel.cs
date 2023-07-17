@@ -32,6 +32,12 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
     private double _accuracy;
 
     [ObservableProperty]
+    private double _startWeight;
+
+    [ObservableProperty]
+    private double _endWeight;
+
+    [ObservableProperty]
     private string _morphName;
 
     [ObservableProperty]
@@ -61,6 +67,8 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
 
         EarlierPoint = new(0.25, 0.25);
         LaterPoint = new(0.75, 0.75);
+        StartWeight = 0;
+        EndWeight = 1;
         _morphName = "";
         _log = "";
 
@@ -145,7 +153,7 @@ public partial class MorphInterpolationViewModel : ObservableRecipient
         if (savePath is null) { return; }
 
         var points = MorphInterpolater.CreateInterpolatedPoints(EarlierPoint.ToPoint2(), LaterPoint.ToPoint2(), FrameLength, Accuracy, 0.00001);
-        MorphInterpolater.WriteVmd(savePath.Path, null, MorphName, FrameLength, points, new() { EnableBackup = false });
+        MorphInterpolater.WriteVmd(savePath.Path, null, MorphName, FrameLength, points, StartWeight, EndWeight, new() { EnableBackup = false });
         AppendLog?.Invoke($"{"Log_SavePath".GetLocalized()}: {savePath.Path}");
     }
 }

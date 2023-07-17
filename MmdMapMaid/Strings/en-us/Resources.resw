@@ -363,4 +363,10 @@
   <data name="Label_GuideOffset.Text" xml:space="preserve">
     <value>Guide Offset</value>
   </data>
+  <data name="Label_EndWeight.Text" xml:space="preserve">
+    <value>End Weight</value>
+  </data>
+  <data name="Label_StartWeight.Text" xml:space="preserve">
+    <value>Start Weight</value>
+  </data>
 </root>

@@ -3,11 +3,16 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:MmdMapMaid.Controls" xmlns:helpers="using:MmdMapMaid.Helpers"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:MmdMapMaid.Controls"
+    xmlns:helpers="using:MmdMapMaid.Helpers"
+    xmlns:wct="using:Microsoft.UI.Xaml.Controls"
+    xmlns:glob="using:Windows.Globalization.NumberFormatting"
     mc:Ignorable="d">
 
     <Page.Resources>
         <helpers:DoubleToIntConverter x:Key="DoubleToIntConverter" />
+        <glob:DecimalFormatter x:Key="DecimalFormatter" FractionDigits="4"/>
     </Page.Resources>
 
     <Grid x:Name="ContentArea">
@@ -32,11 +37,29 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            
+
             <StackPanel Spacing="3" Padding="15, 0" Grid.Row="0">
                 <AutoSuggestBox x:Uid="TextBox_MorphName" x:Name="MorphNameSuggestBox" Text="{x:Bind ViewModel.MorphName, Mode=TwoWay}" FontSize="28" TextChanged="{x:Bind ViewModel.UpdateSuggest}" SuggestionChosen="{x:Bind ViewModel.SuggestionChosen}" GotFocus="MorphNameSuggestBox_GotFocus"/>
                 <TextBlock x:Uid="Label_FrameLength" Margin="0,15,0,0"/>
                 <NumberBox Minimum="2" Value="{x:Bind ViewModel.FrameLength, Mode=TwoWay}" SpinButtonPlacementMode="Inline" />
+                <Grid RowSpacing="5" Margin="0,15,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock x:Uid="Label_StartWeight" Grid.Row="0" Grid.Column="0" />
+                    <TextBlock x:Uid="Label_EndWeight" Grid.Row="0" Grid.Column="2" />
+
+                    <NumberBox Value="{x:Bind ViewModel.StartWeight, Mode=TwoWay}" SmallChange="0.01" LargeChange="0.1" NumberFormatter="{StaticResource DecimalFormatter}" SpinButtonPlacementMode="Inline" Grid.Row="1" Grid.Column="0"/>
+                    <TextBlock Text="～" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1"/>
+                    <NumberBox Value="{x:Bind ViewModel.EndWeight, Mode=TwoWay}" SmallChange="0.01" LargeChange="0.1" NumberFormatter="{StaticResource DecimalFormatter}" SpinButtonPlacementMode="Inline" Grid.Row="1" Grid.Column="2"/>
+                </Grid>
                 <TextBlock x:Uid="Label_Accuracy" Margin="0,15,0,0"/>
                 <Slider Minimum="0.0" Maximum="0.1" StepFrequency="0.001" Value="{x:Bind ViewModel.Accuracy, Mode=TwoWay}" />
                 <TextBlock x:Uid="Label_TrueCurveOpacity" Margin="0,15,0,0"/>
