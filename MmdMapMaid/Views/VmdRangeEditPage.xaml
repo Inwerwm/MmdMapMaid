@@ -52,6 +52,7 @@
                                 <numberFormatting:DecimalFormatter FractionDigits="0"/>
                             </NumberBox.NumberFormatter>
                         </NumberBox>
+                        <CheckBox x:Uid="Button_WithMorph" IsChecked="{x:Bind ViewModel.TransferMorph, Mode=TwoWay}" />
                         <TextBox x:Uid="TextBox_GuideVmd" Text="{x:Bind ViewModel.GuideVmdPath, Mode=OneWay}" DragOver="ContentArea_DragOver" Drop="GenerateAlignedFramesArea_DropAsync" Width="600" IsReadOnly="True" />
                         <Button x:Uid="Button_ReadGuideVmd" Command="{x:Bind ViewModel.ReadGuideVmdCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                     </StackPanel>

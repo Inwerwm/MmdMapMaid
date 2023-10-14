@@ -369,4 +369,7 @@
   <data name="Label_StartWeight.Text" xml:space="preserve">
     <value>Start Weight</value>
   </data>
+  <data name="Button_WithMorph.Content" xml:space="preserve">
+    <value>Morphs are also transferred</value>
+  </data>
 </root>

@@ -13,6 +13,7 @@ public partial class VmdRangeEditViewModel : ObservableRecipient
     private const string SettingsKeyOfVmdPath = "VmdRangeEditVmdPath";
     private const string SettingsKeyOfGuideVmdPath = "VmdRangeEditGuideVmdPath";
     private const string SettingsKeyOfGuideOffset = "VmdRangeEditGuideOffset";
+    private const string SettingsKeyOfTransferMorph = "VmdRangeEditTransferMorph";
     private const string SettingsKeyOfOffsetScale = "VmdRangeEditOffsetScale";
 
     [ObservableProperty]
@@ -39,12 +40,16 @@ public partial class VmdRangeEditViewModel : ObservableRecipient
     [ObservableProperty]
     private int _guideOffset;
 
+    [ObservableProperty]
+    private bool _transferMorph;
+
     public VmdRangeEditViewModel(ILocalSettingsService localSettingsService)
     {
         OffsetScale = 1.0f;
         _vmdPath = localSettingsService.ReadSetting<string>(SettingsKeyOfVmdPath) ?? string.Empty;
         _guideVmdPath = localSettingsService.ReadSetting<string>(SettingsKeyOfGuideVmdPath) ?? string.Empty;
         _guideOffset = localSettingsService.ReadSetting<int>(SettingsKeyOfGuideOffset);
+        _transferMorph = localSettingsService.ReadSetting<bool>(SettingsKeyOfTransferMorph);
         _offsetScale = localSettingsService.ReadSetting<float>(SettingsKeyOfOffsetScale);
         _vmdWriteInfobarMessage = "Message_VmdWriteComplete".GetLocalized();
 
@@ -55,6 +60,7 @@ public partial class VmdRangeEditViewModel : ObservableRecipient
                 nameof(VmdPath) => localSettingsService.SaveSettingAsync(SettingsKeyOfVmdPath, VmdPath),
                 nameof(GuideVmdPath) => localSettingsService.SaveSettingAsync(SettingsKeyOfGuideVmdPath, GuideVmdPath),
                 nameof(GuideOffset) => localSettingsService.SaveSettingAsync(SettingsKeyOfGuideOffset, GuideOffset),
+                nameof(TransferMorph) => localSettingsService.SaveSettingAsync(SettingsKeyOfTransferMorph, TransferMorph),
                 nameof(OffsetScale) => localSettingsService.SaveSettingAsync(SettingsKeyOfOffsetScale, OffsetScale),
                 _ => null
             };
@@ -145,7 +151,7 @@ public partial class VmdRangeEditViewModel : ObservableRecipient
                 var clone = (IVmdFrame)f.Clone();
                 clone.Frame += (uint)GuideOffset;
                 return clone;
-            })));
+            }), TransferMorph));
         }
 
         vmd.ModelName = modelName;

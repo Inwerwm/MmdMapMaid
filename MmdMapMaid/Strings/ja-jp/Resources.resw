@@ -369,4 +369,7 @@
   <data name="Label_StartWeight.Text" xml:space="preserve">
     <value>開始ウェイト</value>
   </data>
+  <data name="Button_WithMorph.Content" xml:space="preserve">
+    <value>モーフも転写する</value>
+  </data>
 </root>

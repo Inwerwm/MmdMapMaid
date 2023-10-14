@@ -42,22 +42,24 @@ public static class VmdRangeEditor
     /// </summary>
     /// <param name="source">ソースとなるフレームのシーケンス。</param>
     /// <param name="guide">ガイドとなるフレームのシーケンス。</param>
+    /// <param name="withMorph">配置時にモーフも転写するか</param>
     /// <returns>生成され、ガイドに沿って配置されたフレームのシーケンス。</returns>
-    public static IEnumerable<IVmdFrame> GenerateAlignedFrames(IEnumerable<IVmdFrame> source, IEnumerable<IVmdFrame> guide) =>
-        GenerateAlignedFrames(source, guide.OrderBy(frame => frame.Frame).ToList());
+    public static IEnumerable<IVmdFrame> GenerateAlignedFrames(IEnumerable<IVmdFrame> source, IEnumerable<IVmdFrame> guide, bool withMorph) =>
+        GenerateAlignedFrames(source, guide.OrderBy(frame => frame.Frame), withMorph);
 
     /// <summary>
     /// ソースフレームをガイドフレームに沿って再配置します。
     /// </summary>
     /// <param name="source">ソースとなるフレームのシーケンス。</param>
     /// <param name="orderedGuide">ソートされたガイドフレームのリスト。</param>
+    /// <param name="withMorph">配置時にモーフも転写するか</param>
     /// <returns>生成され、ガイドに沿って配置されたフレームのシーケンス。</returns>
-    private static IEnumerable<IVmdFrame> GenerateAlignedFrames(IEnumerable<IVmdFrame> source, List<IVmdFrame> orderedGuide) => source
+    private static IEnumerable<IVmdFrame> GenerateAlignedFrames(IEnumerable<IVmdFrame> source, IOrderedEnumerable<IVmdFrame> orderedGuide, bool withMorph) => source
         .GroupBy(frame => frame.Name)
         .Select(group => ComputeOffsets(orderedGuide, group))
         .SelectMany(frameOffsets => frameOffsets.TakeCyclic()
             .Zip(orderedGuide, ComputeFrameTimes)
-            .Select(CloneAndRepositionFrame)
+            .Select(frame => CloneAndRepositionFrame(frame, withMorph))
         );
 
     /// <summary>
@@ -66,11 +68,11 @@ public static class VmdRangeEditor
     /// <param name="orderedGuide">ソートされたガイドフレームのリスト。</param>
     /// <param name="group">ソースとなるフレームのグループ。</param>
     /// <returns>フレームとそのオフセットのシーケンス。</returns>
-    private static IVmdFrame CloneAndRepositionFrame((IVmdFrame Guide, IVmdFrame Frame, uint FrameTime) frame)
+    private static IVmdFrame CloneAndRepositionFrame((IVmdFrame Guide, IVmdFrame Frame, uint FrameTime) frame, bool withMorph)
     {
-        return (frame.Guide, frame.Frame) switch
+        return (withMorph, frame.Guide, frame.Frame) switch
         {
-            (IVmdInterpolatable guideInterpolatable, VmdCameraFrame cameraClone) => new VmdCameraFrame(frame.FrameTime, guideInterpolatable.InterpolationCurves)
+            (true, IVmdInterpolatable guideInterpolatable, VmdCameraFrame cameraClone) => new VmdCameraFrame(frame.FrameTime, guideInterpolatable.InterpolationCurves)
             {
                 Distance = cameraClone.Distance,
                 Position = cameraClone.Position,
@@ -78,12 +80,12 @@ public static class VmdRangeEditor
                 ViewAngle = cameraClone.ViewAngle,
                 IsPerspectiveOff = cameraClone.IsPerspectiveOff,
             },
-            (IVmdInterpolatable guideInterpolatable, VmdMotionFrame motionClone) => new VmdMotionFrame(motionClone.Name, frame.FrameTime, guideInterpolatable.InterpolationCurves)
+            (true, IVmdInterpolatable guideInterpolatable, VmdMotionFrame motionClone) => new VmdMotionFrame(motionClone.Name, frame.FrameTime, guideInterpolatable.InterpolationCurves)
             {
                 Position = motionClone.Position,
                 Rotation = motionClone.Rotation,
             },
-            (IVmdFrame, IVmdFrame f) => CloneFrameWithNewTime(f, frame.FrameTime)
+            (_, IVmdFrame, IVmdFrame f) => CloneFrameWithNewTime(f, frame.FrameTime)
         };
     }
 
@@ -93,21 +95,18 @@ public static class VmdRangeEditor
     /// <param name="guideFrame">ガイドフレーム。</param>
     /// <param name="frameOffset">フレームとそのオフセット。</param>
     /// <returns>フレーム、ガイドフレーム、新しいタイムスタンプのタプル。</returns>
-    private static (IVmdFrame Guide, IVmdFrame Frame, uint FrameTime) ComputeFrameTimes((IVmdFrame Frame, long Offset) frameOffset, IVmdFrame guideFrame)
-    {
-        return (
-            Guide: guideFrame,
-            frameOffset.Frame,
-            FrameTime: (uint)Math.Max(guideFrame.Frame + frameOffset.Offset, 0)
-        );
-    }
+    private static (IVmdFrame Guide, IVmdFrame Frame, uint FrameTime) ComputeFrameTimes((IVmdFrame Frame, long Offset) frameOffset, IVmdFrame guideFrame) => (
+        Guide: guideFrame,
+        frameOffset.Frame,
+        FrameTime: (uint)Math.Max(guideFrame.Frame + frameOffset.Offset, 0)
+    );
 
     /// <summary>
     /// フレームをクローンし、新しいタイムスタンプで配置します。
     /// </summary>
     /// <param name="frame">フレーム、ガイドフレーム、新しいタイムスタンプのタプル。</param>
     /// <returns>新しいタイムスタンプで再配置されたクローンフレーム。</returns>
-    private static IEnumerable<(IVmdFrame Frame, long Offset)> ComputeOffsets(List<IVmdFrame> orderedGuide, IGrouping<string, IVmdFrame> group)
+    private static IEnumerable<(IVmdFrame Frame, long Offset)> ComputeOffsets(IOrderedEnumerable<IVmdFrame> orderedGuide, IGrouping<string, IVmdFrame> group)
     {
         return group
             .OrderBy(frame => frame.Frame)
