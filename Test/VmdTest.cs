@@ -107,7 +107,7 @@ internal class VmdTest
         };
 
         // Act
-        var result = VmdRangeEditor.GenerateAlignedFrames(source, guide).ToList();
+        var result = VmdRangeEditor.GenerateAlignedFrames(source, guide, true).ToList();
 
         // Assert
         Assert.Multiple(() =>
